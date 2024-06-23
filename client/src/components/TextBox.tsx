@@ -1,6 +1,19 @@
 import React from "react";
 import clsx from "clsx";
-const TextBox = React.forwardRef(({
+
+
+interface IProps{
+    type?:string;
+    placeholder?:string;
+    label?:string;
+    register:()=>void;
+    name?:string;
+    className?:string;
+    error?:string;
+
+}
+
+const TextBox = React.forwardRef<HTMLInputElement, IProps>(({
     type,placeholder,label,register,name,className,error
 },ref)=>{
 
