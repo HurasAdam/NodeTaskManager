@@ -4,6 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenSidebar } from "../redux/authSlice";
 import UserAvatar from "./UserAvatar";
+import NotificationPanel from "./NotificationPanel";
 
 const Navbar:React.FC = () => {
     const {user}=useSelector((state)=>state.auth);
@@ -28,7 +29,7 @@ type="text" />
        </div>
 
 <div className="flex gap-2 items-center">
-{/* <NotificationPanel/> */}
+<NotificationPanel/>
 <UserAvatar/>
 </div>
 
