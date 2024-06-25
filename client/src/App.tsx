@@ -9,6 +9,7 @@ import Users from './pages/Users';
 import { useSelector } from "react-redux";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
+import MobileSidebar from "./components/MobileSidebar";
 
 
 
@@ -21,8 +22,8 @@ return user ? (
     <div className='w-1/5 h-screen bg-white sticky top-0 hidden md:block'>
       <Sidebar />
     </div>
-{/* 
-    <MobileSidebar /> */}
+ 
+    <MobileSidebar /> 
 
     <div className='flex-1 overflow-y-auto'>
       <Navbar />
