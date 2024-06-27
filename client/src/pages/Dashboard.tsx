@@ -7,6 +7,7 @@ import { summary } from "../assets/data";
 import { MdAdminPanelSettings } from "react-icons/md";
 import Card from "../components/Card";
 import Chart from "../components/Chart";
+import TaskTable from "../components/taskTable/TaskTable";
 
 const Dashboard:React.FC = () => {
 
@@ -72,6 +73,21 @@ return(
 <h4 className="text-xl text-gray-600 font-semibold">Chart by priority</h4>
 <Chart/>
 </div>
+
+<div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
+
+{/* LEFT */}
+
+<div className="w-full">
+<TaskTable
+tasks={summary.last10Task}
+/>
+</div>
+
+{/* RIGHT */}
+
+</div>
+
 
     </div>
   )
