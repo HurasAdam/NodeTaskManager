@@ -1,3 +1,5 @@
+import TableHeader from "./TableHeader";
+import TableRow from "./TableRow";
 
 const UserTable:React.FC = ({ users }) => {
 

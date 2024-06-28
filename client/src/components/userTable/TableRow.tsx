@@ -1,3 +1,7 @@
+import clsx from "clsx";
+import moment from "moment";
+import { getInitials } from "../../utils";
+
 const TableRow:React.FC = ({ user }) => (
     <tr className='border-b border-gray-200  text-gray-600 hover:bg-gray-400/10'>
       <td className='py-2'>

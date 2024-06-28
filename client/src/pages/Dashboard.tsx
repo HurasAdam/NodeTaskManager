@@ -8,6 +8,7 @@ import { MdAdminPanelSettings } from "react-icons/md";
 import Card from "../components/Card";
 import Chart from "../components/Chart";
 import TaskTable from "../components/taskTable/TaskTable";
+import UserTable from "../components/userTable/UserTable";
 
 const Dashboard:React.FC = () => {
 
@@ -78,10 +79,11 @@ return(
 
 {/* LEFT */}
 
-<div className="w-full">
+<div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
 <TaskTable
 tasks={summary.last10Task}
 />
+<UserTable users={summary.users}/>
 </div>
 
 {/* RIGHT */}
