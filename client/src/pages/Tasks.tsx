@@ -7,6 +7,11 @@ import { DiVim } from "react-icons/di";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { IoMdAdd } from "react-icons/io";
+import Tabs from "../components/Tabs";
+import TaskTitle from "../components/TaskTitle";
+import BoardView from "../components/BoardView";
+import { tasks } from "../assets/data";
+import Table from "../components/task/Table";
 
 const TABS=[
   {title:"Board View", icon:<MdGridView/>},
@@ -21,10 +26,15 @@ const TASK_TYPE={
 
 const Tasks:React.FC = () => {
   const params= useParams()
-  const [selected, setSelected]=useState(0);
+  const [selected, setSelected]=useState<number>(0);
   const [open, setOpen]=useState<boolean>(false);
   const [loading, setLoading]=useState<boolean>(false);
   const status = params?.status || ""
+
+console.log(selected)
+
+
+
   return loading? (
     <div className="py-10">
       <Loader/>
@@ -40,6 +50,24 @@ className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white round
   icon={<IoMdAdd className="text-lg"/>}/>
 )}
    </div>
+   {/* TAB */}
+<div>
+<Tabs
+tabs={TABS}
+setSelected={setSelected}
+>
+  {!status && (
+    <div className="w-full flex gap-4 md:gap-x-12 py-4">
+      <TaskTitle label="To Do" className={TASK_TYPE.todo}/>
+      <TaskTitle label="In Progress" className={TASK_TYPE["in progress"]}/>
+      <TaskTitle label="Completed" className={TASK_TYPE.completed}/>
+    </div>
+  )}
+
+  {selected === 0 ? (<BoardView tasks={tasks}/>):(<Table tasks={tasks}/>)}
+  </Tabs>
+</div>
+
   </div>)
 }
 

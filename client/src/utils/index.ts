@@ -27,7 +27,21 @@ export function getInitials(fullName) {
   }
 
 
-  export const PRIOSTYLES={
+  export const formatDate = (date) => {
+    // Get the month, day, and year
+    const month = date.toLocaleString("en-US", { month: "short" });
+    const day = date.getDate();
+    const year = date.getFullYear();
+  
+    const formattedDate = `${day}-${month}-${year}`;
+  
+    return formattedDate;
+  };
+  
+
+
+
+  export const PRIOTITYSTYELS={
     high:"text-red-700",
     medium:"text-yellow-700",
     low:"text-blue-600",
