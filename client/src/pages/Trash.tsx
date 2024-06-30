@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import { tasks } from "../assets/data";
 import clsx from "clsx";
 import { PRIOTITYSTYELS, TASK_TYPE } from "../utils";
+import ConfirmatioDialog from "../components/Dialogs";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -14,12 +15,30 @@ const ICONS = {
 
 
 const Trash:React.FC = () => {
-const [openDialog, setOpenDialong]=useState<boolean>(false);
+const [openDialog, setOpenDialog]=useState<boolean>(false);
 const [open, setOpen]=useState<boolean>(false);
 const [msg, setMsg]=useState(null);
 const [type, setType]=useState<string>("delete");
 const [selected, setSelected]=useState<string>("");
 
+const deleteAllClick= ()=>{
+  setType("deleteAll");
+  setMsg("Do you want to permanantyl delte all items?");
+  setOpenDialog(true);
+}
+
+const deleteClick = (id) => {
+  setType("delete");
+  setSelected(id);
+  setOpenDialog(true);
+};
+
+const restoreClick = (id) => {
+  setSelected(id);
+  setType("restore");
+  setMsg("Do you want to restore the selected item?");
+  setOpenDialog(true);
+};
 
 
 const TableHeader = () => (
@@ -109,7 +128,16 @@ const TableRow = ({ item }) => (
         </div>
       </div>
 
+<ConfirmatioDialog
+open={openDialog}
+setOpen={setOpenDialog}
+msg={msg}
+setMsg={setMsg}
+type={type}
+setType={setType}
+onClick={()=>deleteRestoreHandler()}
 
+/>
 
     </>
   )
