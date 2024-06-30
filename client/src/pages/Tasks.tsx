@@ -3,7 +3,6 @@ import { FaList } from "react-icons/fa";
 import { MdGridView } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-import { DiVim } from "react-icons/di";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { IoMdAdd } from "react-icons/io";
@@ -12,6 +11,7 @@ import TaskTitle from "../components/TaskTitle";
 import BoardView from "../components/BoardView";
 import { tasks } from "../assets/data";
 import Table from "../components/task/Table";
+import AddTask from "../components/task/AddTask";
 
 const TABS=[
   {title:"Board View", icon:<MdGridView/>},
@@ -43,8 +43,10 @@ console.log(selected)
   (<div className="w-full">
    <div className="flex items-center justify-between mb-4">
 <Title title={status? `${status} Tasks`:"Tasks"}/>
+
 {!status &&(
   <Button 
+  onClick={()=>setOpen(true)}
 className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
   label="create task" 
   icon={<IoMdAdd className="text-lg"/>}/>
@@ -67,7 +69,7 @@ setSelected={setSelected}
   {selected === 0 ? (<BoardView tasks={tasks}/>):(<Table tasks={tasks}/>)}
   </Tabs>
 </div>
-
+<AddTask open={open} setOpen={setOpen}/>
   </div>)
 }
 
