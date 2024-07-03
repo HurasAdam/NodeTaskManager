@@ -5,8 +5,8 @@ import express from "express";
 import morgan from "morgan";
 import connectDB from "./config/db";
 import { errorResponseHandler, invalidPathHandler } from "./middlewares/errorMiddleware";
+import routes from "./routes/index";
 
-const routes="";
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(morgan("dev"));
-// app.use("/api",routes);
+app.use("/api",routes);
  app.use(invalidPathHandler);
  app.use(errorResponseHandler);
 
