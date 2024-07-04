@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import mongoose from "mongoose";
-
+import * as types from "../types/index";
 
 
 const userSchema = new mongoose.Schema(
@@ -39,5 +39,5 @@ userSchema.methods.generateJWT = async function(){
 }
 
 
-const User = mongoose.model("User",userSchema);
+const User = mongoose.model<types.IuserDocument>("User",userSchema);
 export default User;
