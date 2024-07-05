@@ -14,7 +14,7 @@ const user = await User.create(
 )
 
 if(user){
-    isAdmin ? await user.generateJWT() : null;
+   
     res.status(200).json({
         name:user?.name,
         email:user?.email,
@@ -22,6 +22,16 @@ if(user){
         role:user?.role,
         title:user?.title
     })
+    
+const token = user.generateJWT();
+
+res.cookie("auth_token",token,{
+    httpOnly:true,
+    secure:process.env.NODE_ENV==="production",
+    maxAge:86400000,
+    sameSite:"strict"
+})
+
 }else{
     res.status(400).json({message:"Invalid user data"})
 }
@@ -30,3 +40,30 @@ if(user){
 return res.status(400).json({message:"Invalid user data"})
 }
 }
+
+export const loginUser = async(req:Request,res:Response)=>{
+ try{
+    const {email,password}=req.body;
+    const user = await User.findOne({email});
+    if(!user){
+        return res.status(400).json({message:"Invalid email or password"});
+    }
+    
+if( await user.comparePassword(password)){
+    const token = user.generateJWT();
+    
+    res.cookie("auth_token",token,{
+        httpOnly:true,
+        secure:process.env.NODE_ENV==="production",
+        maxAge:86400000,
+        sameSite:"strict"
+    })
+}
+ 
+ }catch(error){
+    res.status(400).json({message:error})
+ }
+   
+    }
+  
+    

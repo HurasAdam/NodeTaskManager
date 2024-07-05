@@ -4,6 +4,7 @@ export interface IcustomError extends Error{
 
 export interface IuserDocument extends IUser, Document{
     generateJWT():Promise<string>;
+    comparePassword(password:string):Promise<boolean>;
 }
 
 export interface IUser{
