@@ -1,8 +1,11 @@
-import { registerUser } from "./userControllers";
-
+import { getTeamList, logoutUser, registerUser } from "./userControllers";
+import { loginUser } from "./userControllers";
 
 const userController={
-    registerUser
+    registerUser,
+    loginUser,
+    logoutUser,
+    getTeamList,
 }
 
 export default userController;

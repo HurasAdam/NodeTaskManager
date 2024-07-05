@@ -65,5 +65,28 @@ if( await user.comparePassword(password)){
  }
    
     }
+
+
+    export const logoutUser= async(req:Request,res:Response)=>{
+        try{
+res.cookie("auth_token","",{
+    expires:new Date(0)
+})
+res.status(200).json({message:"Logout sucessfull"})
+        }catch(error){
+            res.status(400).json({message:"Something went wrong"})
+        }
+    }
   
     
+    export const getTeamList = async(req:Request,res:Response)=>{
+        try{
+const users = await User.find().select("name title role email isActive");
+res.status(200).json(users);
+        }catch(error){
+            if(error instanceof Error){
+                return res.status(400).json({message:error.message})
+            }
+          res.status(500).json({message:"An unexpected error has occured"})
+        }
+    }
