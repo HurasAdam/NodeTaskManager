@@ -2,6 +2,8 @@ import {Request,Response} from "express";
 import Task from "../../models/Task";
 import Notification from "../../models/Notification";
 import * as types from "../../types/index";
+import * as enums from "../../enums/index";
+import User from "../../models/User";
 
 export const createTask = async(req:Request,res:Response)=>{
 try{
@@ -130,3 +132,72 @@ if(!task){
         }
         }
         
+        export const dashboardStatistics = async(req:Request,res:Response)=>{
+            try{
+           const {userId,isAdmin}=req.user;
+
+           const allTasks = isAdmin ? await  Task.find({
+           isTrashed:false,
+           }).populate({
+            path:"team",
+            select:"name role title email"
+           }).sort({_id: -1}) 
+           :
+           await Task.find({
+            isTrashed:false,
+            team:{$all : [userId]},
+           }).populate({
+            path:"team",
+            select:"name role title email"
+           }).sort({_id: -1})
+
+           const users = await User.find({
+            isActive:true
+           }).select("name title role isAdmin createdAt").limit(10).sort({_id: -1})
+    
+
+// group task by stage and calculate counts
+const groupTasks: Record<string, number> = {};
+allTasks.forEach(task => {
+    const stage = task.stage;
+    if (!groupTasks[stage]) {
+        groupTasks[stage] = 1;
+    } else {
+        groupTasks[stage]++;
+    }
+});
+
+
+
+   // group tasks by priority
+       const groupData: { name: string; total: number }[] = [];
+       allTasks.forEach(task => {
+           const priority = task.priority;
+           const existingItem = groupData.find(item => item.name === priority);
+           if (existingItem) {
+               existingItem.total++;
+           } else {
+               groupData.push({ name: priority, total: 1 });
+           }
+       });
+
+// calcualte total tasks
+const totalTasks = allTasks.length
+const lastTenTasks = allTasks.slice(0, 10)
+
+const summaryResult = {
+    totalTasks,
+    lastTenTasks,
+    users: isAdmin ? users :[],
+    tasks:groupTasks,
+    graphData:groupData
+};
+
+res.status(200).json(summaryResult)
+            }catch(error){
+                if(error instanceof Error){
+                    return res.status(400).json({message:error.message})
+                }
+                res.status(500).json({message:"An unexpected error has occured"})
+            }
+            }

@@ -1,32 +1,26 @@
 import mongoose from "mongoose";
 import * as types from "../types/index";
+import * as enums from "../enums/index";
 const taskSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     date: { type: Date, default: new Date() },
     priority: {
       type: String,
-      default: "normal",
-      enum: ["high", "medium", "normal", "low"],
+      default: enums.ETaskPriority.Normal,
+      enum: Object.values(enums.ETaskPriority),
     },
     stage: {
       type: String,
-      default: "todo",
-      enum: ["todo", "in progress", "completed"],
+      default: enums.ETaskStage.Todo,
+      enum: Object.values(enums.ETaskStage),
     },
     activities: [
       {
         type: {
           type: String,
-          default: "assigned",
-          enum: [
-            "assigned",
-            "started",
-            "in progress",
-            "bug",
-            "completed",
-            "commented",
-          ],
+          default: enums.ETaskActivityType.Assigned,
+          enum:Object.values(enums.ETaskActivityType)
         },
         activity: String,
         date: { type: Date, default: new Date() },
