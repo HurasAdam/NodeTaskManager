@@ -1,6 +1,6 @@
 import { Request,Response } from "express"
 import User from "../../models/User";
-
+import Notification from "../../models/Notification";
 export const registerUser = async(req:Request,res:Response)=>{
 try{
 const {name,email,password,isAdmin,role,title}=req.body;
@@ -89,4 +89,52 @@ res.status(200).json(users);
             }
           res.status(500).json({message:"An unexpected error has occured"})
         }
+    }
+
+   export const getNotificationsList = async(req:Request,res:Response)=>{
+        try{
+const {userId}=req.user;
+
+const notice = await Notification.find({
+    team: userId,
+    isRead: { $nin: [userId] },
+  }).populate("task", "title");
+
+res.status(200).json(notice);
+        }catch(error){
+            if(error instanceof Error){
+                return res.status(400).json({message:error.message})
+            }
+          res.status(500).json({message:"An unexpected error has occured"})
+        }
+    }
+
+
+    export const updateUserProfile = async (req:Request,res:Response)=>{
+try{
+const {userId,isAdmin}=req.user;
+const {_id}= req.body;
+
+const id = isAdmin && userId === _id ? userId : isAdmin && userId !==_id ? _id:userId
+
+const user = await User.findById(id)
+if(!user){
+    return res.status(400).json({message:"User not found"})
+}
+user.name = req.body.name || user.name;
+user.title = req.body.title || user.title;
+user.role = req.body.role || user.role;
+const updatedUser = await user.save();
+
+res.status(201).json({
+    message:"profile updated sucessfully",
+    user:updatedUser
+})
+
+}catch(error){
+    if(error instanceof Error){
+        return res.status(400).json({message:error.message})
+    }
+    res.status(500).json({message:"An unexpected error has occured"})
+}
     }
