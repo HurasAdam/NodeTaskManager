@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import * as types from "../types/index";
 const taskSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
@@ -48,6 +48,6 @@ const taskSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Task = mongoose.model("Task", taskSchema);
+const Task = mongoose.model<types.ITaskDocument>("Task", taskSchema);
 
 export default Task;
