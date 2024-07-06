@@ -59,7 +59,16 @@ if( await user.comparePassword(password)){
         sameSite:"strict"
     })
 }
- res.status(200).json({message:"logged in sucessfully"})
+
+const userData={
+    name:user?.name,
+    email:user?.email,
+    isAdmin:user?.isAdmin,
+    role:user?.role,
+    title:user?.title
+}
+
+ return res.status(200).json({message:"logged in sucessfully",data:userData})
  }catch(error){
     res.status(400).json({message:error})
  }
