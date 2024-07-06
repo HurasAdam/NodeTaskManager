@@ -34,7 +34,7 @@ export interface ITask{
     stage:enums.ETaskStage;
     description:string;
     priority:enums.ETaskPriority;
-    activity:ITaskActivity[];
+    activities:ITaskActivity[];
     subTasks:ISubTask[];
     assets:string[];
     isTrashed:boolean;
@@ -45,7 +45,7 @@ export interface ITaskActivity{
     type: enums.ETaskActivityType;
     activity: string;
     date: Date;
-    by: mongoose.Schema.Types.ObjectId;
+    by: string;
 }
 
 interface ISubTask {

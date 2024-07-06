@@ -1,6 +1,7 @@
 import {Request,Response} from "express";
 import Task from "../../models/Task";
 import Notification from "../../models/Notification";
+import * as types from "../../types/index";
 
 export const createTask = async(req:Request,res:Response)=>{
 try{
@@ -97,3 +98,35 @@ if(saveDuplicatedTask){
         res.status(500).json({message:"An unexpected error has occured"})
     }
     }
+
+
+
+    export const postTaskActivity = async(req:Request,res:Response)=>{
+        try{
+       
+        const {id}=req.params;
+        const {userId}=req.user;
+        const {type,activity}=req.body;
+        
+        const task = await Task.findById(id);
+if(!task){
+    return res.status(400).json({message:"Task not found"})
+}
+        const data = {
+            type,
+            activity,
+            by:userId,
+            date:new Date()
+        }
+        task.activities.push(data);
+
+        await task.save();
+
+        }catch(error){
+            if(error instanceof Error){
+                return res.status(400).json({message:error.message})
+            }
+            res.status(500).json({message:"An unexpected error has occured"})
+        }
+        }
+        

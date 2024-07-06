@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post("/create", taskController.createTask);
 router.post("/duplicate/:id", taskController.duplicateTask);
+router.post("/activity/:id", taskController.postTaskActivity);
 
 
 export default router;
