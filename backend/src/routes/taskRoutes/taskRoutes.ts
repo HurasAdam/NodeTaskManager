@@ -10,5 +10,6 @@ router.post("/activity/:id", taskController.postTaskActivity);
 router.get("/dashboard",taskController.dashboardStatistics );
 router.get("/",taskController.getTasks );
 router.get("/id",taskController.getTask );
+router.put("/id",taskController.updateTask );
 
 export default router;

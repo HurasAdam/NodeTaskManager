@@ -255,3 +255,124 @@ if(!task){
                         res.status(500).json({message:"An unexpected error has occured"})
                     }
                     }
+
+
+                    
+                export const createSubTask = async(req:Request,res:Response)=>{
+                    try{
+                   const {id}=req.params;
+                   const {title,tag,date}=req.body;
+
+                   const newSubTask ={
+                    title,date,tag
+                   }
+                   const task = await Task.findById(id);
+if(!task){
+    return res.status(400).json({message:"Task not found"})
+}
+task.subTasks.push(newSubTask);
+
+const savedTask = await task.save();
+
+if(savedTask){
+    res.status(201).json({message:" Subtask added sucessfully"})
+}
+
+                    }catch(error){
+                        if(error instanceof Error){
+                            return res.status(400).json({message:error.message})
+                        }
+                        res.status(500).json({message:"An unexpected error has occured"})
+                    }
+                    }
+
+                    export const updateTask = async(req:Request,res:Response)=>{
+                        try{
+const {id}=req.params;
+    const {title,date,team,stage,priority,description,assets}=req.body;
+const task = await Task.findById(id);
+
+if(!task){
+    return res.status(400).json({meesage:"Task not found"});
+}
+task.title=title || task.title
+task.date=date || task.date
+task.priority=priority || task.priority
+task.description=description || task.description
+task.assets=assets || task.assets
+task.stage=stage || task.stage
+task.team=team || task.team
+
+const savedTask = await task.save();
+
+if(savedTask){
+    res.status(201).json({message:"Task updated successfully"})
+}
+
+                        }catch(error){
+                            if(error instanceof Error){
+                                return res.status(400).json({message:error.message})
+                            }
+                            res.status(500).json({message:"An unexpected error has occured"})
+                        }
+                        }
+
+
+                        export const trashTask = async(req:Request,res:Response)=>{
+                            try{
+                      const {id}=req.params;
+
+                    const task = await Task.findById(id);
+                    if(!task){
+                        return res.status(400).json({message:"Task not found"})
+                    }
+                    task.isTrashed=true;
+                    const trashedTask= await task.save();
+                    if(trashedTask){
+                        res.status(201).json({message:"Task trashed successfully"})
+                    }
+    
+                            }catch(error){
+                                if(error instanceof Error){
+                                    return res.status(400).json({message:error.message})
+                                }
+                                res.status(500).json({message:"An unexpected error has occured"})
+                            }
+                            }
+
+
+                            export const deleteRestoreTask = async (req:Request, res:Response) => {
+                                try {
+                                  const { id } = req.params;
+                                  const { actionType } = req.query;
+                              
+                                  if (actionType === "delete") {
+                                    await Task.findByIdAndDelete(id);
+                                  } else if (actionType === "deleteAll") {
+                                    await Task.deleteMany({ isTrashed: true });
+                                  } else if (actionType === "restore") {
+                                    const resp = await Task.findById(id);
+                              
+                                   if(resp){
+                                    resp.isTrashed = false;
+                                    resp.save();
+                                   }
+                                  } else if (actionType === "restoreAll") {
+                                    await Task.updateMany(
+                                      { isTrashed: true },
+                                      { $set: { isTrashed: false } }
+                                    );
+                                  }
+                              
+                                  res.status(200).json({
+                                    status: true,
+                                    message: `Operation performed successfully.`,
+                                  });
+                                } catch (error) {
+                                  console.log(error);
+                                  if(error instanceof Error){
+                                    return res.status(400).json({ message: error.message });
+                                  }
+                                 res.status(500).json({message:"An unexpected error has occured"})
+                                }
+                              };
