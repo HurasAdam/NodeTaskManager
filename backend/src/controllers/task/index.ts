@@ -1,4 +1,4 @@
-import { createTask, dashboardStatistics, duplicateTask, postTaskActivity } from "./taskControllers";
+import { createTask, dashboardStatistics, duplicateTask, getTask, getTasks, postTaskActivity } from "./taskControllers";
 
 
 
@@ -7,6 +7,8 @@ const taskController= {
     duplicateTask,
     postTaskActivity,
     dashboardStatistics,
+    getTasks,
+    getTask
     
 };
 

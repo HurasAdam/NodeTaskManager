@@ -8,5 +8,7 @@ router.post("/duplicate/:id", taskController.duplicateTask);
 router.post("/activity/:id", taskController.postTaskActivity);
 
 router.get("/dashboard",taskController.dashboardStatistics );
+router.get("/",taskController.getTasks );
+router.get("/id",taskController.getTask );
 
 export default router;

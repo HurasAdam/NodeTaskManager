@@ -201,3 +201,57 @@ res.status(200).json(summaryResult)
                 res.status(500).json({message:"An unexpected error has occured"})
             }
             }
+
+
+
+            export const getTasks = async(req:Request,res:Response)=>{
+                try{
+               
+   const {stage,isTrashed}=req.query as {stage?:string, isTrashed?:string};
+
+
+
+   let query:any= {isTrashed:isTrashed ? true: false}
+
+   if(stage){
+    query.stage=stage;
+   }
+        let queryResult =  Task.find(query).populate({
+            path:"team", 
+            select:"name title email"
+        }).sort({_id :-1});
+
+const tasks = await queryResult;
+res.status(200).json(tasks)
+
+                }catch(error){
+                    if(error instanceof Error){
+                        return res.status(400).json({message:error.message})
+                    }
+                    res.status(500).json({message:"An unexpected error has occured"})
+                }
+                }
+                
+
+                export const getTask = async(req:Request,res:Response)=>{
+                    try{
+                   const {id}=req.params;
+                   const task = await Task.findById(id).populate({
+                    path:"team", select:"name title role email"
+                   }).populate({
+                    path:"activities.by",select: "name"
+                   }).sort({_id: -1});
+      
+if(!task){
+    return res.status(400).json({message:"Task not found"})
+}
+
+                   res.status(200).json(task)
+
+                    }catch(error){
+                        if(error instanceof Error){
+                            return res.status(400).json({message:error.message})
+                        }
+                        res.status(500).json({message:"An unexpected error has occured"})
+                    }
+                    }
