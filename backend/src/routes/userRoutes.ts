@@ -8,7 +8,8 @@ router.post("/login",userController.loginUser);
 router.post("/logout",userController.logoutUser);
 router.post("/get-team",userController.getTeamList);
 router.get("/notifications",userController.getNotificationsList);
-router.put("update-profile",userController.updateUserProfile);
+router.put("/update-profile",userController.updateUserProfile);
+router.put("/read-notification",userController.markNotificationRead);
 
 
 

@@ -138,3 +138,32 @@ res.status(201).json({
     res.status(500).json({message:"An unexpected error has occured"})
 }
     }
+
+
+    export const markNotificationRead = async (req:Request,res:Response)=>{
+        try{
+        const {userId,isAdmin}=req.user;
+        const {_id}= req.body;
+   const {isReadType,id}=req.query;
+   if(isReadType ==='all'){
+    await Notification.updateMany({
+        team:userId, isRead: {$nin: [userId]}},
+        {$push: {isRead: userId}},
+        {new:true}
+    );
+   }else{
+    await Notification.findOneAndUpdate({
+        _id:id,
+        isRead: {$nin: [userId]}},
+        {$push: {isRead :userId}}
+    )
+   }  
+
+   res.status(201).json({message:"Marked as read"})
+        }catch(error){
+            if(error instanceof Error){
+                return res.status(400).json({message:error.message})
+            }
+            res.status(500).json({message:"An unexpected error has occured"})
+        }
+            }
