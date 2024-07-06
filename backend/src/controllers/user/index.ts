@@ -1,4 +1,4 @@
-import { getNotificationsList, getTeamList, logoutUser, markNotificationRead, registerUser, updateUserProfile } from "./userControllers";
+import { activateUserProfile, changeUserPassword, deleteUserProfile, getNotificationsList, getTeamList, logoutUser, markNotificationRead, registerUser, updateUserProfile } from "./userControllers";
 import { loginUser } from "./userControllers";
 
 const userController={
@@ -9,6 +9,9 @@ const userController={
     getNotificationsList,
     updateUserProfile,
     markNotificationRead,
+    changeUserPassword,
+    activateUserProfile,
+    deleteUserProfile
 }
 
 export default userController;

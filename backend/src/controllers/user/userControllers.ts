@@ -167,3 +167,75 @@ res.status(201).json({
             res.status(500).json({message:"An unexpected error has occured"})
         }
             }
+
+
+
+export const changeUserPassword = async(req:Request,res:Response)=>{
+    try{
+const {userId}=req.user;
+const user = await User.findById(userId);
+if(!user){
+    return res.status(400).json({message:"User not found"})
+}
+user.password = req.body.password;
+ const updatedPassword = await user.save();
+
+ if(updatedPassword){
+    return res.status(201).json({message:"Password updated sucessfully"})
+ }
+
+    }catch(error){
+        if( error instanceof Error){
+            return res.status(400).json({message:error.message})
+        }
+        res.status(500).json({message:"An unexpected error has occured"})
+    }
+}
+
+
+export const activateUserProfile = async(req:Request,res:Response)=>{
+    try{
+const {id}=req.params;
+const user = await User.findById(id);
+
+if(!user){
+    return res.status(400).json({message:"User not found"});
+}
+
+user.isActive = req.body.isActive;
+await user.save();
+res.status(201).json({
+    message:`User account has been ${user?.isActive ? "activated" :"disabled"}`
+})
+
+    }catch(error){
+        if( error instanceof Error){
+            return res.status(400).json({message:error.message})
+        }
+        res.status(500).json({message:"An unexpected error has occured"})
+    }
+}
+
+export const deleteUserProfile = async(req:Request,res:Response)=>{
+    try{
+
+const {id}=req.params;
+
+const user = await User.findById(id);
+
+if(!user){
+    return res.status(400).json({message:"User not found"});
+}
+const deletedUser = await User.findByIdAndDelete(id);
+
+if(deletedUser){
+    return res.status(201).json({message:"User account deleted sucessfully"})
+}
+
+    }catch(error){
+        if( error instanceof Error){
+            return res.status(400).json({message:error.message})
+        }
+        res.status(500).json({message:"An unexpected error has occured"})
+    }
+}

@@ -10,8 +10,12 @@ router.post("/get-team",userController.getTeamList);
 router.get("/notifications",userController.getNotificationsList);
 router.put("/update-profile",userController.updateUserProfile);
 router.put("/read-notification",userController.markNotificationRead);
+router.put("/change-password",userController.changeUserPassword);
 
 
-
+router
+  .route("/:id")
+  .put( userController.activateUserProfile)
+  .delete( userController.deleteUserProfile);
 
 export default router;
