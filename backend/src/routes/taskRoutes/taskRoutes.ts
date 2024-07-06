@@ -1,9 +1,10 @@
 import express from "express";
 import taskController from "../../controllers/task";
+import { authGuard } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.post("/create", taskController.createTask);
+router.post("/create",authGuard, taskController.createTask);
 router.post("/duplicate/:id", taskController.duplicateTask);
 router.post("/activity/:id", taskController.postTaskActivity);
 

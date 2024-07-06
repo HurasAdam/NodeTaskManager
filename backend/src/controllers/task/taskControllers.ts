@@ -8,6 +8,28 @@ import User from "../../models/User";
 export const createTask = async(req:Request,res:Response)=>{
 try{
 const {title,team,stage,date,priority,description,assets}=req.body;
+const {userId}=req.user;
+
+
+let text = "New task has been assigned to you";
+if (team?.length > 1) {
+  text = text + ` and ${team?.length - 1} others.`;
+}
+
+text =
+  text +
+  ` The task priority is set a ${priority} priority, so check and act accordingly. The task date is ${new Date(
+    date
+  ).toDateString()}. Thank you!!!`;
+
+
+
+const activity={
+    type:"assigned",
+    activity:text,
+    by:userId
+}
+
 
 const task = await Task.create({
     title,
@@ -16,16 +38,12 @@ const task = await Task.create({
     date,
     priority:priority.toLowerCase(),
     description,
-    assets
+    assets,
+    activities: activity,
 })
 
-let text= "New task has been asigned to you!"
 
-if(task.team.length > 1){
-text = `${text} and ${task.team.length - 1} others`
-}
 
-text = text + `The task priority is set as ${task.priority} priority, so check and act accordingly. The task date is ${task?.date.toDateString()}`
 
 
 const notification = await Notification.create({

@@ -23,7 +23,7 @@ export const authGuard = async(req:Request,res:Response,next:NextFunction)=>{
 const token = req.cookies["auth_token"];
 
     if(!token){
-        return res.status(401).json({"Authorization required"})
+        return res.status(401).json({message:"Authorization required"})
     }
     if(token){
         try{
