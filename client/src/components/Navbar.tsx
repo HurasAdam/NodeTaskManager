@@ -1,14 +1,15 @@
 import React from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useDispatch, useSelector } from "react-redux";
-import { setOpenSidebar } from "../redux/authSlice";
+
+// import { setOpenSidebar } from "../redux/authSlice";
 import UserAvatar from "./UserAvatar";
 import NotificationPanel from "./NotificationPanel";
+import { useAccountStore } from "../redux/store";
 
 const Navbar:React.FC = () => {
-    const {user}=useSelector((state)=>state.auth);
-    const dispatch = useDispatch();
+    const {account}=useAccountStore((state)=>state.account);
+
   return (
     <div className="flex justify-between items-center bg-white px-4 py-3 2xl:py-4 sticky z-10 top-0">
 

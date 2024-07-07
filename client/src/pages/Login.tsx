@@ -1,29 +1,42 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
 import Button from "../components/Button";
-import { useSelector } from "react-redux";
 import TextBox from "../components/TextBox";
+import { useMutation } from "@tanstack/react-query";
+import { userApi } from "../services/userApi";
+import { useAccountStore } from "../redux/store";
 
 const Login = () => {
-  const { user } = useSelector((state) => state.auth);
-
+  // const { user } = useSelector((state) => state.auth);
+  const {account,setAccount} = useAccountStore((state)=>state);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+console.log(account);
+const {mutate}=useMutation({
+  mutationFn:({email,password}:{email:string,password:string})=>{
+    return userApi.userLogin({email,password})
+  },
+  onSuccess:({message,data})=>{
+    setAccount(data)
+    console.log(data)
+  }
+})
+
   const navigate = useNavigate();
 
   const submitHandler = async (data) => {
-    console.log("submit");
+
+    mutate(data);
   };
 
-  useEffect(() => {
-    user && navigate("/dashboard");
-  }, [user]);
+  // useEffect(() => {
+  //   account && navigate("/dashboard");
+  // }, [account,navigate]);
 
   return (
     <div className='w-full min-h-screen flex items-center justify-center flex-col lg:flex-row bg-[#f3f4f6]'>

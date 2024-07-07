@@ -1,11 +1,11 @@
 import React from "react"
 import { FaTasks,FaTrashAlt,FaUsers } from "react-icons/fa";
 import { MdDashboard, MdOutlineAddTask, MdOutlinePendingActions, MdSettings, MdTaskAlt, } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { setOpenSidebar } from "../redux/authSlice";
+// import { setOpenSidebar } from "../redux/authSlice";
 import { IoLogoFirebase } from "react-icons/io5";
 import clsx from "clsx";
+import { useAccountStore } from "../redux/store";
 
 
 const sidebarLinks = [
@@ -49,16 +49,16 @@ const sidebarLinks = [
 
 const Sidebar:React.FC = () => {
 
-const {user}= useSelector((state)=>state.auth);
+const {user}= useAccountStore((state)=>state.account);
 
-const dispatch = useDispatch();
+// const dispatch = useDispatch();
 const location = useLocation();
 const path = location.pathname.split("/")[1]
 
 const sidebarRoleBasedLinks = user?.role==='admin' ? sidebarLinks : sidebarLinks.slice(0,5);
 
 const closeSidebar=()=>{
-    dispatch(setOpenSidebar(false))
+    // dispatch(setOpenSidebar(false))
 }
 
 interface INavLinkProps{

@@ -1,15 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./authSlice";
-import { apiSlice } from "./apiSlice";
+import { create } from "zustand";
 
-const store = configureStore({
-  reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
-    auth: authReducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
-  devTools: true,
-});
+export const useAccountStore = create<IAccountStore>((set) => ({
 
-export default store;
+  isSidebarOpen:false,
+  isLoggedIn: false,
+  account: undefined,
+  setAccount: (user): void => set({ account: user }),
+  setIsLoggedIn: (value): void => set({ isLoggedIn: value }),
+  setOpenSidebar:(value):void =>set({isSidebarOpen:value}),
+}))

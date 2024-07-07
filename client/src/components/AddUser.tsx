@@ -1,16 +1,17 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+
 import ModalWrapper from "./ModalWrapper";
 import { Dialog } from "@headlessui/react";
 import Loading from "./Loader";
 import Button from "./Button";
 import TextBox from "./TextBox";
+import { useAccountStore } from "../redux/store";
 
 
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
-  const { user } = useSelector((state) => state.auth);
+  const { account } = useAccountStore((state) => state.account);
 
   const isLoading = false,
     isUpdating = false;

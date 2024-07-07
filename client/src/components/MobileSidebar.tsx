@@ -1,17 +1,18 @@
 import { Transition } from "@headlessui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { setOpenSidebar } from "../redux/authSlice";
+
+// import { setOpenSidebar } from "../redux/authSlice";
 import { Fragment, useRef } from "react";
 import clsx from "clsx";
 import { IoClose } from "react-icons/io5";
 import Sidebar from "./Sidebar";
+import { useAccountStore } from "../redux/store";
 const MobileSidebar = () => {
-    const { isSidebarOpen } = useSelector((state) => state.auth);
+    const { isSidebarOpen } = useAccountStore((state) => state.account);
     const mobileMenuRef = useRef(null);
-    const dispatch = useDispatch();
+ 
   
     const closeSidebar = () => {
-      dispatch(setOpenSidebar(false));
+      // dispatch(setOpenSidebar(false));
     };
   
     return (
