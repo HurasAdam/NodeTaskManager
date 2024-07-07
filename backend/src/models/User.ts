@@ -32,8 +32,8 @@ userSchema.methods.comparePassword = async function(enteredPassword:string):Prom
     return await bcrypt.compare(enteredPassword,this.password);
     };
 
-userSchema.methods.generateJWT = async function(){
-    return await jsonwebtoken.sign({id:this._id},process.env.JWT_SECRET as string,{
+userSchema.methods.generateJWT = async function():Promise<string>{
+    return await jsonwebtoken.sign({id:this._id,role:this.isAdmin},process.env.JWT_SECRET_KEY as string,{
         expiresIn:"30d"
     })
 }

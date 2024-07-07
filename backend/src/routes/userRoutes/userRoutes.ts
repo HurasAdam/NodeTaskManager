@@ -11,7 +11,7 @@ router.get("/notifications",userController.getNotificationsList);
 router.put("/update-profile",userController.updateUserProfile);
 router.put("/read-notification",userController.markNotificationRead);
 router.put("/change-password",userController.changeUserPassword);
-
+router.post("/validateToken",authGuard,userController.validateToken);
 
 router
   .route("/:id")

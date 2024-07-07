@@ -29,7 +29,6 @@ res.cookie("auth_token",token,{
     httpOnly:true,
     secure:process.env.NODE_ENV==="production",
     maxAge:86400000,
-    sameSite:"strict"
 })
 
 }else{
@@ -50,13 +49,13 @@ export const loginUser = async(req:Request,res:Response)=>{
     }
     
 if( await user.comparePassword(password)){
-    const token = user.generateJWT();
+    const token = await user.generateJWT();
     
     res.cookie("auth_token",token,{
         httpOnly:true,
         secure:process.env.NODE_ENV==="production",
         maxAge:86400000,
-        sameSite:"strict"
+        
     })
 }
 
@@ -243,6 +242,23 @@ if(deletedUser){
 
     }catch(error){
         if( error instanceof Error){
+            return res.status(400).json({message:error.message})
+        }
+        res.status(500).json({message:"An unexpected error has occured"})
+    }
+}
+
+
+export const validateToken = async(req:Request,res:Response)=>{
+    try{
+        const {userId}=req.user;
+const user = await User.findById(userId).select("-password")
+if(!user){
+    return res.status(404).json({message:"User not found"})
+}
+res.status(200).json({message:"session is valid",data:user})
+    }catch(error){
+        if(error instanceof Error){
             return res.status(400).json({message:error.message})
         }
         res.status(500).json({message:"An unexpected error has occured"})

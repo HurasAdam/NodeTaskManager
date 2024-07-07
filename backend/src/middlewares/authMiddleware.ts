@@ -28,7 +28,7 @@ const token = req.cookies["auth_token"];
     if(token){
         try{
 const token = req.cookies["auth_token"];
-const {id}= jwt.verify(token,process.env.JWT_SECRET as string) as jwt.JwtPayload;
+const {id,isAdmin}= jwt.verify(token, process.env.JWT_SECRET_KEY as string) as jwt.JwtPayload;
 const user = await User.findById(id);
 console.log(user);
 if(!user){
