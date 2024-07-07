@@ -10,6 +10,8 @@ import Button from "../Button";
 import TextBox from "../TextBox";
 import UserList from "./UserList";
 import SelectList from "../SelectList";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { taskApi } from "../../services/taskApi";
 
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
@@ -20,20 +22,55 @@ const uploadedFileURLs = [];
 const AddTask = ({ open, setOpen }) => {
   const task = "";
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const [team, setTeam] = useState(task?.team || []);
+
+  const [team, setTeam] = useState([]);
   const [stage, setStage] = useState(task?.stage?.toUpperCase() || LISTS[0]);
   const [priority, setPriority] = useState(
     task?.priority?.toUpperCase() || PRIORIRY[2]
   );
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
+const queryClient = useQueryClient();
 
-  const submitHandler = () => {};
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+    reset
+  } = useForm({
+    defaultValues:{
+      title:"",
+      team: [],
+      priority:"",
+      stage:"",
+      date:""
+    }
+  });
+
+
+  const {mutate}=useMutation({
+    mutationFn:(formData)=>{
+      return taskApi.createTask(formData)
+    },
+    onSuccess:()=>{
+      queryClient.invalidateQueries(["tasks"])
+      reset();
+      setOpen(false);
+    }
+  })
+
+
+
+  const onSubmit = handleSubmit((data) => {
+console.log(data)
+mutate(data)
+});
+
+
+
 
   const handleSelect = (e) => {
     setAssets(e.target.files);
@@ -42,12 +79,12 @@ const AddTask = ({ open, setOpen }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form onSubmit={handleSubmit(submitHandler)}>
+        <form onSubmit={onSubmit} className="">
           <Dialog.Title
             as='h2'
-            className='text-base font-bold leading-6 text-gray-900 mb-4'
+            className='text-base font-bold leading-6 text-blue-800 mb-10 rounded-xl bg-blue-100 p-5'
           >
-            {task ? "UPDATE TASK" : "ADD TASK"}
+            {task ? "UPDATE TASK" : "NEW TASK"}
           </Dialog.Title>
 
           <div className='mt-2 flex flex-col gap-6'>
@@ -61,14 +98,18 @@ const AddTask = ({ open, setOpen }) => {
               error={errors.title ? errors.title.message : ""}
             />
 
-            <UserList setTeam={setTeam} team={team} />
+            <UserList setTeam={setTeam} team={team} setValue={setValue}  />
 
             <div className='flex gap-4'>
               <SelectList
                 label='Task Stage'
                 lists={LISTS}
-                selected={stage}
-                setSelected={setStage}
+                selected={watch("stage")}
+               
+              
+                name="stage"
+                register={register("stage", { required: "Task stage is required" })}
+                error={errors.stage ? errors.stage.message : ""}
               />
 
               <div className='w-full'>
@@ -90,8 +131,11 @@ const AddTask = ({ open, setOpen }) => {
               <SelectList
                 label='Priority Level'
                 lists={PRIORIRY}
-                selected={priority}
+                selected={watch("priority")}
+                 name="priority"
                 setSelected={setPriority}
+                register={register("priority", { required: "Task priority is required" })}
+                error={errors.priority ? errors.priority.message : ""}
               />
 
               <div className='w-full flex items-center justify-center mt-4'>

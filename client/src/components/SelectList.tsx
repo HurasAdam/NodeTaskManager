@@ -3,12 +3,17 @@ import React, { Fragment } from "react";
 import { BsChevronExpand } from "react-icons/bs";
 import { MdCheck } from "react-icons/md";
 
-const SelectList:React.FC = ({ lists, selected, setSelected, label }) => {
+const SelectList:React.FC = ({ lists, selected, error, label,register,name }) => {
+
+const onChange= (value)=>{
+  register.onChange({ target: { name, value } });
+}
+
   return (
     <div className='w-full'>
       {label && <p className='text-slate-900 dark:text-gray-500'>{label}</p>}
 
-      <Listbox value={selected} onChange={setSelected}>
+      <Listbox value={selected} onChange={onChange} >
         <div className='relative mt-1'>
           <Listbox.Button className='relative w-full cursor-default rounded bg-white pl-3 pr-10 text-left px-3 py-2.5 2xl:py-3 border border-gray-300 sm:text-sm'>
             <span className='block truncate'>{selected}</span>
@@ -58,6 +63,9 @@ const SelectList:React.FC = ({ lists, selected, setSelected, label }) => {
           </Transition>
         </div>
       </Listbox>
+      {error && (
+    <span className="text-xs text-rose-500 mt-0.5">{error}</span>
+)}
     </div>
   );
 };

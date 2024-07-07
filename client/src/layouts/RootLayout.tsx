@@ -30,7 +30,6 @@ const navigate = useNavigate();
   }
   )
 
-console.log(account)
 
   if(!account){
     return navigate("/log-in")

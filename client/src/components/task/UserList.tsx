@@ -6,7 +6,7 @@ import {BsChevronExpand} from "react-icons/bs";
 import {MdCheck} from "react-icons/md";
 import { getInitials } from '../../utils';
 
-const UserList:React.FC = ({setTeam, team}) => {
+const UserList:React.FC = ({setTeam, team,setValue}) => {
 
 const data = summary?.users;
 const [selectedUsers, setSelectedUsers]=useState([]);
@@ -14,6 +14,7 @@ const [selectedUsers, setSelectedUsers]=useState([]);
 const handleChange= (el)=>{
     setSelectedUsers(el)
     setTeam(el.map((user)=>user?._id))
+    // setValue("team",el.map((user)=>user?._id))
 }
 
   return (

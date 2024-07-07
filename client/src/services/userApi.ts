@@ -35,8 +35,18 @@ const userLogout= async()=>{
 }
 
 
+const getUsers= async()=>{
+  const config = {
+    withCredentials:true
+  }
+  const {data}= await axios.get(`${BACKEND_BASE_URL}/user/get-team`,config);
+  return data;
+}
+
+
 export const userApi={
     userLogin,
     validateToken,
-    userLogout
+    userLogout,
+    getUsers
 }

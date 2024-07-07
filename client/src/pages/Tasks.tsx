@@ -9,9 +9,11 @@ import { IoMdAdd } from "react-icons/io";
 import Tabs from "../components/Tabs";
 import TaskTitle from "../components/TaskTitle";
 import BoardView from "../components/BoardView";
-import { tasks } from "../assets/data";
+// import { tasks } from "../assets/data";
 import Table from "../components/task/Table";
 import AddTask from "../components/task/AddTask";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { taskApi } from "../services/taskApi";
 
 const TABS=[
   {title:"Board View", icon:<MdGridView/>},
@@ -31,8 +33,23 @@ const Tasks:React.FC = () => {
   const [loading, setLoading]=useState<boolean>(false);
   const status = params?.status || ""
 
-console.log(selected)
+  const {data:tasks}=useQuery({
+    queryFn:()=>{
+      return taskApi.getTasks({stage:status});
+    },
+    queryKey:["tasks",status]
+  })
 
+
+const {mutate}=useMutation({
+  mutationFn:(formData)=>{
+return taskApi.createTask(formData)
+  }
+})
+
+const onSave=(formData,actionType)=>{
+mutate(formData)
+}
 
 
   return loading? (
@@ -69,7 +86,7 @@ setSelected={setSelected}
   {selected === 0 ? (<BoardView tasks={tasks}/>):(<Table tasks={tasks}/>)}
   </Tabs>
 </div>
-<AddTask open={open} setOpen={setOpen}/>
+<AddTask open={open} setOpen={setOpen} onSave={onSave}/>
   </div>)
 }
 

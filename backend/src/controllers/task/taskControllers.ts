@@ -36,7 +36,7 @@ const task = await Task.create({
     team,
     stage:stage.toLowerCase(),
     date,
-    priority:priority.toLowerCase(),
+    priority: priority.toLowerCase(),
     description,
     assets,
     activities: activity,
@@ -226,7 +226,7 @@ res.status(200).json(summaryResult)
                 try{
                
    const {stage,isTrashed}=req.query as {stage?:string, isTrashed?:string};
-
+console.log(req.query);
 
 
    let query:any= {isTrashed:isTrashed ? true: false}

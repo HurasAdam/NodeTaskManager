@@ -36,7 +36,7 @@ const ModalWrapper = ({ open, setOpen, children }) => {
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
             >
               <Dialog.Panel 
-              className='w-full relative transform overflow-hidden rounded-lg  bg-white text-left shadow-xl transition-all pb-0 sm:my-8 sm:w-full md:max-w-[75%] xl:max-w-[60%] '>
+              className='w-full relative transform overflow-hidden rounded-lg  bg-white text-left shadow-xl transition-all  pb-0 sm:my-8 sm:w-full md:max-w-[75%] xl:max-w-[60%] '>
                 <div className='bg-white  px-4 pb-4 pt-5 sm:p-6 sm:pb-4 '>
                   <div className='sm:flex sm:items-start'>
                     <div className='w-full mt-3  sm:ml-4 sm:mt-0 sm:text-left'>

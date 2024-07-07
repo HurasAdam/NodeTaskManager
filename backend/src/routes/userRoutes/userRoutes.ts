@@ -6,7 +6,7 @@ const router = express.Router();
 router.post("/register",userController.registerUser);
 router.post("/login",userController.loginUser);
 router.post("/logout",userController.logoutUser);
-router.post("/get-team",userController.getTeamList);
+router.get("/get-team",authGuard,userController.getTeamList);
 router.get("/notifications",userController.getNotificationsList);
 router.put("/update-profile",userController.updateUserProfile);
 router.put("/read-notification",userController.markNotificationRead);
