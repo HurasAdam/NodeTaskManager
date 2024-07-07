@@ -22,7 +22,21 @@ export const validateToken = async()=>{
       return data;
     }
 
+
+
+
+const userLogout= async()=>{
+    const config = {
+        withCredentials: true
+      };
+
+    const {data}= await axios.post(`${BACKEND_BASE_URL}/user/logout`,{},config)
+    return data;
+}
+
+
 export const userApi={
     userLogin,
     validateToken,
+    userLogout
 }

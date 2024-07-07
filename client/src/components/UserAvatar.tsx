@@ -6,17 +6,17 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { getInitials } from "../utils";
 import { useAccountStore } from "../redux/store";
+import { useQuery } from "@tanstack/react-query";
+import { userApi } from "../services/userApi";
 
-const UserAvatar:React.FC = () => {
+const UserAvatar:React.FC = ({logoutHandler}) => {
     const [open, setOpen] = useState<boolean>(false);
     const [openPassword, setOpenPassword] = useState<boolean>(false);
     const userAccount = useAccountStore((state) => state.account);
 
     const navigate = useNavigate();
   
-    const logoutHandler = () => {
-      console.log("logout");
-    };
+
   
     return (
       <>

@@ -6,9 +6,28 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import UserAvatar from "./UserAvatar";
 import NotificationPanel from "./NotificationPanel";
 import { useAccountStore } from "../redux/store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { userApi } from "../services/userApi";
 
 const Navbar:React.FC = () => {
     const {account}=useAccountStore((state)=>state.account);
+    const queryClient= useQueryClient();
+
+    const {mutate}=useMutation({
+      mutationFn:()=>{
+        return userApi.userLogout()
+      },
+      onSuccess:()=>{
+queryClient.invalidateQueries(["validateToken"])
+      }
+    })
+    
+    
+        const logoutHandler = () => {
+          console.log("logout");
+          mutate()
+        };
+
 
   return (
     <div className="flex justify-between items-center bg-white px-4 py-3 2xl:py-4 sticky z-10 top-0">
@@ -31,7 +50,7 @@ type="text" />
 
 <div className="flex gap-2 items-center">
 <NotificationPanel/>
-<UserAvatar/>
+<UserAvatar logoutHandler={logoutHandler}/>
 </div>
 
     </div>

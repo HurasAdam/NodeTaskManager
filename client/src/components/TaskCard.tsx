@@ -23,7 +23,7 @@ const ICONS = {
 };
 
 const TaskCard = ({ task }) => {
-  const { account } = useAccountStore((state) => state.account);
+  const { account } = useAccountStore((state) => state);
   const [open, setOpen] = useState(false);
 
   return (
@@ -40,7 +40,7 @@ const TaskCard = ({ task }) => {
             <span className='uppercase'>{task?.priority} Priority</span>
           </div>
 
-          {user?.isAdmin && <TaskDialog task={task} />}
+          {account?.isAdmin && <TaskDialog task={task} />}
         </div>
 
         <>
@@ -114,7 +114,7 @@ const TaskCard = ({ task }) => {
         <div className='w-full pb-2'>
           <button
             onClick={() => setOpen(true)}
-            disabled={user.isAdmin ? false : true}
+            disabled={account?.isAdmin ? false : true}
             className='w-full flex gap-4 items-center text-sm text-gray-500 font-semibold disabled:cursor-not-allowed disabled::text-gray-300'
           >
             <IoMdAdd className='text-lg' />
