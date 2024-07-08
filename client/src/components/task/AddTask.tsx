@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import ModalWrapper from "../ModalWrapper";
 import { Dialog } from "@headlessui/react";
-
 import { useForm } from "react-hook-form";
-
-
 import { BiImages } from "react-icons/bi";
 import Button from "../Button";
 import TextBox from "../TextBox";
@@ -19,19 +16,10 @@ const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 
 const uploadedFileURLs = [];
 
-const AddTask = ({ open, setOpen }) => {
+const AddTask:React.FC = ({ open, setOpen }) => {
   const task = "";
-
-
-  const [team, setTeam] = useState([]);
-  const [stage, setStage] = useState(task?.stage?.toUpperCase() || LISTS[0]);
-  const [priority, setPriority] = useState(
-    task?.priority?.toUpperCase() || PRIORIRY[2]
-  );
   const [assets, setAssets] = useState([]);
-  const [uploading, setUploading] = useState(false);
 const queryClient = useQueryClient();
-
 
   const {
     register,
@@ -51,7 +39,7 @@ const queryClient = useQueryClient();
   });
 
 
-  const {mutate}=useMutation({
+  const {mutate,isLoading}=useMutation({
     mutationFn:(formData)=>{
       return taskApi.createTask(formData)
     },
@@ -62,14 +50,10 @@ const queryClient = useQueryClient();
     }
   })
 
-
-
-  const onSubmit = handleSubmit((data) => {
-console.log(data)
-mutate(data)
-});
-
-
+ const onSubmit = handleSubmit((data) => {
+ console.log(data)
+ mutate(data)
+ });
 
 
   const handleSelect = (e) => {
@@ -98,15 +82,19 @@ mutate(data)
               error={errors.title ? errors.title.message : ""}
             />
 
-            <UserList setTeam={setTeam} team={team} setValue={setValue}  />
+            <UserList 
+            setValue={setValue}
+            name="team"
+            selectedUsers={watch("team")}
+            register={register("team", { required: "Please select at least one asignee" })}
+            error={errors.team ? errors.team.message : ""}
+            />
 
             <div className='flex gap-4'>
               <SelectList
                 label='Task Stage'
                 lists={LISTS}
-                selected={watch("stage")}
-               
-              
+                selected={watch("stage")}              
                 name="stage"
                 register={register("stage", { required: "Task stage is required" })}
                 error={errors.stage ? errors.stage.message : ""}
@@ -133,7 +121,7 @@ mutate(data)
                 lists={PRIORIRY}
                 selected={watch("priority")}
                  name="priority"
-                setSelected={setPriority}
+           
                 register={register("priority", { required: "Task priority is required" })}
                 error={errors.priority ? errors.priority.message : ""}
               />
@@ -158,7 +146,7 @@ mutate(data)
             </div>
 
             <div className='bg-gray-50 py-6 sm:flex sm:flex-row-reverse gap-4'>
-              {uploading ? (
+              {isLoading ? (
                 <span className='text-sm py-2 text-red-500'>
                   Uploading assets
                 </span>
