@@ -12,7 +12,7 @@ import BoardView from "../components/BoardView";
 // import { tasks } from "../assets/data";
 import Table from "../components/task/Table";
 import AddTask from "../components/task/AddTask";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { taskApi } from "../services/taskApi";
 
 const TABS=[
@@ -26,13 +26,19 @@ const TASK_TYPE={
   completed:"bg-green-600"
 }
 
+
+enum ActionType {
+  CREATE_TASK = "CREATE_TASK",
+  CREATE_SUBTASK = "CREATE_SUBTASK",
+}
+
 const Tasks:React.FC = () => {
   const params= useParams()
   const [selected, setSelected]=useState<number>(0);
   const [open, setOpen]=useState<boolean>(false);
   const [loading, setLoading]=useState<boolean>(false);
   const status = params?.status || ""
-
+const queryClient = useQueryClient();
   const {data:tasks}=useQuery({
     queryFn:()=>{
       return taskApi.getTasks({stage:status});
@@ -44,12 +50,43 @@ const Tasks:React.FC = () => {
 const {mutate}=useMutation({
   mutationFn:(formData)=>{
 return taskApi.createTask(formData)
+  },
+  onSuccess:()=>{
+    queryClient.invalidateQueries(["tasks"])
+
+     setOpen(false);
   }
 })
 
-const onSave=(formData,actionType)=>{
-mutate(formData)
+
+const {mutate:subtaskMutate}=useMutation({
+  mutationFn:(formData)=>{
+    return taskApi.createSubTask(formData);
+  },
+  onSuccess:()=>{
+      queryClient.invalidateQueries(["tasks"])
+       setOpen(false);
+  }
+})
+
+
+const onSave=({formData,actionType})=>{
+  switch (actionType) {
+    case ActionType.CREATE_TASK:
+      mutate(formData);
+      break;
+    case ActionType.CREATE_SUBTASK:
+      subtaskMutate(formData);
+      break;
+    default:
+      throw new Error("Unknown action type");
+  }
+
 }
+const handleSave=({taskId,formData})=>{
+  subtaskMutate({taskId,formData})
+}
+
 
 
   return loading? (
@@ -83,7 +120,7 @@ setSelected={setSelected}
     </div>
   )}
 
-  {selected === 0 ? (<BoardView tasks={tasks}/>):(<Table tasks={tasks}/>)}
+  {selected === 0 ? (<BoardView onSave={onSave} tasks={tasks}/>):(<Table tasks={tasks}/>)}
   </Tabs>
 </div>
 <AddTask open={open} setOpen={setOpen} onSave={onSave}/>

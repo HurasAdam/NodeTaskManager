@@ -85,6 +85,9 @@ multiple
 {/* --- */}
 
 </Listbox>
+{error && (
+    <span className="text-xs text-rose-500 mt-0.5">{error}</span>
+)}
     </div>
   )
 }

@@ -5,23 +5,30 @@ import { Dialog } from "@headlessui/react";
 import Button from "../Button";
 import TextBox from "../TextBox";
 
-const AddSubTask = ({ open, setOpen, id }) => {
+const AddSubTask = ({ open, setOpen, id, onSave }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues:{
+      title:"",
+      tag:"",
+      date:""
+    }
+  });
 
-  // const [addSbTask] = useCreateSubTaskMutation();
 
-  const handleOnSubmit = async (data) => {
+  const onSubmit = handleSubmit((data) => {
+    onSave({formData:{taskId:id,data},actionType:"CREATE_SUBTASK"})
+    });
 
-  };
+
 
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form onSubmit={handleSubmit(handleOnSubmit)} className=''>
+        <form onSubmit={onSubmit} className=''>
           <Dialog.Title
             as='h2'
             className='text-base font-bold leading-6 text-gray-900 mb-4'

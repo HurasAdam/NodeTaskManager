@@ -22,7 +22,7 @@ const ICONS = {
   low: <MdKeyboardArrowDown />,
 };
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ task,onSave }) => {
   const { account } = useAccountStore((state) => state);
   const [open, setOpen] = useState(false);
 
@@ -122,7 +122,7 @@ const TaskCard = ({ task }) => {
           </button>
         </div>
       </div>
-<AddSubTask open={open} setOpen={setOpen} id={task?._id}/>
+<AddSubTask open={open} setOpen={setOpen} id={task?._id} onSave={onSave}/>
      
     </>
   );

@@ -13,10 +13,10 @@ import { taskApi } from "../../services/taskApi";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
-
+const isLoading=""
 const uploadedFileURLs = [];
 
-const AddTask:React.FC = ({ open, setOpen }) => {
+const AddTask:React.FC = ({ open, setOpen,onSave }) => {
   const task = "";
   const [assets, setAssets] = useState([]);
 const queryClient = useQueryClient();
@@ -39,20 +39,20 @@ const queryClient = useQueryClient();
   });
 
 
-  const {mutate,isLoading}=useMutation({
-    mutationFn:(formData)=>{
-      return taskApi.createTask(formData)
-    },
-    onSuccess:()=>{
-      queryClient.invalidateQueries(["tasks"])
-      reset();
-      setOpen(false);
-    }
-  })
+  // const {mutate,isLoading}=useMutation({
+  //   mutationFn:(formData)=>{
+  //     return taskApi.createTask(formData)
+  //   },
+  //   onSuccess:()=>{
+  //     queryClient.invalidateQueries(["tasks"])
+  //     reset();
+  //     setOpen(false);
+  //   }
+  // })
 
  const onSubmit = handleSubmit((data) => {
  console.log(data)
- mutate(data)
+onSave({formData:data, actionType:"CREATE_TASK"})
  });
 
 
@@ -108,7 +108,7 @@ const queryClient = useQueryClient();
                   label='Task Date'
                   className='w-full rounded'
                   register={register("date", {
-                    required: "Date is required!",
+                    required: "Date is required",
                   })}
                   error={errors.date ? errors.date.message : ""}
                 />
