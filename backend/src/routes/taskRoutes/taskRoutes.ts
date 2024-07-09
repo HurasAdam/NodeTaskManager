@@ -10,8 +10,8 @@ router.post("/activity/:id", authGuard, taskController.postTaskActivity);
 
 router.get("/dashboard", authGuard, taskController.dashboardStatistics );
 router.get("/", authGuard, taskController.getTasks );
-router.get("/id", authGuard, taskController.getTask );
-router.put("/id", authGuard, taskController.updateTask );
+router.get("/:id", authGuard, taskController.getTask );
+router.put("/:id", authGuard, taskController.updateTask );
 router.put("/trash/:id",authGuard, taskController.trashTask);
 router.put("/create-subtask/:id", authGuard, taskController.createSubTask);
 
