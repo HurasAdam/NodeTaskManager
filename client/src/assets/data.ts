@@ -38,7 +38,7 @@ export const summary = {
         activities: [],
         subTasks: [
           {
-            title: "Task manager youtube tutorial",
+            title: "Task manager testing task",
             date: "2024-02-09T00:00:00.000Z",
             tag: "tutorial",
             _id: "65c5f153b5204a81bde866c8",
@@ -192,7 +192,7 @@ export const summary = {
       },
       {
         _id: "65c45fb6af6ec0118be94052",
-        title: "Task Manager Youtube Video",
+        title: "Task Manager testing task",
         date: "2024-02-11T00:00:00.000Z",
         priority: "medium",
         stage: "completed",
@@ -624,7 +624,7 @@ export const summary = {
       activities: [],
       subTasks: [
         {
-          title: "Task manager youtube tutorial",
+          title: "Task manager ",
           date: "2024-02-09T00:00:00.000Z",
           tag: "tutorial",
           _id: "65c5f153b5204a81bde866c8",
@@ -773,7 +773,7 @@ export const summary = {
     },
     {
       _id: "65c45fb6af6ec0118be94052",
-      title: "Task Manager Youtube Video",
+      title: "Task Manager testing task",
       date: "2024-02-11T00:00:00.000Z",
       priority: "medium",
       stage: "completed",

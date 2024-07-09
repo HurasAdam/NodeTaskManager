@@ -22,6 +22,18 @@ const createSubTask= async({data:formData,taskId})=>{
     }
 
 
+    const getTask= async({taskId}:{taskId:string})=>{
+ 
+        const config = {
+            withCredentials:true
+        }
+  
+        
+        const {data}= await axios.get(`${BACKEND_BASE_URL}/task/${taskId}`,config);
+        return data;
+        }
+
+
 const getTasks= async({stage,isTrashed}:{stage:string, isTrashed:string})=>{
  
 const config = {
@@ -46,5 +58,6 @@ return data;
 export const taskApi={
     getTasks,
     createTask,
-    createSubTask
+    createSubTask,
+    getTask
 }

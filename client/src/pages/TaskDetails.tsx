@@ -20,6 +20,8 @@ import Tabs from "../components/Tabs";
 import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
+import { useQuery } from "@tanstack/react-query";
+import { taskApi } from "../services/taskApi";
 
 const assets = [
   "https://images.pexels.com/photos/2418664/pexels-photo-2418664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -91,7 +93,16 @@ const TaskDetails = () => {
   const { id } = useParams();
 
   const [selected, setSelected] = useState(0);
-  const task = tasks[3];
+  // const task = tasks[3];
+
+
+
+const {data:task}=useQuery({
+  queryFn:()=>{
+    return taskApi.getTask({taskId:id});
+  }
+})
+
 
   return (
     <div className='w-full flex flex-col gap-3 mb-4 overflow-y-hidden'>
