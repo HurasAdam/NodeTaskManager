@@ -20,8 +20,9 @@ import Tabs from "../components/Tabs";
 import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { taskApi } from "../services/taskApi";
+import { useForm } from "react-hook-form";
 
 const assets = [
   "https://images.pexels.com/photos/2418664/pexels-photo-2418664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -80,12 +81,12 @@ const TASKTYPEICON = {
 };
 
 const act_types = [
-  "Started",
-  "Completed",
-  "In Progress",
-  "Commented",
-  "Bug",
-  "Assigned",
+  "assigned",
+  "started",
+  "in progress",
+  "commented",
+  "bug",
+  "completed",
 ];
 
 
@@ -100,7 +101,8 @@ const TaskDetails = () => {
 const {data:task}=useQuery({
   queryFn:()=>{
     return taskApi.getTask({taskId:id});
-  }
+  },
+  queryKey:["task",id]
 })
 
 
@@ -130,7 +132,7 @@ const {data:task}=useQuery({
                     <div
                       className={clsx(
                         "w-4 h-4 rounded-full",
-                        TASK_TYPE[task.stage]
+                        TASK_TYPE[task?.stage]
                       )}
                     />
                     <span className='text-black uppercase'>{task?.stage}</span>
@@ -138,7 +140,7 @@ const {data:task}=useQuery({
                 </div>
 
                 <p className='text-gray-500'>
-                  Created At: {new Date(task?.date).toDateString()}
+                  Created At: <span className="text-gray-800">{new Date(task?.createdAt).toDateString()}</span>
                 </p>
 
                 <div className='flex items-center gap-8 p-4 border-y border-gray-200'>
@@ -241,15 +243,36 @@ const {data:task}=useQuery({
 };
 
 const Activities = ({ activity, id }) => {
-  const [selected, setSelected] = useState(act_types[0]);
+
   const [text, setText] = useState("");
   const isLoading = false;
+const queryClient = useQueryClient();
 
-  const handleSubmit = async () => {};
+
+const {register,handleSubmit,watch}=useForm({
+  defaultValues:{
+    type:"",
+    activity:""
+  }
+})
+
+const {mutate} = useMutation({
+  mutationFn:(data)=>{
+    return taskApi.addTaskActivity(data)
+  },
+  onSuccess:(data)=>{
+    queryClient.invalidateQueries(["task",id])
+  }
+})
+
+const onSubmit = handleSubmit((data) => {
+  console.log(data)
+  mutate({taskId:id, formData:data})
+});
 
   const Card = ({ item }) => {
     return (
-      <div className='flex space-x-4 '>
+      <div className='flex space-x-4'>
         <div className='flex flex-col items-center flex-shrink-0 '>
           <div className='w-10 h-10 flex items-center justify-center'>
             {TASKTYPEICON[item?.type]}
@@ -288,6 +311,7 @@ const Activities = ({ activity, id }) => {
       </div>
 
       <div className='w-full md:w-1/3'>
+      <form onSubmit={onSubmit}>
         <h4 className='text-gray-600 font-semibold text-lg mb-5'>
           Add Activity
         </h4>
@@ -295,18 +319,21 @@ const Activities = ({ activity, id }) => {
           {act_types.map((item, index) => (
             <div key={item} className='flex gap-2 items-center'>
               <input
-                type='checkbox'
+                type='radio'
                 className='w-4 h-4'
-                checked={selected === item ? true : false}
-                onChange={(e) => setSelected(item)}
+                value={item}
+                checked={watch("type") === item ? true : false}
+                {...register("type",{required:"Please select activity type"})}
+              
               />
               <p>{item}</p>
             </div>
           ))}
           <textarea
             rows={10}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            
+     
+            {...register("activity",{required:"Please add activity description"})}
             placeholder='Type ......'
             className='bg-white w-full mt-10 border border-gray-300 outline-none p-4 rounded-md focus:ring-2 ring-blue-500'
           ></textarea>
@@ -314,13 +341,14 @@ const Activities = ({ activity, id }) => {
             <Loading />
           ) : (
             <Button
-              type='button'
+              type='submit'
               label='Submit'
-              onClick={handleSubmit}
+          
               className='bg-blue-600 text-white rounded'
             />
           )}
         </div>
+        </form>
       </div>
     </div>
   );

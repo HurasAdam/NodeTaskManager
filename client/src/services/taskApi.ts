@@ -12,8 +12,7 @@ return data;
 }
 
 const createSubTask= async({data:formData,taskId})=>{
-    console.log("FORMDATA")
-    console.log(formData)
+
     const config = {
         withCredentials: true
     }
@@ -49,6 +48,14 @@ return data;
 }
 
 
+const addTaskActivity = async({taskId, formData})=>{
+const config = {
+    withCredentials:true
+}
+
+const {data}= await axios.post(`${BACKEND_BASE_URL}/task/activity/${taskId}`,formData,config);
+    return data;
+}
 
 
 
@@ -59,5 +66,6 @@ export const taskApi={
     getTasks,
     createTask,
     createSubTask,
-    getTask
+    getTask,
+    addTaskActivity
 }

@@ -7,8 +7,9 @@ import Button from "../Button";
 import TextBox from "../TextBox";
 import UserList from "./UserList";
 import SelectList from "../SelectList";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { taskApi } from "../../services/taskApi";
+import { userApi } from "../../services/userApi";
 
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
@@ -50,6 +51,13 @@ const queryClient = useQueryClient();
   //   }
   // })
 
+
+const {data:usersList}=useQuery({
+  queryFn:()=>{
+    return userApi.getUsers();
+  }
+})
+
  const onSubmit = handleSubmit((data) => {
  console.log(data)
 onSave({formData:data, actionType:"CREATE_TASK"})
@@ -83,6 +91,7 @@ onSave({formData:data, actionType:"CREATE_TASK"})
             />
 
             <UserList 
+            data={usersList}
             setValue={setValue}
             name="team"
             selectedUsers={watch("team")}

@@ -6,9 +6,9 @@ import {BsChevronExpand} from "react-icons/bs";
 import {MdCheck} from "react-icons/md";
 import { getInitials } from '../../utils';
 
-const UserList:React.FC = ({team,setValue,register,error,name,selectedUsers}) => {
+const UserList:React.FC = ({data,team,setValue,register,error,name,selectedUsers}) => {
 
-const data = summary?.users;
+// const data = summary?.users;
 
 
 const handleChange= (value):void=>{
