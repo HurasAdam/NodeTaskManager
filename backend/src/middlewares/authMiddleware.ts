@@ -30,7 +30,7 @@ const token = req.cookies["auth_token"];
 const token = req.cookies["auth_token"];
 const {id,isAdmin}= jwt.verify(token, process.env.JWT_SECRET_KEY as string) as jwt.JwtPayload;
 const user = await User.findById(id);
-console.log(user);
+
 if(!user){
     return res.status(404).json({message:"User not found"})
 }else{

@@ -140,9 +140,19 @@ if(!task){
             by:userId,
             date:new Date()
         }
-        task.activities.push(data);
 
-        await task.save();
+        task.activities.push({
+            type,
+            activity,
+            by:userId,
+            date:new Date()
+        });
+
+       const updatedTask = await task.save();
+
+       if(updatedTask){
+        return res.status(201).json({message:"actvity has been added sucessfully"})
+       }
 
         }catch(error){
             if(error instanceof Error){
