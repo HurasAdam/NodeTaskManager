@@ -10,6 +10,8 @@ try{
 const {title,team,stage,date,priority,description,assets}=req.body;
 const {userId}=req.user;
 
+console.log(team)
+console.log("team");
 
 let text = "New task has been assigned to you";
 if (team?.length > 1) {
@@ -226,7 +228,7 @@ res.status(200).json(summaryResult)
                 try{
                
    const {stage,isTrashed}=req.query as {stage?:string, isTrashed?:string};
-console.log(req.query);
+
 
 
    let query:any= {isTrashed:isTrashed ? true: false}
@@ -254,11 +256,11 @@ res.status(200).json(tasks)
                 export const getTask = async(req:Request,res:Response)=>{
                     try{
                    const {id}=req.params;
-                   const task = await Task.findById(id).populate({
-                    path:"team", select:"name title role email"
-                   }).populate({
-                    path:"activities.by",select: "name"
-                   }).sort({_id: -1});
+                   const task = await Task.findById(id).populate([{
+                    path:"team", select:["name", "title", "role", "email"]
+                   }]).populate([{
+                    path:"activities.by",select: ["name"]
+                   }]).sort({_id: -1});
       
 if(!task){
     return res.status(400).json({message:"Task not found"})
@@ -280,6 +282,7 @@ if(!task){
                     try{
                    const {id}=req.params;
                    const {title,tag,date}=req.body;
+                   const userId= req.user.userId;
 
                    const newSubTask ={
                     title,date,tag
@@ -289,6 +292,21 @@ if(!task){
     return res.status(400).json({message:"Task not found"})
 }
 task.subTasks.push(newSubTask);
+
+const text = `new subtask has been added`
+
+
+
+
+const activity={
+    type:enums.ETaskActivityType.Assigned,
+    activity:text,
+    by:userId,
+    date: new Date()
+
+}
+
+task.activities.push(activity);
 
 const savedTask = await task.save();
 
@@ -303,6 +321,8 @@ if(savedTask){
                         res.status(500).json({message:"An unexpected error has occured"})
                     }
                     }
+
+
 
                     export const updateTask = async(req:Request,res:Response)=>{
                         try{
