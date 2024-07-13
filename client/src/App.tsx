@@ -8,6 +8,7 @@ import Trash from './pages/Trash';
 import Users from './pages/Users';
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
+import Projects from "./pages/Projects";
 
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route index path='/' element={<Navigate to='/dashboard' />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/tasks' element={<Tasks />} />
+          <Route path='/projects' element={<Projects />} />
           <Route path='/completed/:status' element={<Tasks />} />
           <Route path='/in-progress/:status' element={<Tasks />} />
           <Route path='/todo/:status' element={<Tasks />} />

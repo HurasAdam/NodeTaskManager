@@ -33,7 +33,7 @@ enum ActionType {
 }
 
 const Tasks:React.FC = () => {
-  const params= useParams()
+  const params= useParams();
   const [selected, setSelected]=useState<number>(0);
   const [open, setOpen]=useState<boolean>(false);
   const [loading, setLoading]=useState<boolean>(false);
@@ -120,7 +120,7 @@ setSelected={setSelected}
     </div>
   )}
 
-  {selected === 0 ? (<BoardView onSave={onSave} tasks={tasks}/>):(<Table tasks={tasks}/>)}
+  {selected === 0 ? (<BoardView type="tickets" onSave={onSave} data={tasks}/>):(<Table tasks={tasks}/>)}
   </Tabs>
 </div>
 <AddTask open={open} setOpen={setOpen} onSave={onSave}/>

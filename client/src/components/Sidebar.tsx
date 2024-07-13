@@ -14,6 +14,7 @@ const sidebarLinks = [
       link: "dashboard",
       icon: <MdDashboard />,
     },
+
     {
       label: "Tasks",
       link: "tasks",
@@ -33,6 +34,11 @@ const sidebarLinks = [
       label: "To Do",
       link: "todo/todo",
       icon: <MdOutlinePendingActions />,
+    },
+    {
+      label: "Projects",
+      link: "projects",
+      icon: <FaTasks />,
     },
     {
       label: "Team",
@@ -55,7 +61,7 @@ const {user}= useAccountStore((state)=>state.account);
 const location = useLocation();
 const path = location.pathname.split("/")[1]
 
-const sidebarRoleBasedLinks = user?.role==='admin' ? sidebarLinks : sidebarLinks.slice(0,5);
+const sidebarRoleBasedLinks = user?.role==='admin' ? sidebarLinks : sidebarLinks.slice(0,6);
 
 const closeSidebar=()=>{
     // dispatch(setOpenSidebar(false))
