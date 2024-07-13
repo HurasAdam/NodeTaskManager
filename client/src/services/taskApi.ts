@@ -11,6 +11,15 @@ const {data}= await axios.post(`${BACKEND_BASE_URL}/task/create`,formData,config
 return data;
 }
 
+const deleteTask = async(taskId) => {
+    const config = {
+        withCredentials: true,
+        data: {taskId}
+    }    
+    const { data } = await axios.delete(`${BACKEND_BASE_URL}/task/delete`, config);
+    return data;
+}
+
 const createSubTask= async({data:formData,taskId})=>{
 
     const config = {
@@ -62,10 +71,12 @@ const {data}= await axios.post(`${BACKEND_BASE_URL}/task/activity/${taskId}`,for
 
 
 
+
 export const taskApi={
     getTasks,
     createTask,
     createSubTask,
     getTask,
-    addTaskActivity
+    addTaskActivity,
+    deleteTask
 }

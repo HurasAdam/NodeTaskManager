@@ -54,13 +54,6 @@ const {data:projects}=useQuery({
    <div className="flex items-center justify-between mb-4">
 <Title title={status? `${status} Projects`:"Projects"}/>
 
-{!status &&(
-  <Button 
-  onClick={()=>setOpen(true)}
-className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
-  label="create task" 
-  icon={<IoMdAdd className="text-lg"/>}/>
-)}
    </div>
    {/* TAB */}
 <div>
@@ -79,7 +72,6 @@ setSelected={setSelected}
   {selected === 0 ? (<BoardView type="project"  data={projects}/>):(<Table tasks={projects}/>)}
   </Tabs>
 </div>
-<AddTask open={open} setOpen={setOpen} />
   </div>)
 }
 
