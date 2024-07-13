@@ -33,17 +33,15 @@ const createSubProject= async({data:formData,projectId})=>{
     }
 
 
-const getProjects= async({stage,isTrashed}:{stage:string, isTrashed:string})=>{
+const getProjects= async()=>{
  
 const config = {
     withCredentials:true
 }
 
-const queryParams = new URLSearchParams();
-queryParams.append("stage",stage || "");
-queryParams.append("isTrashed",isTrashed || "");
 
-const {data}= await axios.get(`${BACKEND_BASE_URL}/projects?${queryParams}`,config);
+
+const {data}= await axios.get(`${BACKEND_BASE_URL}/project/projects`,config);
 return data;
 }
 
