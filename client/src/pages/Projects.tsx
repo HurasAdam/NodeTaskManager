@@ -10,7 +10,7 @@ import BoardView from '../components/BoardView';
 import Table from '../components/task/Table';
 import { MdGridView } from 'react-icons/md';
 import { useQuery } from '@tanstack/react-query';
-import { taskApi } from '../services/taskApi';
+import { projectsApi } from '../services/projectsApi';
 import { useParams } from 'react-router-dom';
 import AddTask from '../components/task/AddTask';
 
@@ -33,11 +33,11 @@ const Projects = () => {
 const loading= false;
   const status = params?.status || ""
 
-const {data:tasks}=useQuery({
+const {data:projects}=useQuery({
   queryFn:()=>{
-    return taskApi.getTasks({stage:status});
+    return projectsApi.getProjects({stage:status});
   },
-  queryKey:["tasks",status]
+  queryKey:["projects",status]
 })
 
 
@@ -52,15 +52,8 @@ const {data:tasks}=useQuery({
   ):
   (<div className="w-full">
    <div className="flex items-center justify-between mb-4">
-<Title title={status? `${status} Tasks`:"Tasks"}/>
+<Title title={status? `${status} Projects`:"Projects"}/>
 
-{!status &&(
-  <Button 
-  onClick={()=>setOpen(true)}
-className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
-  label="create task" 
-  icon={<IoMdAdd className="text-lg"/>}/>
-)}
    </div>
    {/* TAB */}
 <div>
@@ -76,10 +69,9 @@ setSelected={setSelected}
     </div>
   )} */}
 
-  {selected === 0 ? (<BoardView type="project"  data={tasks}/>):(<Table tasks={tasks}/>)}
+  {selected === 0 ? (<BoardView type="project"  data={projects}/>):(<Table tasks={projects}/>)}
   </Tabs>
 </div>
-<AddTask open={open} setOpen={setOpen} />
   </div>)
 }
 
