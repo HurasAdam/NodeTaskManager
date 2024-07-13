@@ -19,3 +19,8 @@ export enum ETaskPriority{
     Completed = "completed",
     Commented = "commented",
   }
+
+
+  export enum EProjectActivityType{
+    Created = 'created'
+  }
