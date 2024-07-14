@@ -8,6 +8,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { Menu, Transition } from "@headlessui/react";
 import { taskApi } from '../../services/taskApi';
 import AddTask from "./AddTask";
+import AddNew from "../AddNew";
 import AddSubTask from "./AddSubTask";
 import ConfirmatioDialog from "../Dialogs";
 
@@ -109,7 +110,7 @@ const TaskDialog:React.FC = ({ task }) => {
         </Menu>
       </div>
 
-      <AddTask
+      <AddNew
         open={openEdit}
         setOpen={setOpenEdit}
         task={task}

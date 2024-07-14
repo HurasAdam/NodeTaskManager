@@ -4,7 +4,7 @@ import * as enums from "../enums/index";
 
 const projectSchema = new mongoose.Schema({
     name:{type:String, required:true,unique:true},
-    pm:{type:mongoose.Schema.Types.ObjectId, ref:"User"},
+    pm:[{type:mongoose.Schema.Types.ObjectId, ref:"User"}],
     members:[{type:mongoose.Schema.Types.ObjectId, ref:"User"}],
     status:{type:String, default:enums.EProjectStatusType.InProgress},
     overview:[
@@ -29,6 +29,9 @@ const projectSchema = new mongoose.Schema({
           by: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         },
       ],
+      createdAt:{
+        type:Date, default: new Date()
+      }
 })
 
 const Project = mongoose.model("Project",projectSchema);

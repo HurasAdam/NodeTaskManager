@@ -7,3 +7,9 @@ export enum ETaskActivityType {
     Commented = "commented",
   }
 
+
+  export enum ActionType {
+    CREATE_PROJECT = "CREATE_PROJECT",
+    CREATE_TASK = "CREATE_TASK",
+    CREATE_SUBTASK = "CREATE_SUBTASK",
+  }

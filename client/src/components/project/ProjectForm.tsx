@@ -9,13 +9,13 @@ import TextareaBox from "../TextareaBox";
 import UserList from "../project/UserList";
 import SelectList from "../SelectList";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { projectsApi } from "../../services/projectsApi";
+import { projectsApi } from "../../services/projectApi";
 import { userApi } from "../../services/userApi";
 
 const isLoading = "";
 const uploadedFileURLs = [];
 
-const projectForm: React.FC = ({ open, setOpen, onSave }) => {
+const projectForm: React.FC = ({ setOpen, onSave }) => {
   const project = "";
   const [assets, setAssets] = useState([]);
   const queryClient = useQueryClient();
@@ -54,7 +54,7 @@ const projectForm: React.FC = ({ open, setOpen, onSave }) => {
 
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+    
         <form onSubmit={onSubmit} className="">
           <Dialog.Title
             as="h2"
@@ -68,7 +68,7 @@ const projectForm: React.FC = ({ open, setOpen, onSave }) => {
               name="name"
               label="Project Name"
               className="w-full rounded"
-              register={register("name", { required: "Name is required" })}
+              register={register("name", { required: "Project name is required" })}
               error={errors.name ? errors.name.message : ""}
             />
 
@@ -78,7 +78,7 @@ const projectForm: React.FC = ({ open, setOpen, onSave }) => {
                 setValue={setValue}
                 name="pm"
                 selectedUsers={watch("pm")}
-                register={register("pm", { required: "Please select at least one asignee" })}
+                register={register("pm", { required: "Project leader is required" })}
                 error={errors.pm ? errors.pm.message : ""}
             />
 
@@ -88,17 +88,17 @@ const projectForm: React.FC = ({ open, setOpen, onSave }) => {
                 setValue={setValue}
                 name="members"
                 selectedUsers={watch("members")}
-                register={register("members", { required: "Please select at least one asignee" })}
+                register={register("members", { required: "Please select at least one project member" })}
                 error={errors.members ? errors.members.message : ""}
             />
             <TextareaBox
               placeholder="Project Description"
               type="text"
-              name="name"
+              name="description"
               label="Project Description"
               className="w-full rounded"
-              register={register("name", { required: "Description is required" })}
-              error={errors.name ? errors.name.message : ""}
+              register={register("description", { required: "Project description is required" })}
+              error={errors.description ? errors.description.message : ""}
             />
 
             <TextareaBox
@@ -107,7 +107,7 @@ const projectForm: React.FC = ({ open, setOpen, onSave }) => {
               name="target"
               label="Project Target"
               className="w-full rounded"
-              register={register("target", { required: "Target is required" })}
+              register={register("target", { required: "project target and objectives are required" })}
               error={errors.target ? errors.target.message : ""}
             />
 
@@ -134,7 +134,7 @@ const projectForm: React.FC = ({ open, setOpen, onSave }) => {
             />
           </div>
         </form>
-      </ModalWrapper>
+   
     </>
   );
 };
