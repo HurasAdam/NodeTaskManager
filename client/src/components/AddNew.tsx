@@ -13,13 +13,22 @@ import ProjectForm from "./project/ProjectForm";
 import TaskForm from "./task/TaskForm";
 import * as enums from "../enums/index";
 import { taskApi } from "../services/taskApi";
+import SubtaskForm from "./task/SubtaskForm";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 const isLoading=""
 const uploadedFileURLs = [];
 
-const AddNew:React.FC = ({ open, setOpen,type }) => {
+
+interface IAddNewProps{
+  open:boolean;
+  setOpen:()=>void;
+  type: enums.EAddNewType,
+  taskId?:string
+}
+
+const AddNew:React.FC<IAddNewProps> = ({ open, setOpen,type,taskId }) => {
 
   const [assets, setAssets] = useState([]);
 const queryClient = useQueryClient();
@@ -83,11 +92,16 @@ const onSave=({formData,actionType})=>{
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         {
-          type ==="project" ? (
+          type === enums.EAddNewType.PROJECT && (
             <ProjectForm setOpen={setOpen} onSave={onSave}/>
-          ):
-          (
-            <TaskForm setOpen={setOpen} onSave={onSave}/>
+          )}
+    {type === enums.EAddNewType.TASK &&(
+      <TaskForm setOpen={setOpen} onSave={onSave}/>
+    )
+        }
+        {
+          type === enums.EAddNewType.SUBTASK && (
+            <SubtaskForm  setOpen={setOpen} onSave={onSave} taskId={taskId} />
           )
         }
 
