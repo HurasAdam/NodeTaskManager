@@ -10,9 +10,10 @@ import BoardView from '../components/BoardView';
 import Table from '../components/task/Table';
 import { MdGridView } from 'react-icons/md';
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
-import { projectsApi } from '../services/projectsApi';
+import { projectApi } from '../services/projectApi';
 import { useParams } from 'react-router-dom';
 import  ProjectForm  from '../components/project/ProjectForm';
+import AddNew from '../components/AddNew';
 
 
 const TABS=[
@@ -26,51 +27,25 @@ const PROJECT_TYPE={
   completed:"bg-green-600"
 }
 
-enum ActionType {
-  CREATE_PROJECT = "CREATE_PROJECT",
-}
+
 
 const Projects = () => {
   const params= useParams()
   const [selected, setSelected]=useState<number>(0);
   const [open, setOpen]=useState<boolean>(false);
-  const loading= false;
   const status = params?.status || ""
-  const queryClient = useQueryClient();
-  const {data:projects}=useQuery({
+  const {data:projects,isLoading}=useQuery({
   queryFn:()=>{
-    return projectsApi.getProjects();
+    return projectApi.getProjects();
   },
   queryKey:["projects",status]
 })
 
-const {mutate} = useMutation({
-  mutationFn:(FormData)=>{
-    return projectsApi.createProject(FormData)
-  },
-  onSuccess:()=>{
-    queryClient.invalidateQueries(["projects"])
-
-    setOpen(false);
-  }
-})
-
-
-
-const onSave = ({formData, ActionType}) => {
-  switch(ActionType){
-    case ActionType.CREATE_PROJECT:
-      mutate(formData);
-      break;
-    default: 
-      throw new Error("Unknown action type");
-  }
-}
 
 
 
 
-  return loading? (
+  return isLoading? (
     <div className="py-10">
       <Loader/>
     </div>
@@ -103,7 +78,8 @@ setSelected={setSelected}
   {selected === 0 ? (<BoardView type="project" data={projects}/>):(<Table tasks={projects}/>)}
   </Tabs>
 </div>
-  <ProjectForm open={open} setOpen={setOpen} onSave={onSave}/>
+<AddNew open={open} setOpen={setOpen} type="project"/>
+  {/* <ProjectForm open={open} setOpen={setOpen} onSave={onSave}/> */}
   </div>)
 }
 

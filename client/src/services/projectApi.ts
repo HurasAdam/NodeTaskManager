@@ -7,7 +7,7 @@ const createProject= async(formData)=>{
     const config = {
         withCredentials: true
     }
-    const {data}= await axios.post(`${BACKEND_BASE_URL}/projects/create`,formData,config);
+    const {data}= await axios.post(`${BACKEND_BASE_URL}/project/create`,formData,config);
     return data;
 }
 
@@ -65,7 +65,7 @@ const {data}= await axios.post(`${BACKEND_BASE_URL}/projects/activity/${projectI
 }
 
 
-export const projectsApi={
+export const projectApi={
     getProjects,
     createProject,
     createSubProject,

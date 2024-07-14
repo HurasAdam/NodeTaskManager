@@ -5,10 +5,10 @@ import { useForm } from "react-hook-form";
 import { BiImages } from "react-icons/bi";
 import Button from "../Button";
 import TextBox from "../TextBox";
-import UserList from "../task/UserList";
+import UserList from "./UserList";
 import SelectList from "../SelectList";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { projectApi } from "../../services/projectsApi";
+import { taskApi } from "../../services/taskApi";
 import { userApi } from "../../services/userApi";
 
 
@@ -17,8 +17,8 @@ const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 const isLoading=""
 const uploadedFileURLs = [];
 
-const AddNew:React.FC = ({ open, setOpen, onSave }) => {
-  const project = "";
+const TaskForm:React.FC = ({ open, setOpen,onSave }) => {
+  const task = "";
   const [assets, setAssets] = useState([]);
 const queryClient = useQueryClient();
 
@@ -40,18 +40,6 @@ const queryClient = useQueryClient();
   });
 
 
-  // const {mutate,isLoading}=useMutation({
-  //   mutationFn:(formData)=>{
-  //     return taskApi.createTask(formData)
-  //   },
-  //   onSuccess:()=>{
-  //     queryClient.invalidateQueries(["tasks"])
-  //     reset();
-  //     setOpen(false);
-  //   }
-  // })
-
-
 const {data:usersList}=useQuery({
   queryFn:()=>{
     return userApi.getUsers();
@@ -60,7 +48,7 @@ const {data:usersList}=useQuery({
 
  const onSubmit = handleSubmit((data) => {
  console.log(data)
-onSave({formData:data, actionType:"CREATE_PROJECT"})
+onSave({formData:data, actionType:"CREATE_TASK"})
  });
 
 
@@ -70,21 +58,21 @@ onSave({formData:data, actionType:"CREATE_PROJECT"})
 
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+ 
         <form onSubmit={onSubmit} className="">
           <Dialog.Title
             as='h2'
             className='text-base font-bold leading-6 text-blue-800 mb-10 rounded-xl bg-blue-100 p-5'
           >
-            {project ? "UPDATE PROJECT" : "NEW PROJECT"}
+            {task ? "UPDATE TASK" : "NEW TASK"}
           </Dialog.Title>
 
           <div className='mt-2 flex flex-col gap-6'>
             <TextBox
-              placeholder='Project Title'
+              placeholder='Task Title'
               type='text'
               name='title'
-              label='Project Title'
+              label='Task Title'
               className='w-full rounded'
               register={register("title", { required: "Title is required" })}
               error={errors.title ? errors.title.message : ""}
@@ -101,11 +89,11 @@ onSave({formData:data, actionType:"CREATE_PROJECT"})
 
             <div className='flex gap-4'>
               <SelectList
-                label='Project Stage'
+                label='Task Stage'
                 lists={LISTS}
                 selected={watch("stage")}              
                 name="stage"
-                register={register("stage", { required: "Project stage is required" })}
+                register={register("stage", { required: "Task stage is required" })}
                 error={errors.stage ? errors.stage.message : ""}
               />
 
@@ -131,7 +119,7 @@ onSave({formData:data, actionType:"CREATE_PROJECT"})
                 selected={watch("priority")}
                  name="priority"
            
-                register={register("priority", { required: "Project priority is required" })}
+                register={register("priority", { required: "Task priority is required" })}
                 error={errors.priority ? errors.priority.message : ""}
               />
 
@@ -176,9 +164,9 @@ onSave({formData:data, actionType:"CREATE_PROJECT"})
             </div>
           </div>
         </form>
-      </ModalWrapper>
+  
     </>
   );
 };
 
-export default AddNew;
+export default TaskForm;
