@@ -12,7 +12,7 @@ import { MdGridView } from 'react-icons/md';
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { projectsApi } from '../services/projectsApi';
 import { useParams } from 'react-router-dom';
-import AddNew from '../components/project/AddNew';
+import  ProjectForm  from '../components/project/ProjectForm';
 
 
 const TABS=[
@@ -103,7 +103,7 @@ setSelected={setSelected}
   {selected === 0 ? (<BoardView type="project" data={projects}/>):(<Table tasks={projects}/>)}
   </Tabs>
 </div>
-  <AddNew open={open} setOpen={setOpen} onSave={onSave}/>
+  <ProjectForm open={open} setOpen={setOpen} onSave={onSave}/>
   </div>)
 }
 
