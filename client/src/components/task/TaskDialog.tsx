@@ -6,6 +6,7 @@ import { HiDuplicate } from "react-icons/hi";
 import { MdAdd, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Menu, Transition } from "@headlessui/react";
+import { taskApi } from '../../services/taskApi';
 import AddTask from "./AddTask";
 import AddSubTask from "./AddSubTask";
 import ConfirmatioDialog from "../Dialogs";
@@ -19,8 +20,12 @@ const TaskDialog:React.FC = ({ task }) => {
   const navigate = useNavigate();
 
   const duplicateHandler = () => {};
-  const deleteClicks = () => {};
-  const deleteHandler = () => {};
+  const deleteClicks = () => {
+    setOpenDialog(true);
+  };
+  const deleteHandler = () => {
+    setOpenDialog(false);
+  };
 
   const items = [
     {
