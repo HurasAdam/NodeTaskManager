@@ -8,7 +8,7 @@ import TextBox from "../TextBox";
 import UserList from "../task/UserList";
 import SelectList from "../SelectList";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { projectApi } from "../services/projectsApi";
+import { projectApi } from "../../services/projectsApi";
 import { userApi } from "../../services/userApi";
 
 
