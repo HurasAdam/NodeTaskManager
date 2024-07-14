@@ -6,6 +6,17 @@ const projectSchema = new mongoose.Schema({
     name:{type:String, required:true,unique:true},
     pm:{type:mongoose.Schema.Types.ObjectId, ref:"User"},
     members:[{type:mongoose.Schema.Types.ObjectId, ref:"User"}],
+    status:{type:String, default:enums.EProjectStatusType.InProgress},
+    overview:[
+      {
+        header:{
+          type:String,required:true
+        },
+        content:{
+          type:String,required:true
+        }
+      }
+    ],
     activities: [
         {
           type: {

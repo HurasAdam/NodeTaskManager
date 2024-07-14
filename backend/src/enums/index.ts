@@ -21,6 +21,13 @@ export enum ETaskPriority{
   }
 
 
+  export enum EProjectStatusType{
+    InProgress = "inProgress",
+    Maintained = "maintained",
+    Closed = "closed"
+  }
+
+
   export enum EProjectActivityType{
     Created = 'created'
   }
