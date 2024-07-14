@@ -12,7 +12,7 @@ import { MdGridView } from 'react-icons/md';
 import { useQuery } from '@tanstack/react-query';
 import { projectsApi } from '../services/projectsApi';
 import { useParams } from 'react-router-dom';
-import AddTask from '../components/task/AddTask';
+import AddNew from '../components/project/AddNew';
 
 
 const TABS=[
@@ -20,7 +20,7 @@ const TABS=[
   {title:"Last View", icon:<FaList/>},
 ]
 
-const TASK_TYPE={
+const PROJECT_TYPE={
   todo:"bg-blue-600",
   "in progress":"bg-amber-600",
   completed:"bg-green-600"
@@ -53,7 +53,13 @@ const {data:projects}=useQuery({
   (<div className="w-full">
    <div className="flex items-center justify-between mb-4">
 <Title title={status? `${status} Projects`:"Projects"}/>
-
+{!status &&(
+  <Button 
+  onClick={()=>setOpen(true)}
+className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
+  label="create project" 
+  icon={<IoMdAdd className="text-lg"/>}/>
+)}
    </div>
    {/* TAB */}
 <div>
@@ -69,9 +75,11 @@ setSelected={setSelected}
     </div>
   )} */}
 
-  {selected === 0 ? (<BoardView type="project"  data={projects}/>):(<Table tasks={projects}/>)}
+  {selected === 0 ? (<BoardView type="project" data={projects}/>):(<Table tasks={projects}/>)}
   </Tabs>
 </div>
+  <AddNew open={open} setOpen={setOpen}/>
+  {/* <AddNew open={open} setOpen={setOpen} onSave={onSave}/> */}
   </div>)
 }
 
