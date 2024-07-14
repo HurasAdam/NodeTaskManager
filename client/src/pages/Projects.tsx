@@ -35,7 +35,7 @@ const loading= false;
 
 const {data:projects}=useQuery({
   queryFn:()=>{
-    return projectsApi.getProjects({stage:status});
+    return projectsApi.getProjects();
   },
   queryKey:["projects",status]
 })

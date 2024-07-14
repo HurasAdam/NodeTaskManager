@@ -5,6 +5,7 @@ import { NextFunction,Request,Response } from "express";
 
 
 interface IReqUser{
+    userName:string;
     email:string;
     isAdmin:boolean;
     userId:string;
@@ -35,6 +36,7 @@ if(!user){
     return res.status(404).json({message:"User not found"})
 }else{
     req.user={
+        userName:user?.name,
         email:user.email,
         isAdmin:user.isAdmin,
         userId:id
