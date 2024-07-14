@@ -4,17 +4,18 @@ export const createProject = async(req:Request,res:Response)=>{
 try{
 
     const {userId,userName}=req.user;
-    const {name,pm,members}=req.body;
+    const {name,pm,members,target,description}=req.body;
 
     const project = await Project.findOne({name});
-
 
     if(project){
         return res.status(400).json({message:"Project with that name already exist. Project name must be unique."})
     }
 
     const text= `Project created by: ${userName}`
-    
+  
+
+
     const activity={
         type:"created",
         activity:text,
@@ -25,6 +26,7 @@ try{
    name,
    pm,
    members,
+   overview:[{header:"Project Objectives",content:target},{header:"Project Description",content:description}],
    activities:activity
     })
   const savedProject = await newProject.save();
@@ -43,8 +45,10 @@ try{
 
 export const getProjects = async(req:Request,res:Response)=>{
 try{
-
-    const projects = await Project.find({});
+    const projects = await Project.find({}).populate([
+        {path:"pm", select:["name","email"]},
+        {path:"members", select:["name","email"]},
+]);
 
     if(!projects){
         return res.status(200).json([])
