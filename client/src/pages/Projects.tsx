@@ -9,7 +9,7 @@ import TaskTitle from '../components/TaskTitle';
 import BoardView from '../components/BoardView';
 import Table from '../components/task/Table';
 import { MdGridView } from 'react-icons/md';
-import { useQuery } from '@tanstack/react-query';
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { projectsApi } from '../services/projectsApi';
 import { useParams } from 'react-router-dom';
 import AddNew from '../components/project/AddNew';
@@ -26,21 +26,46 @@ const PROJECT_TYPE={
   completed:"bg-green-600"
 }
 
+enum ActionType {
+  CREATE_PROJECT = "CREATE_PROJECT",
+}
+
 const Projects = () => {
   const params= useParams()
   const [selected, setSelected]=useState<number>(0);
   const [open, setOpen]=useState<boolean>(false);
-const loading= false;
+  const loading= false;
   const status = params?.status || ""
-
-const {data:projects}=useQuery({
+  const queryClient = useQueryClient();
+  const {data:projects}=useQuery({
   queryFn:()=>{
     return projectsApi.getProjects({stage:status});
   },
   queryKey:["projects",status]
 })
 
+const {mutate} = useMutation({
+  mutationFn:(FormData)=>{
+    return projectsApi.createProject(FormData)
+  },
+  onSuccess:()=>{
+    queryClient.invalidateQueries(["projects"])
 
+    setOpen(false);
+  }
+})
+
+
+
+const onSave = ({formData, ActionType}) => {
+  switch(ActionType){
+    case ActionType.CREATE_PROJECT:
+      mutate(formData);
+      break;
+    default: 
+      throw new Error("Unknown action type");
+  }
+}
 
 
 
@@ -78,8 +103,7 @@ setSelected={setSelected}
   {selected === 0 ? (<BoardView type="project" data={projects}/>):(<Table tasks={projects}/>)}
   </Tabs>
 </div>
-  <AddNew open={open} setOpen={setOpen}/>
-  {/* <AddNew open={open} setOpen={setOpen} onSave={onSave}/> */}
+  <AddNew open={open} setOpen={setOpen} onSave={onSave}/>
   </div>)
 }
 
