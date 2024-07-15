@@ -5,7 +5,7 @@ import { Dialog } from "@headlessui/react";
 import Button from "../Button";
 import TextBox from "../TextBox";
 
-const AddSubTask = ({ open, setOpen, id, onSave }) => {
+const SubtaskForm = ({ open, setOpen, taskId, onSave }) => {
   const {
     register,
     handleSubmit,
@@ -20,14 +20,14 @@ const AddSubTask = ({ open, setOpen, id, onSave }) => {
 
 
   const onSubmit = handleSubmit((data) => {
-    onSave({formData:{taskId:id,data},actionType:"CREATE_SUBTASK"})
+    onSave({formData:{taskId,data},actionType:"CREATE_SUBTASK"})
     });
 
 
 
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+     
         <form onSubmit={onSubmit} className=''>
           <Dialog.Title
             as='h2'
@@ -88,9 +88,9 @@ const AddSubTask = ({ open, setOpen, id, onSave }) => {
             />
           </div>
         </form>
-      </ModalWrapper>
+  
     </>
   );
 };
 
-export default AddSubTask;
+export default SubtaskForm;

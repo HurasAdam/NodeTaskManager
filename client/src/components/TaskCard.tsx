@@ -12,8 +12,9 @@ import { BiMessageAltDetail } from "react-icons/bi";
 import { FaList } from "react-icons/fa";
 import UserInfo from "./UserInfo";
 import { IoMdAdd } from "react-icons/io";
-import AddSubTask from "./task/AddSubTask";
+import AddSubTask from "./task/SubtaskForm";
 import { useAccountStore } from "../redux/store";
+import AddNew from "./AddNew";
 
 
 const ICONS = {
@@ -25,7 +26,8 @@ const ICONS = {
 const TaskCard = ({ task,onSave }) => {
   const { account } = useAccountStore((state) => state);
   const [open, setOpen] = useState(false);
-
+console.log("TASK to")
+console.log(task);
   return (
     <>
       <div className='w-full h-fit bg-white shadow-md p-4 rounded'>
@@ -122,7 +124,7 @@ const TaskCard = ({ task,onSave }) => {
           </button>
         </div>
       </div>
-<AddSubTask open={open} setOpen={setOpen} id={task?._id} onSave={onSave}/>
+<AddNew open={open} setOpen={setOpen} taskId={task?._id} onSave={onSave} type="subtask"/>
      
     </>
   );
