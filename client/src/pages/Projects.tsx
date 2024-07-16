@@ -14,7 +14,7 @@ import { projectApi } from '../services/projectApi';
 import { useParams } from 'react-router-dom';
 import  ProjectForm  from '../components/project/ProjectForm';
 import AddNew from '../components/AddNew';
-
+import * as enums from "../enums/index"
 
 const TABS=[
   {title:"Board View", icon:<MdGridView/>},
@@ -78,7 +78,7 @@ setSelected={setSelected}
   {selected === 0 ? (<BoardView type="project" data={projects}/>):(<Table tasks={projects}/>)}
   </Tabs>
 </div>
-<AddNew open={open} setOpen={setOpen} type="project"/>
+<AddNew open={open} setOpen={setOpen} type={enums.EAddNewType.PROJECT}/>
   {/* <ProjectForm open={open} setOpen={setOpen} onSave={onSave}/> */}
   </div>)
 }

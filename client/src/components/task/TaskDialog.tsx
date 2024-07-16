@@ -9,10 +9,8 @@ import { Menu, Transition } from "@headlessui/react";
 import { taskApi } from '../../services/taskApi';
 import AddTask from "./AddTask";
 import AddNew from "../AddNew";
-import AddSubTask from "./AddSubTask";
 import ConfirmatioDialog from "../Dialogs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 
 const TaskDialog:React.FC = ({ task }) => {
   const [open, setOpen] = useState(false);
@@ -130,9 +128,10 @@ const TaskDialog:React.FC = ({ task }) => {
         setOpen={setOpenEdit}
         task={task}
         key={new Date().getTime()}
+        type={enums.EAddNewType.TASK}
       />
 
-      <AddSubTask open={open} setOpen={setOpen} />
+      <AddNew open={open} setOpen={setOpen} type={enums.EAddNewType.SUBTASK} taskId={task?._id} />
 
       <ConfirmatioDialog
         open={openDialog}

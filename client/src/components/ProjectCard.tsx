@@ -12,8 +12,9 @@ import { BiMessageAltDetail } from "react-icons/bi";
 import { FaList } from "react-icons/fa";
 import UserInfo from "./UserInfo";
 import { IoMdAdd } from "react-icons/io";
-import AddSubTask from "./task/AddSubTask";
+import AddSubTask from "./task/SubtaskForm";
 import { useAccountStore } from "../redux/store";
+import AddNew from "./AddNew";
 
 
 const ICONS = {
@@ -122,7 +123,7 @@ const ProjectCard = ({project, onSave }) => {
           </button>
         </div>
       </div>
-<AddSubTask open={open} setOpen={setOpen} id={project?._id} onSave={onSave}/>
+<AddNew open={open} setOpen={setOpen} id={project?._id} onSave={onSave} type="project"/>
      
     </>
   );

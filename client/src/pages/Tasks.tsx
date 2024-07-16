@@ -9,12 +9,11 @@ import { IoMdAdd } from "react-icons/io";
 import Tabs from "../components/Tabs";
 import TaskTitle from "../components/TaskTitle";
 import BoardView from "../components/BoardView";
-// import { tasks } from "../assets/data";
 import Table from "../components/task/Table";
-import AddTask from "../components/task/AddTask";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { taskApi } from "../services/taskApi";
 import AddNew from "../components/AddNew";
+import * as enums from "../enums/index";
 
 const TABS=[
   {title:"Board View", icon:<MdGridView/>},
@@ -77,7 +76,7 @@ setSelected={setSelected}
   {selected === 0 ? (<BoardView type="tickets"  data={tasks}/>):(<Table tasks={tasks}/>)}
   </Tabs>
 </div>
-<AddNew open={open} setOpen={setOpen}  type="task"/>
+<AddNew open={open} setOpen={setOpen}  type={enums.EAddNewType.PROJECT}/>
   </div>)
 }
 
