@@ -11,6 +11,7 @@ import AddTask from "./AddTask";
 import AddNew from "../AddNew";
 import AddSubTask from "./AddSubTask";
 import ConfirmatioDialog from "../Dialogs";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
 const TaskDialog:React.FC = ({ task }) => {
@@ -20,14 +21,21 @@ const TaskDialog:React.FC = ({ task }) => {
 
   const navigate = useNavigate();
 
-  const duplicateHandler = async () => {
-    try {
-      const result = await taskApi.duplicateTask(task._id);
-      console.log("Success Duplicated Task", result);
-    } catch (error) {
+
+  const {mutate} = useMutation({
+    mutationFn: () => taskApi.duplicateTask({ taskId: task?._id }),
+    onSuccess: (data) => {
+      console.log("Success Duplicated Task", data);
+    },
+    onError: (error) => {
       console.log("Error Duplicated Task", error);
-    }
+    },
+  });
+  
+  const duplicateHandler = async () => {
+      mutate();
   };
+
   const deleteClicks = () => {
     setOpenDialog(true);
   };

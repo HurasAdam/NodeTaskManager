@@ -60,7 +60,7 @@ const duplicateTask = async ({ taskId }) => {
   const config = {
     withCredentials: true,
   };
-  const { data } = await axios.post(`${BACKEND_BASE_URL}/task/duplicate/${taskId}`, config);
+  const { data } = await axios.post(`${BACKEND_BASE_URL}/task/duplicate/${taskId}`, {}, config);
   return data;
 };
 

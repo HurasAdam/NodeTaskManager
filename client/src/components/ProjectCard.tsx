@@ -71,8 +71,8 @@ const ProjectCard = ({project, onSave }) => {
               <span>0/{project?.subTasks?.length}</span>
             </div>
           </div>
-
           <div className='flex flex-row-reverse'>
+          
             {project?.pm?.map((m, index) => (
               <div
                 key={index}
