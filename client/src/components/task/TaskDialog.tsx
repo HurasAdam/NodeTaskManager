@@ -20,7 +20,14 @@ const TaskDialog:React.FC = ({ task }) => {
 
   const navigate = useNavigate();
 
-  const duplicateHandler = () => {};
+  const duplicateHandler = async () => {
+    try {
+      const result = await taskApi.duplicateTask(task._id);
+      console.log("Success Duplicated Task", result);
+    } catch (error) {
+      console.log("Error Duplicated Task", error);
+    }
+  };
   const deleteClicks = () => {
     setOpenDialog(true);
   };
@@ -47,7 +54,7 @@ const TaskDialog:React.FC = ({ task }) => {
     {
       label: "Duplicate",
       icon: <HiDuplicate className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => duplicateHanlder(),
+      onClick: () => duplicateHandler(),
     },
   ];
 

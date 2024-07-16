@@ -22,7 +22,7 @@ const ICONS = {
   low: <MdKeyboardArrowDown />,
 };
 
-const ProjectCard = ({ project,onSave }) => {
+const ProjectCard = ({project, onSave }) => {
   const { account } = useAccountStore((state) => state);
   const [open, setOpen] = useState(false);
 
@@ -48,10 +48,10 @@ const ProjectCard = ({ project,onSave }) => {
             <div
               className={clsx("w-4 h-4 rounded-full", TASK_TYPE[project?.stage])}
             />
-            <h4 className='line-clamp-1 text-black'>{project?.title}</h4>
+            <h4 className='line-clamp-1 text-black'>{project?.name}</h4>
           </div>
           <span className='text-sm text-gray-600'>
-            {formatDate(new Date(project?.date))}
+            {formatDate(new Date(project?.createdAt))}
           </span>
         </>
 
@@ -73,7 +73,7 @@ const ProjectCard = ({ project,onSave }) => {
           </div>
 
           <div className='flex flex-row-reverse'>
-            {project?.team?.map((m, index) => (
+            {project?.pm?.map((m, index) => (
               <div
                 key={index}
                 className={clsx(
