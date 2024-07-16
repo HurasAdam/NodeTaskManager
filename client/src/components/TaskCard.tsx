@@ -12,6 +12,7 @@ import { BiMessageAltDetail } from "react-icons/bi";
 import { FaList } from "react-icons/fa";
 import UserInfo from "./UserInfo";
 import { IoMdAdd } from "react-icons/io";
+import * as enums from "../enums/index";
 import AddSubTask from "./task/SubtaskForm";
 import { useAccountStore } from "../redux/store";
 import AddNew from "./AddNew";
@@ -124,7 +125,7 @@ console.log(task);
           </button>
         </div>
       </div>
-<AddNew open={open} setOpen={setOpen} taskId={task?._id} onSave={onSave} type="subtask"/>
+<AddNew open={open} setOpen={setOpen} taskId={task?._id} onSave={onSave} type={enums.EAddNewType.SUBTASK}/>
      
     </>
   );

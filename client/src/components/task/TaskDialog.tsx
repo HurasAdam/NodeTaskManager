@@ -7,10 +7,12 @@ import { MdAdd, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Menu, Transition } from "@headlessui/react";
 import { taskApi } from '../../services/taskApi';
+import { toast } from 'sonner';
 import AddTask from "./AddTask";
 import AddNew from "../AddNew";
 import ConfirmatioDialog from "../Dialogs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import * as enums from "../../enums/index";
 
 const TaskDialog:React.FC = ({ task }) => {
   const [open, setOpen] = useState(false);
@@ -18,19 +20,20 @@ const TaskDialog:React.FC = ({ task }) => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const navigate = useNavigate();
-
+const queryClient = useQueryClient();
 
   const {mutate} = useMutation({
     mutationFn: () => taskApi.duplicateTask({ taskId: task?._id }),
     onSuccess: (data) => {
-      console.log("Success Duplicated Task", data);
+      queryClient.invalidateQueries({ queryKey: ['tasks'] })
+      toast.success(data.message)
     },
     onError: (error) => {
       console.log("Error Duplicated Task", error);
     },
   });
   
-  const duplicateHandler = async () => {
+  const duplicateHandler = () => {
       mutate();
   };
 

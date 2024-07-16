@@ -102,14 +102,8 @@ if(!task){
         text,
         task:duplicatedTask._id
     })
-    
-    if(notification){
-        res.status(201).json({message:"Task has been created sucessfully"})
-    }
-    
-
-
-if(saveDuplicatedTask){
+        
+if(notification && saveDuplicatedTask){
     return res.status(201).json({message:"Task duplicated successfully"})
 }
 
