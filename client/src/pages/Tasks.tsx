@@ -76,7 +76,7 @@ setSelected={setSelected}
   {selected === 0 ? (<BoardView type="tickets"  data={tasks}/>):(<Table tasks={tasks}/>)}
   </Tabs>
 </div>
-<AddNew open={open} setOpen={setOpen}  type={enums.EAddNewType.PROJECT}/>
+<AddNew open={open} setOpen={setOpen}  type={enums.EAddNewType.TASK}/>
   </div>)
 }
 

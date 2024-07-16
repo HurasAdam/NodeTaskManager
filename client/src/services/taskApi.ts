@@ -48,11 +48,11 @@ const getTasks = async ({ stage, isTrashed }) => {
   return data;
 };
 
-const addTaskActivity = async ({ taskId }) => {
+const addTaskActivity = async ({ taskId,formData }) => {
   const config = {
     withCredentials: true,
   };
-  const { data } = await axios.post(`${BACKEND_BASE_URL}/task/activity/${taskId}`, config);
+  const { data } = await axios.post(`${BACKEND_BASE_URL}/task/activity/${taskId}`,formData,config);
   return data;
 };
 
