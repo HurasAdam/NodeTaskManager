@@ -10,7 +10,7 @@ import { taskApi } from '../../services/taskApi';
 import AddTask from "./AddTask";
 import AddNew from "../AddNew";
 import ConfirmatioDialog from "../Dialogs";
-import * as enums from "../../enums/index";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const TaskDialog:React.FC = ({ task }) => {
   const [open, setOpen] = useState(false);
@@ -19,7 +19,21 @@ const TaskDialog:React.FC = ({ task }) => {
 
   const navigate = useNavigate();
 
-  const duplicateHandler = () => {};
+
+  const {mutate} = useMutation({
+    mutationFn: () => taskApi.duplicateTask({ taskId: task?._id }),
+    onSuccess: (data) => {
+      console.log("Success Duplicated Task", data);
+    },
+    onError: (error) => {
+      console.log("Error Duplicated Task", error);
+    },
+  });
+  
+  const duplicateHandler = async () => {
+      mutate();
+  };
+
   const deleteClicks = () => {
     setOpenDialog(true);
   };
@@ -46,7 +60,7 @@ const TaskDialog:React.FC = ({ task }) => {
     {
       label: "Duplicate",
       icon: <HiDuplicate className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => duplicateHanlder(),
+      onClick: () => duplicateHandler(),
     },
   ];
 
