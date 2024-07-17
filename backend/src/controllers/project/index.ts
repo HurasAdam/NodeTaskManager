@@ -1,6 +1,7 @@
-import { createProject, getProjects } from "./projectControllers";
+import { createProject, getProject, getProjects } from "./projectControllers";
 
 export const projectController={
     createProject,
-    getProjects
+    getProjects,
+    getProject
 }
