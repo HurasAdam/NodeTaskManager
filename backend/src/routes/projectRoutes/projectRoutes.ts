@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post("/create",authGuard, projectController.createProject);
 router.get("/projects",authGuard, projectController.getProjects);
+router.get("/:id",authGuard, projectController.getProject);
 
 
 
