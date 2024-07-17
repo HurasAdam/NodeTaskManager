@@ -15,6 +15,7 @@ import { IoMdAdd } from "react-icons/io";
 import AddSubTask from "./task/SubtaskForm";
 import { useAccountStore } from "../redux/store";
 import AddNew from "./AddNew";
+import ProjectDialog from "./project/ProjectDialog";
 
 
 const ICONS = {
@@ -41,7 +42,7 @@ const ProjectCard = ({project, onSave }) => {
             <span className='uppercase'>{project?.priority} Priority</span>
           </div>
 
-          {account?.isAdmin && <TaskDialog task={project} />}
+          {account?.isAdmin && <ProjectDialog task={project} />}
         </div>
 
         <>

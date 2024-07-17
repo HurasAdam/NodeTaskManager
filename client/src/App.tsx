@@ -9,6 +9,7 @@ import Users from './pages/Users';
 import RootLayout from "./layouts/RootLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import Projects from "./pages/Projects";
+import ProjectDetails from "./pages/ProjectDetails";
 
 
 
@@ -31,6 +32,7 @@ function App() {
           <Route path='/team' element={<Users />} />
           <Route path='/trashed' element={<Trash />} />
           <Route path='/task/:id' element={<TaskDetails />} />
+          <Route path='/project/:id' element={<ProjectDetails/>} />
         </Route>
 
         <Route  element={<AuthLayout/>} >
