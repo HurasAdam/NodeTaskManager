@@ -36,10 +36,11 @@ const queryClient = useQueryClient();
   const duplicateHandler = () => {
       mutate();
   };
-
+  
   const deleteClicks = () => {
     setOpenDialog(true);
   };
+
   const deleteHandler = () => {
     setOpenDialog(false);
   };
