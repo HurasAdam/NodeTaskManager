@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import Button from "./Button";
 import { taskApi } from "../services/taskApi";
 import ActivityCard from "./ActivityCard";
+import { toast } from 'sonner';
 
 const TaskActivities = ({ activity, id,activityTypes,taskTypeIcons }) => {
 
@@ -26,6 +27,7 @@ const TaskActivities = ({ activity, id,activityTypes,taskTypeIcons }) => {
     },
     onSuccess:(data)=>{
       queryClient.invalidateQueries(["task",id])
+      toast.success(data.message);
     }
   })
   
