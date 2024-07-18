@@ -45,8 +45,8 @@ const {mutate:createProjectMutate} = useMutation({
     toast.success(FormData.message);
     setOpen(false);
   },
-  onError: (error) => {
-    console.log("Error Created Project", error);
+  onError: () => {
+    toast.error('Error Created Project');
   }
 })
 
@@ -60,8 +60,8 @@ return taskApi.createTask(formData)
     toast.success(FormData.message);
     setOpen(false);
   },
-  onError: (error) => {
-    console.log("Error Created Task", error);
+  onError: () => {
+    toast.error('Error Created Task');
   },
 })
 
@@ -75,8 +75,8 @@ const {mutate:createSubtaskMutate}=useMutation({
       toast.success(formData.message);
       setOpen(false);
   },
-  onError: (error) => {
-    console.log("Error Created SubTask", error);
+  onError: () => {
+    toast.error('Error Created SubTask');
   }
 })
 
