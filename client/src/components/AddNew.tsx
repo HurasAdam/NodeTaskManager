@@ -14,6 +14,7 @@ import TaskForm from "./task/TaskForm";
 import * as enums from "../enums/index";
 import { taskApi } from "../services/taskApi";
 import SubtaskForm from "./task/SubtaskForm";
+import { toast } from 'sonner';
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
@@ -39,10 +40,13 @@ const {mutate:createProjectMutate} = useMutation({
   mutationFn:(FormData)=>{
     return projectApi.createProject(FormData)
   },
-  onSuccess:()=>{
+  onSuccess:(FormData)=>{
     queryClient.invalidateQueries(["projects"])
-
+    toast.success(FormData.message);
     setOpen(false);
+  },
+  onError: () => {
+    toast.error('Error Created Project');
   }
 })
 
@@ -51,11 +55,14 @@ const {mutate:createTaskMutate}=useMutation({
   mutationFn:(formData)=>{
 return taskApi.createTask(formData)
   },
-  onSuccess:()=>{
+  onSuccess:(FormData)=>{
     queryClient.invalidateQueries(["tasks"])
-
-     setOpen(false);
-  }
+    toast.success(FormData.message);
+    setOpen(false);
+  },
+  onError: () => {
+    toast.error('Error Created Task');
+  },
 })
 
 
@@ -63,9 +70,13 @@ const {mutate:createSubtaskMutate}=useMutation({
   mutationFn:(formData)=>{
     return taskApi.createSubTask(formData);
   },
-  onSuccess:()=>{
+  onSuccess:(formData)=>{
       queryClient.invalidateQueries(["tasks"])
-       setOpen(false);
+      toast.success(formData.message);
+      setOpen(false);
+  },
+  onError: () => {
+    toast.error('Error Created SubTask');
   }
 })
 

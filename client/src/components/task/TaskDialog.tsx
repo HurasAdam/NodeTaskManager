@@ -28,18 +28,19 @@ const queryClient = useQueryClient();
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
       toast.success(data.message)
     },
-    onError: (error) => {
-      console.log("Error Duplicated Task", error);
+    onError: () => {
+      toast.error("Error Duplicated Task");
     },
   });
   
   const duplicateHandler = () => {
       mutate();
   };
-
+  
   const deleteClicks = () => {
     setOpenDialog(true);
   };
+
   const deleteHandler = () => {
     setOpenDialog(false);
   };
