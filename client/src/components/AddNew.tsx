@@ -44,6 +44,9 @@ const {mutate:createProjectMutate} = useMutation({
     queryClient.invalidateQueries(["projects"])
     toast.success(FormData.message);
     setOpen(false);
+  },
+  onError: (error) => {
+    console.log("Error Created Project", error);
   }
 })
 
@@ -56,7 +59,10 @@ return taskApi.createTask(formData)
     queryClient.invalidateQueries(["tasks"])
     toast.success(FormData.message);
     setOpen(false);
-  }
+  },
+  onError: (error) => {
+    console.log("Error Created Task", error);
+  },
 })
 
 
@@ -68,6 +74,9 @@ const {mutate:createSubtaskMutate}=useMutation({
       queryClient.invalidateQueries(["tasks"])
       toast.success(formData.message);
       setOpen(false);
+  },
+  onError: (error) => {
+    console.log("Error Created SubTask", error);
   }
 })
 
