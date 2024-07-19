@@ -69,7 +69,16 @@ try{
 
 const {id}=req.params;
 
-const project = await Project.findById(id);
+const project = await Project.findById(id).populate([
+    {
+    path:"pm",
+     select:"name role title email"
+},
+{
+    path:"members",
+    select:"name role title email"
+}
+]);
 
 if(!project){
     return res.status(404).json({message:"Project not found"})

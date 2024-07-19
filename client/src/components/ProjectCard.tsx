@@ -38,8 +38,9 @@ const ProjectCard = ({project, onSave }) => {
               PRIOTITYSTYELS[project?.priority]
             )}
           >
-            <span className='text-lg'>{ICONS[project?.priority]}</span>
-            <span className='uppercase'>{project?.priority} Priority</span>
+            {/* <span className='text-lg'>{ICONS[project?.priority]}</span>
+            <span className='uppercase'>{project?.priority} Priority</span> */}
+            <h4 className='line-clamp-1 text-black uppercase'>{project?.name}</h4>
           </div>
 
           {account?.isAdmin && <ProjectDialog task={project} />}
@@ -50,7 +51,7 @@ const ProjectCard = ({project, onSave }) => {
             <div
               className={clsx("w-4 h-4 rounded-full", TASK_TYPE[project?.stage])}
             />
-            <h4 className='line-clamp-1 text-black'>{project?.name}</h4>
+            {/* <h4 className='line-clamp-1 text-black'>{project?.name}</h4> */}
           </div>
           <span className='text-sm text-gray-600'>
             {formatDate(new Date(project?.createdAt))}
