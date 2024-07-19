@@ -24,7 +24,7 @@ const uploadedFileURLs = [];
 
 interface IAddNewProps{
   open:boolean;
-  setOpen:()=>void;
+  setOpen:(bol:boolean)=>void;
   type: enums.EAddNewType,
   taskId?:string
 }
@@ -45,8 +45,9 @@ const {mutate:createProjectMutate} = useMutation({
     toast.success(FormData.message);
     setOpen(false);
   },
-  onError: () => {
-    toast.error('Error Created Project');
+  onError: (error) => {
+    const errMessage = error?.response?.data?.message
+    toast.error(errMessage);
   }
 })
 
@@ -60,8 +61,9 @@ return taskApi.createTask(formData)
     toast.success(FormData.message);
     setOpen(false);
   },
-  onError: () => {
-    toast.error('Error Created Task');
+  onError: (error) => {
+    const errMessage = error?.response?.data?.message
+    toast.error(errMessage);
   },
 })
 
@@ -75,8 +77,9 @@ const {mutate:createSubtaskMutate}=useMutation({
       toast.success(formData.message);
       setOpen(false);
   },
-  onError: () => {
-    toast.error('Error Created SubTask');
+  onError: (error) => {
+    const errMessage = error?.response?.data?.message
+    toast.error(errMessage);
   }
 })
 

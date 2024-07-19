@@ -37,7 +37,7 @@ const createSubProject= async({data:formData,projectId})=>{
         }
   
         
-        const {data}= await axios.get(`${BACKEND_BASE_URL}/projects/${projectId}`,config);
+        const {data}= await axios.get(`${BACKEND_BASE_URL}/project/${projectId}`,config);
         return data;
     }
 

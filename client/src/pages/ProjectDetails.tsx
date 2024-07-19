@@ -4,6 +4,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import { FaBug, FaTasks, FaThumbsUp, FaUser } from "react-icons/fa";
 import { GrInProgress } from "react-icons/gr";
+import { PiProjectorScreenChart } from "react-icons/pi";
 import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
@@ -110,9 +111,12 @@ const {data:task}=useQuery({
 
   return (
     <div className='w-full flex flex-col gap-3 mb-4 overflow-y-hidden'>
-      <h1 className='text-2xl text-gray-600 font-bold'>{task?.title}</h1>
-
+    
+    <h1 className='flex items-center gap-x-2 text-2xl text-gray-600 font-bold bg-white p-2.5 rounded'>
+        <PiProjectorScreenChart className="text-blue-800 "/>
+        {task?.name}</h1>
       <Tabs tabs={TABS} setSelected={setSelected}>
+        
         {selected === 0 ? (
           <>
             <div className='w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-8 overflow-y-auto'>
@@ -145,6 +149,10 @@ const {data:task}=useQuery({
                   Created At: <span className="text-gray-800">{new Date(task?.createdAt).toDateString()}</span>
                 </p>
 
+                <p className='text-gray-500'>
+                  Created At: <span className="text-gray-800">{new Date(task?.createdAt).toDateString()}</span>
+                </p>
+
                 <div className='flex items-center gap-8 p-4 border-y border-gray-200'>
                   <div className='space-x-2'>
                     <span className='font-semibold'>Assets :</span>
@@ -154,17 +162,17 @@ const {data:task}=useQuery({
                   <span className='text-gray-400'>|</span>
 
                   <div className='space-x-2'>
-                    <span className='font-semibold'>Sub-Task :</span>
-                    <span>{task?.subTasks?.length}</span>
+                    <span className='font-semibold'>Members :</span>
+                    <span>{task?.members?.length}</span>
                   </div>
                 </div>
 
                 <div className='space-y-4 py-6'>
                   <p className='text-gray-600 font-semibold test-sm'>
-                    TASK TEAM
+                    PROJECT LEADER
                   </p>
                   <div className='space-y-3'>
-                    {task?.team?.map((m, index) => (
+                    {task?.pm?.map((m, index) => (
                       <div
                         key={index}
                         className='flex gap-4 py-2 items-center border-t border-gray-200'
