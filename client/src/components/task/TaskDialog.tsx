@@ -32,6 +32,17 @@ const queryClient = useQueryClient();
       toast.error("Error Duplicated Task");
     },
   });
+
+const {mutate:deleteTaskMutation}= useMutation({
+  mutationFn:()=>{
+    return taskApi.deleteTask({taskId:task?._id})
+  },
+  onSuccess:(data)=>{
+    queryClient.invalidateQueries({queryKey:["tasks"]})
+    toast.success(data.message)
+  }
+})
+
   
   const duplicateHandler = () => {
       mutate();
@@ -42,6 +53,8 @@ const queryClient = useQueryClient();
   };
 
   const deleteHandler = () => {
+deleteTaskMutation();
+
     setOpenDialog(false);
   };
 
