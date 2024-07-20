@@ -55,13 +55,12 @@ const sidebarLinks = [
 
 const Sidebar:React.FC = () => {
 
-const {user}= useAccountStore((state)=>state.account);
-
+const {account}= useAccountStore((state)=>state);
 // const dispatch = useDispatch();
 const location = useLocation();
 const path = location.pathname.split("/")[1]
-
-const sidebarRoleBasedLinks = user?.role==='admin' ? sidebarLinks : sidebarLinks.slice(0,6);
+console.log(account && account)
+const sidebarRoleBasedLinks = account?.isAdmin ? sidebarLinks : sidebarLinks.slice(0,6);
 
 const closeSidebar=()=>{
     // dispatch(setOpenSidebar(false))

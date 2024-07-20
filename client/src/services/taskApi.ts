@@ -10,12 +10,12 @@ const createTask = async (formData) => {
   return data;
 };
 
-const deleteTask = async (taskId) => {
+const deleteTask = async ({taskId}) => {
   const config = {
     withCredentials: true,
-    data: { taskId },
   };
-  const { data } = await axios.delete(`${BACKEND_BASE_URL}/task/delete`, config);
+ 
+  const { data } = await axios.put(`${BACKEND_BASE_URL}/task/trash/${taskId}`,{}, config);
   return data;
 };
 
