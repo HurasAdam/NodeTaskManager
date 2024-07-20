@@ -2,6 +2,7 @@ import {
   createSubTask,
   createTask,
   dashboardStatistics,
+  deleteRestoreAllTasks,
   deleteRestoreTask,
   duplicateTask,
   getTask,
@@ -22,6 +23,7 @@ const taskController = {
   trashTask,
   createSubTask,
   deleteRestoreTask,
+  deleteRestoreAllTasks,
 };
 
 export default taskController;

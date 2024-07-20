@@ -19,4 +19,10 @@ router.delete(
   authGuard,
   taskController.deleteRestoreTask
 );
+
+router.delete(
+  "/delete-restore-all",
+  authGuard,
+  taskController.deleteRestoreAllTasks
+);
 export default router;

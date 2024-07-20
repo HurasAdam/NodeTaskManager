@@ -390,8 +390,6 @@ export const deleteRestoreTask = async (req: Request, res: Response) => {
 
     if (actionType === "delete") {
       await Task.findByIdAndDelete(id);
-    } else if (actionType === "deleteAll") {
-      await Task.deleteMany({ isTrashed: true });
     } else if (actionType === "restore") {
       const resp = await Task.findById(id);
 
@@ -399,6 +397,27 @@ export const deleteRestoreTask = async (req: Request, res: Response) => {
         resp.isTrashed = false;
         resp.save();
       }
+    }
+
+    res.status(200).json({
+      status: true,
+      message: `Operation performed successfully.`,
+    });
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      return res.status(400).json({ message: error.message });
+    }
+    res.status(500).json({ message: "An unexpected error has occured" });
+  }
+};
+
+export const deleteRestoreAllTasks = async (req: Request, res: Response) => {
+  try {
+    const { actionType } = req.query;
+
+    if (actionType === "deleteAll") {
+      await Task.deleteMany({ isTrashed: true });
     } else if (actionType === "restoreAll") {
       await Task.updateMany(
         { isTrashed: true },
