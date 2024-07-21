@@ -1,20 +1,11 @@
 import clsx from "clsx";
 import moment from "moment";
 import React, { useState } from "react";
-import { FaBug, FaTasks, FaThumbsUp, FaUser } from "react-icons/fa";
-import { GrInProgress } from "react-icons/gr";
+import {  FaTasks } from "react-icons/fa";
+
 import { PiProjectorScreenChart } from "react-icons/pi";
-import {
-  MdKeyboardArrowDown,
-  MdKeyboardArrowUp,
-  MdKeyboardDoubleArrowUp,
-  MdOutlineDoneAll,
-  MdOutlineMessage,
-  MdTaskAlt,
-} from "react-icons/md";
 import { RxActivityLog } from "react-icons/rx";
 import { useParams } from "react-router-dom";
-import { toast } from "sonner";
 import { tasks } from "../assets/data";
 import Tabs from "../components/Tabs";
 import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
@@ -26,6 +17,8 @@ import { useForm } from "react-hook-form";
 import TaskActivities from "../components/TaskActivities";
 import TaskDetailsTab from "../components/TaskDetailsTab";
 import { projectApi } from "../services/projectApi";
+import TaskMembers from "../components/TaskMembers";
+import TaskAttachments from "../components/TaskAttachments";
 
 const assets = [
   "https://images.pexels.com/photos/2418664/pexels-photo-2418664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -61,18 +54,38 @@ const ProjectDetails = () => {
         {task?.name}
       </h1>
       <Tabs tabs={TABS} setSelected={setSelected}>
-        {selected === 0 ? (
+        {selected === 0 && (
           <TaskDetailsTab task={task} context="project" />
-        ) : (
-          <>
+        )}
+  {selected === 1 &&(
+            <>
             <TaskActivities
               activity={task?.activities}
               id={id}
-              activityTypes={act_types}
-              taskTypeIcons={TASKTYPEICON}
+      
             />
           </>
-        )}
+  )}
+    {selected === 2 &&(
+            <>
+            <TaskMembers
+              members={task?.activities}
+              id={id}
+      
+            />
+          </>
+  )}
+
+{selected === 3 &&(
+            <>
+            <TaskAttachments
+              attachments={task?.activities}
+              id={id}
+      
+            />
+          </>
+  )}
+        
       </Tabs>
     </div>
   );
