@@ -4,6 +4,7 @@ import * as enums from "../enums/index";
 const taskSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
+    description: { type: String, required: true },
     date: { type: Date, default: new Date() },
     priority: {
       type: String,
@@ -20,10 +21,10 @@ const taskSchema = new mongoose.Schema(
         type: {
           type: String,
           default: enums.ETaskActivityType.Assigned,
-          enum:Object.values(enums.ETaskActivityType)
+          enum: Object.values(enums.ETaskActivityType),
         },
         activity: String,
-        date: { type: Date, default: new Date() },
+        date: { type: Date, default: () => new Date() },
         by: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       },
     ],
