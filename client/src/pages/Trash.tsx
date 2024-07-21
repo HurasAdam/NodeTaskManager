@@ -26,7 +26,7 @@ const Trash: React.FC = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [msg, setMsg] = useState(null);
-  const [type, setType] = useState<string>("delete");
+  const [type, setType] = useState<string>("");
   const [selected, setSelected] = useState<string>("");
   const queryClient = useQueryClient();
   const params = useParams();
@@ -35,15 +35,46 @@ const Trash: React.FC = () => {
     queryFn: () => {
       return taskApi.getTasks({ isTrashed: status });
     },
-    queryKey: ["tasks"],
+    queryKey: ["trashed-tasks"],
   });
-
-  const { mutate } = useMutation({
+  console.log("type");
+  console.log(type);
+  const { mutate: removeTaskMutation } = useMutation({
     mutationFn: ({ taskId }) => {
       return taskApi.removeTask({ taskId });
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["trashed-tasks"] });
+      toast.success(data.message);
+    },
+  });
+
+  const { mutate: restoreTaskMutation } = useMutation({
+    mutationFn: ({ taskId }) => {
+      return taskApi.restoreTask({ taskId });
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["trashed-tasks"] });
+      toast.success(data.message);
+    },
+  });
+
+  const { mutate: removeAllTasksMutation } = useMutation({
+    mutationFn: () => {
+      return taskApi.removeAllTasks();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["trashed-tasks"] });
+      toast.success(data.message);
+    },
+  });
+
+  const { mutate: restoreAllTasksMutation } = useMutation({
+    mutationFn: () => {
+      return taskApi.restoreAllTask();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["trashed-tasks"] });
       toast.success(data.message);
     },
   });
@@ -60,16 +91,29 @@ const Trash: React.FC = () => {
     setOpenDialog(true);
   };
 
-  const restoreClick = (id) => {
-    setSelected(id);
+  const restoreClick = ({ id, title }) => {
+    setSelected({ id, title });
     setType("restore");
     setMsg("Do you want to restore the selected item?");
     setOpenDialog(true);
   };
 
-  const onClick = () => {
-    console.log(selected);
-    mutate({ taskId: selected.id });
+  const restoreAllClick = () => {
+    setType("restoreAll");
+    setMsg("Do you want to permanantyl delte all items?");
+    setOpenDialog(true);
+  };
+
+  const onClick = (type) => {
+    if (type === "delete") {
+      removeTaskMutation({ taskId: selected.id });
+    } else if (type === "restore") {
+      restoreTaskMutation({ taskId: selected?.id });
+    } else if (type === "deleteAll") {
+      removeAllTasksMutation();
+    } else if (type === "restoreAll") {
+      restoreAllTasksMutation();
+    }
   };
 
   const TableHeader = () => (
@@ -113,7 +157,7 @@ const Trash: React.FC = () => {
       <td className="py-2 flex gap-1 justify-end">
         <Button
           icon={<MdOutlineRestore className="text-xl text-gray-500" />}
-          onClick={() => restoreClick(item._id)}
+          onClick={() => restoreClick({ id: item?._id, title: item?.title })}
         />
         <Button
           icon={<MdDelete className="text-xl text-red-600" />}

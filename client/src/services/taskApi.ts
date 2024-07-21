@@ -101,6 +101,39 @@ const removeTask = async ({ taskId }) => {
   return data;
 };
 
+const removeAllTasks = async () => {
+  const config = {
+    withCredentials: true,
+  };
+  const { data } = await axios.delete(
+    `${BACKEND_BASE_URL}/task/delete-restore-all/?actionType=deleteAll`,
+    config
+  );
+  return data;
+};
+
+const restoreTask = async ({ taskId }) => {
+  const config = {
+    withCredentials: true,
+  };
+  const { data } = await axios.delete(
+    `${BACKEND_BASE_URL}/task/delete-restore/${taskId}?actionType=restore`,
+    config
+  );
+  return data;
+};
+
+const restoreAllTask = async () => {
+  const config = {
+    withCredentials: true,
+  };
+  const { data } = await axios.delete(
+    `${BACKEND_BASE_URL}/task/delete-restore-all/?actionType=restoreAll`,
+    config
+  );
+  return data;
+};
+
 export const taskApi = {
   getTasks,
   createTask,
@@ -110,4 +143,7 @@ export const taskApi = {
   deleteTask,
   duplicateTask,
   removeTask,
+  restoreTask,
+  removeAllTasks,
+  restoreAllTask,
 };

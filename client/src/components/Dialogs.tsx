@@ -16,9 +16,12 @@ export default function ConfirmatioDialog({
   setType = () => {},
 }) {
   const closeDialog = () => {
-    setType("delete");
     setMsg(null);
     setOpen(false);
+
+    if (!open) {
+      setType("delete");
+    }
   };
 
   return (
@@ -54,8 +57,15 @@ export default function ConfirmatioDialog({
                   ? "bg-yellow-600"
                   : "bg-red-600 hover:bg-red-500"
               )}
-              onClick={onClick}
-              label={type === "restore" ? "Restore" : "Delete"}
+              onClick={() => {
+                onClick(type);
+                closeDialog();
+              }}
+              label={
+                type === "restore" || type === "restoreAll"
+                  ? "Restore"
+                  : "Delete"
+              }
             />
 
             <Button
