@@ -120,10 +120,7 @@ const TaskDetailsTab = ({ task, context }) => {
           <StageBadge stage={task?.stage} />
         </div>
         <p className="text-gray-500">
-          Created At:{" "}
-          <span className="text-gray-800">
-            {new Date(task?.createdAt).toDateString()}
-          </span>
+          Created At: <span className="text-gray-800"> {new Date(task?.createdAt).toDateString()} </span>
         </p>
         <TaskDetailsStats task={task} context={context} />
         {context === "task" ? (

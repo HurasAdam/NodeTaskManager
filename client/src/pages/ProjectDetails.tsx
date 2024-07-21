@@ -1,4 +1,3 @@
-
 import clsx from "clsx";
 import moment from "moment";
 import React, { useState } from "react";
@@ -25,7 +24,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { taskApi } from "../services/taskApi";
 import { useForm } from "react-hook-form";
 import TaskActivities from "../components/TaskActivities";
-import  TaskDetailsTab  from "../components/TaskDetailsTab";
+import TaskDetailsTab from "../components/TaskDetailsTab";
 import { projectApi } from "../services/projectApi";
 
 const assets = [
@@ -41,48 +40,6 @@ const TABS = [
   { title: "Members", icon: <FaTasks /> },
   { title: "Attachments", icon: <FaTasks /> },
 ];
-const TASKTYPEICON = {
-  commented: (
-    <div className='w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center text-white'>
-      <MdOutlineMessage />,
-    </div>
-  ),
-  started: (
-    <div className='w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white'>
-      <FaThumbsUp size={20} />
-    </div>
-  ),
-  assigned: (
-    <div className='w-6 h-6 flex items-center justify-center rounded-full bg-gray-500 text-white'>
-      <FaUser size={14} />
-    </div>
-  ),
-  bug: (
-    <div className='text-red-600'>
-      <FaBug size={24} />
-    </div>
-  ),
-  completed: (
-    <div className='w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white'>
-      <MdOutlineDoneAll size={24} />
-    </div>
-  ),
-  "in progress": (
-    <div className='w-8 h-8 flex items-center justify-center rounded-full bg-violet-600 text-white'>
-      <GrInProgress size={16} />
-    </div>
-  ),
-};
-
-const act_types = [
-  "assigned",
-  "started",
-  "in progress",
-  "commented",
-  "bug",
-  "completed",
-];
-
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -90,37 +47,35 @@ const ProjectDetails = () => {
   const [selected, setSelected] = useState(0);
   // const task = tasks[3];
 
-
-
-const {data:task}=useQuery({
-  queryFn:()=>{
-    return projectApi.getProject({projectId:id});
-  },
-  queryKey:["task",id]
-})
-
+  const { data: task } = useQuery({
+    queryFn: () => {
+      return projectApi.getProject({ projectId: id });
+    },
+    queryKey: ["task", id],
+  });
 
   return (
-    <div className='w-full flex flex-col gap-3 mb-4 overflow-y-hidden'>
-    
-    <h1 className='flex items-center gap-x-2 text-2xl text-gray-600 font-bold bg-white p-2.5 rounded'>
-        <PiProjectorScreenChart className="text-blue-800 "/>
-        {task?.name}</h1>
+    <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden">
+      <h1 className="flex items-center gap-x-2 text-2xl text-gray-600 font-bold bg-white p-2.5 rounded">
+        <PiProjectorScreenChart className="text-blue-800 " />
+        {task?.name}
+      </h1>
       <Tabs tabs={TABS} setSelected={setSelected}>
-        
         {selected === 0 ? (
-            <TaskDetailsTab task={task} context="project"/>
+          <TaskDetailsTab task={task} context="project" />
         ) : (
           <>
-            <TaskActivities activity={task?.activities} id={id} activityTypes={act_types} taskTypeIcons={TASKTYPEICON} />
+            <TaskActivities
+              activity={task?.activities}
+              id={id}
+              activityTypes={act_types}
+              taskTypeIcons={TASKTYPEICON}
+            />
           </>
         )}
       </Tabs>
-   
     </div>
-    
   );
 };
-
 
 export default ProjectDetails;
