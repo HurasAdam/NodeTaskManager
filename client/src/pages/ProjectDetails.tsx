@@ -49,6 +49,8 @@ const bgColor = {
 const TABS = [
   { title: "Task Detail", icon: <FaTasks /> },
   { title: "Activities/Timeline", icon: <RxActivityLog /> },
+  { title: "Members", icon: <FaTasks /> },
+  { title: "Attachments", icon: <FaTasks /> },
 ];
 const TASKTYPEICON = {
   commented: (
@@ -144,10 +146,6 @@ const {data:task}=useQuery({
                     <span className='text-black uppercase'>{task?.stage}</span>
                   </div>
                 </div>
-
-                <p className='text-gray-500'>
-                  Created At: <span className="text-gray-800">{new Date(task?.createdAt).toDateString()}</span>
-                </p>
 
                 <p className='text-gray-500'>
                   Created At: <span className="text-gray-800">{new Date(task?.createdAt).toDateString()}</span>
