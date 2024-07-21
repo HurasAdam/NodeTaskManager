@@ -6,8 +6,11 @@ import Button from "./Button";
 import { taskApi } from "../services/taskApi";
 import ActivityCard from "./ActivityCard";
 import { toast } from "sonner";
+import { MdOutlineDoneAll, MdOutlineMessage } from "react-icons/md";
+import { FaBug, FaTasks, FaThumbsUp, FaUser } from "react-icons/fa";
+import { GrInProgress } from "react-icons/gr";
 
-const TaskActivities = ({ activity, id, activityTypes, taskTypeIcons }) => {
+const TaskActivities = ({ activity, id}) => {
 
   const TASKTYPEICON = {
     commented: (
@@ -85,7 +88,7 @@ const TaskActivities = ({ activity, id, activityTypes, taskTypeIcons }) => {
         <div className="w-full">
           {activity?.map((el, index) => (
             <ActivityCard
-              taskTypeIcons={taskTypeIcons}
+              taskTypeIcons={TASKTYPEICON}
               key={index}
               item={el}
               isConnected={index < activity.length - 1}
@@ -100,7 +103,7 @@ const TaskActivities = ({ activity, id, activityTypes, taskTypeIcons }) => {
             Add Activity
           </h4>
           <div className="w-full flex flex-wrap gap-5">
-            {activityTypes.map((item, index) => (
+            {act_types.map((item, index) => (
               <div key={item} className="flex gap-2 items-center">
                 <input
                   type="radio"

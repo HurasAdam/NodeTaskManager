@@ -2,22 +2,16 @@
 import clsx from "clsx";
 import moment from "moment";
 import React, { useState } from "react";
-import { FaBug, FaTasks, FaThumbsUp, FaUser } from "react-icons/fa";
+import {FaTasks } from "react-icons/fa";
 import { GrInProgress } from "react-icons/gr";
 import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
-  MdOutlineDoneAll,
-  MdOutlineMessage,
-  MdTaskAlt,
 } from "react-icons/md";
 import { RxActivityLog } from "react-icons/rx";
 import { useParams } from "react-router-dom";
-import { toast } from "sonner";
-import { tasks } from "../assets/data";
 import Tabs from "../components/Tabs";
-import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -78,7 +72,7 @@ const {data:task}=useQuery({
           </>
         ) : (
           <>
-            <TaskActivities activity={task?.activities} id={id} activityTypes={act_types} taskTypeIcons={TASKTYPEICON} />
+            <TaskActivities activity={task?.activities} id={id}  />
       
           </>
         )}
