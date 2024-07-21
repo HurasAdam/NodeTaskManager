@@ -1,18 +1,29 @@
-import { createSubTask, createTask, dashboardStatistics, duplicateTask, getTask, getTasks, postTaskActivity, trashTask, updateTask } from "./taskControllers";
+import {
+  createSubTask,
+  createTask,
+  dashboardStatistics,
+  deleteRestoreAllTasks,
+  deleteRestoreTask,
+  duplicateTask,
+  getTask,
+  getTasks,
+  postTaskActivity,
+  trashTask,
+  updateTask,
+} from "./taskControllers";
 
-
-
-const taskController= {
-    createTask,
-    duplicateTask,
-    postTaskActivity,
-    dashboardStatistics,
-    getTasks,
-    getTask,
-    updateTask,
-    trashTask,
-    createSubTask,
-    
+const taskController = {
+  createTask,
+  duplicateTask,
+  postTaskActivity,
+  dashboardStatistics,
+  getTasks,
+  getTask,
+  updateTask,
+  trashTask,
+  createSubTask,
+  deleteRestoreTask,
+  deleteRestoreAllTasks,
 };
 
 export default taskController;
