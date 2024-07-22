@@ -17,11 +17,12 @@ const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 const isLoading = "";
 const uploadedFileURLs = [];
 
-const TaskForm: React.FC = ({ open, setOpen, onSave }) => {
-  const task = "";
+const TaskForm: React.FC = ({ open, setOpen, onSave,task }) => {
+
   const [assets, setAssets] = useState([]);
   const queryClient = useQueryClient();
-
+console.log("TASK HERE")
+console.log(task)
   const {
     register,
     handleSubmit,
@@ -31,12 +32,12 @@ const TaskForm: React.FC = ({ open, setOpen, onSave }) => {
     reset,
   } = useForm({
     defaultValues: {
-      title: "",
-      description: "",
-      team: [],
-      priority: "",
-      stage: "",
-      date: "",
+      title: task? task?.title: "",
+      description: task ? task.description : "",
+      team: task ? task?.team :[],
+      priority: task ? task?.priority : "",
+      stage: task ? task?.stage : "",
+      date: task ? new Date(task?.date).toISOString().split("T")[0] : "",
     },
   });
 
@@ -46,8 +47,12 @@ const TaskForm: React.FC = ({ open, setOpen, onSave }) => {
     },
   });
 
+
   const onSubmit = handleSubmit((data) => {
     console.log(data);
+    if(task){
+     return  onSave({ formData: {data, taskId:task?._id}, actionType: "UPDATE_TASK" });
+    }
     onSave({ formData: data, actionType: "CREATE_TASK" });
   });
 
@@ -113,6 +118,7 @@ const TaskForm: React.FC = ({ open, setOpen, onSave }) => {
               <TextBox
                 placeholder="Date"
                 type="date"
+                defaultValue={watch("date") || task?.date || ""}
                 name="date"
                 label="Task Date"
                 className="w-full rounded"
