@@ -70,13 +70,14 @@ export const duplicateTask = async (req: Request, res: Response) => {
     const duplicatedTask = await Task.create({
       ...task,
       title: `${task?.title} - Duplicate`,
+      description:task?.description,
     });
 
     duplicatedTask.team = task.team;
     duplicatedTask.subTasks = task.subTasks;
     duplicatedTask.assets = task.assets;
     duplicatedTask.priority = task.priority;
-
+    
     const saveDuplicatedTask = await duplicatedTask.save();
 
     let text = "New task has been asigned to you!";
