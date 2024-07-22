@@ -66,6 +66,20 @@ const getTasks = async ({ stage, isTrashed }) => {
   return data;
 };
 
+
+const updateTask = async (formData) => {
+  const config = {
+    withCredentials: true,
+  };
+  const {data:taskData,taskId}= formData;
+  const { data } = await axios.put(
+    `${BACKEND_BASE_URL}/task/${taskId}`,
+    taskData,
+    config
+  );
+  return data;
+};
+
 const addTaskActivity = async ({ taskId, formData }) => {
   const config = {
     withCredentials: true,
@@ -139,6 +153,7 @@ export const taskApi = {
   createTask,
   createSubTask,
   getTask,
+  updateTask,
   addTaskActivity,
   deleteTask,
   duplicateTask,

@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const TextBox = React.forwardRef<HTMLInputElement, IProps>(
-  ({ type, placeholder, label, register, name, className, error }, ref) => {
+  ({ type, placeholder, label, register, name, className, error, defaultValue }, ref) => {
     return (
       <div className="w-full flex flex-col gap-1">
         {label && (
@@ -22,6 +22,7 @@ const TextBox = React.forwardRef<HTMLInputElement, IProps>(
         )}
         <div>
           <input
+    defaultValue={defaultValue}
             name={name}
             placeholder={placeholder}
             ref={ref}

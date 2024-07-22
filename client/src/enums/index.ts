@@ -12,6 +12,7 @@ export enum ETaskActivityType {
     CREATE_PROJECT = "CREATE_PROJECT",
     CREATE_TASK = "CREATE_TASK",
     CREATE_SUBTASK = "CREATE_SUBTASK",
+    UPDATE_TASK = "UPDATE_TASK",
   }
 
   export enum EAddNewType{

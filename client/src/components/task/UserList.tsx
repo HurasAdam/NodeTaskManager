@@ -22,6 +22,7 @@ const handleChange= (value):void=>{
 value={selectedUsers}
 onChange={(el)=>handleChange(el)}
 multiple
+
 >
 {/* ---- */}
 <div className='relative mt-1'>

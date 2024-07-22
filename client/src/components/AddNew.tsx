@@ -29,7 +29,7 @@ interface IAddNewProps{
   taskId?:string
 }
 
-const AddNew:React.FC<IAddNewProps> = ({ open, setOpen,type,taskId }) => {
+const AddNew:React.FC<IAddNewProps> = ({ open, setOpen,type,taskId,task }) => {
 
   const [assets, setAssets] = useState([]);
 const queryClient = useQueryClient();
@@ -83,6 +83,21 @@ const {mutate:createSubtaskMutate}=useMutation({
   }
 })
 
+const {mutate:updateTaskMutation}=useMutation({
+  mutationFn:(formData)=>{
+    return taskApi.updateTask(formData);
+  },
+  onSuccess:(data)=>{
+      queryClient.invalidateQueries(["tasks"])
+      toast.success(data.message);
+      setOpen(false);
+  },
+  onError: (error) => {
+    const errMessage = error?.response?.data?.message
+    toast.error(errMessage);
+  }
+})
+
 
 
 const onSave=({formData,actionType})=>{
@@ -96,6 +111,9 @@ const onSave=({formData,actionType})=>{
       case enums.ActionType.CREATE_PROJECT:
         createProjectMutate(formData);
       break;
+      case enums.ActionType.UPDATE_TASK:
+        updateTaskMutation(formData);
+        break;
     default:
       throw new Error("Unknown action type");
   }
@@ -110,7 +128,7 @@ const onSave=({formData,actionType})=>{
             <ProjectForm setOpen={setOpen} onSave={onSave}/>
           )}
     {type === enums.EAddNewType.TASK &&(
-      <TaskForm setOpen={setOpen} onSave={onSave}/>
+      <TaskForm setOpen={setOpen} onSave={onSave} task={task}/>
     )
         }
         {
