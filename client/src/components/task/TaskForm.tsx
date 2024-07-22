@@ -37,7 +37,7 @@ console.log(task)
       team: task ? task?.team :[],
       priority: task ? task?.priority : "",
       stage: task ? task?.stage : "",
-      date: task.date ? new Date(task.date).toISOString().split("T")[0] : "",
+      date: task ? new Date(task?.date).toISOString().split("T")[0] : "",
     },
   });
 
@@ -50,7 +50,10 @@ console.log(task)
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    onSave({ formData: {data, taskId:task?._id}, actionType: "UPDATE_TASK" });
+    if(task){
+     return  onSave({ formData: {data, taskId:task?._id}, actionType: "UPDATE_TASK" });
+    }
+    onSave({ formData: data, actionType: "CREATE_TASK" });
   });
 
   const handleSelect = (e) => {
