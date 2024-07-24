@@ -32,8 +32,7 @@ const Tasks: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   // const [loading, setLoading]=useState<boolean>(false);
   const status = params?.status || "";
-  console.log("params");
-  console.log(params);
+
   const { data: tasks, isLoading } = useQuery({
     queryFn: () => {
       return taskApi.getTasks({ stage: status });

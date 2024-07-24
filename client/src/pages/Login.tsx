@@ -16,7 +16,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-console.log(account);
+
 const {mutate}=useMutation({
   mutationFn:({email,password}:{email:string,password:string})=>{
     return userApi.userLogin({email,password})

@@ -37,8 +37,7 @@ const Trash: React.FC = () => {
     },
     queryKey: ["trashed-tasks"],
   });
-  console.log("type");
-  console.log(type);
+
   const { mutate: removeTaskMutation } = useMutation({
     mutationFn: ({ taskId }) => {
       return taskApi.removeTask({ taskId });
