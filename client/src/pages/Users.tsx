@@ -53,10 +53,10 @@ const Users = () => {
           {user.name}
         </div>
       </td>
-
       <td className='p-2'>{user.title}</td>
       <td className='p-2'>{user.email || "user.emal.com"}</td>
       <td className='p-2'>{user.role}</td>
+      
 
       <td>
         <button

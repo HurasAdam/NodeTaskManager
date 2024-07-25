@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import TaskActivities from "../components/TaskActivities";
 import TaskDetailsTab from "../components/TaskDetailsTab";
 import { projectApi } from "../services/projectApi";
-import TaskMembers from "../components/TaskMembers";
+import ProjectsMembers from "../components/ProjectsMembers";
 import TaskAttachments from "../components/TaskAttachments";
 
 const assets = [
@@ -68,8 +68,8 @@ const ProjectDetails = () => {
   )}
     {selected === 2 &&(
             <>
-            <TaskMembers
-              members={task?.activities}
+            <ProjectsMembers
+              members={task?.members}
               id={id}
       
             />
