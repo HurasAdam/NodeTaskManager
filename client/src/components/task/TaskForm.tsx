@@ -21,13 +21,13 @@ const TaskForm: React.FC = ({ open, setOpen, onSave,task }) => {
 
   const [assets, setAssets] = useState([]);
   const queryClient = useQueryClient();
-console.log("TASK HERE")
-console.log(task)
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors,isDirty  },
     setValue,
+    getFieldState,
     watch,
     reset,
   } = useForm({
@@ -49,9 +49,22 @@ console.log(task)
 
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+ 
     if(task){
-     return  onSave({ formData: {data, taskId:task?._id}, actionType: "UPDATE_TASK" });
+      const finalData = {};
+
+      const fields = ["title", "description", "team", "visibility", "priority", "stage", "date"];
+  
+      fields.forEach((field) => {
+        const fieldState = getFieldState(field);
+        if (fieldState.isDirty) {
+          finalData[field] = data[field];
+        }
+      });
+  
+      console.log("Final Data to be sent:", finalData);
+
+     return  onSave({ formData: {data:finalData, taskId:task?._id}, actionType: "UPDATE_TASK" });
     }
     onSave({ formData: data, actionType: "CREATE_TASK" });
   });

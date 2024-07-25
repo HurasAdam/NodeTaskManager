@@ -328,21 +328,59 @@ export const createSubTask = async (req: Request, res: Response) => {
 
 export const updateTask = async (req: Request, res: Response) => {
   try {
+    const { userId } = req.user;
     const { id } = req.params;
-    const { title, date, team, stage, priority, description, assets } =
-      req.body;
+    const { title, date, team, stage, priority, description, assets } = req.body;
+    
     const task = await Task.findById(id);
 
     if (!task) {
-      return res.status(400).json({ meesage: "Task not found" });
+      return res.status(400).json({ message: "Task not found" });
     }
+
+    const oldValues = {
+      title: task.title,
+      date: task.date,
+      team: task.team,
+      stage: task.stage,
+      priority: task.priority,
+      description: task.description,
+      assets: task.assets,
+    };
+
     task.title = title || task.title;
     task.date = date || task.date;
-    task.priority = priority || task.priority;
+    task.priority = priority ? priority.toLowerCase() : task.priority;
     task.description = description || task.description;
     task.assets = assets || task.assets;
-    task.stage = stage || task.stage;
+    task.stage = stage ? stage.toLowerCase() : task.stage;
     task.team = team || task.team;
+
+    const activities = [];
+
+    if (oldValues.title !== task.title) {
+      activities.push({ type: enums.ETaskActivityType.Updated, activity: `Title changed from "${oldValues.title}" to "${task.title}"`, by: userId, date: new Date() });
+    }
+    if (oldValues.date !== task.date) {
+      activities.push({ type: enums.ETaskActivityType.Updated, activity: `Date changed from "${oldValues.date}" to "${task.date}"`, by: userId, date: new Date() });
+    }
+    if (oldValues.priority !== task.priority) {
+      activities.push({ type: enums.ETaskActivityType.Updated, activity: `Priority changed from "${oldValues.priority}" to "${task.priority}"`, by: userId, date: new Date() });
+    }
+    if (oldValues.description !== task.description) {
+      activities.push({ type: enums.ETaskActivityType.Updated, activity: `Description changed from "${oldValues.description}" to "${task.description}"`, by: userId, date: new Date() });
+    }
+    if (oldValues.assets !== task.assets) {
+      activities.push({ type: enums.ETaskActivityType.Updated, activity: `Assets changed`, by: userId, date: new Date() });
+    }
+    if (oldValues.stage !== task.stage) {
+      activities.push({ type: enums.ETaskActivityType.Updated, activity: `Stage changed from "${oldValues.stage}" to "${task.stage}"`, by: userId, date: new Date() });
+    }
+    if (oldValues.team.toString() !== task.team.toString()) {
+      activities.push({ type: enums.ETaskActivityType.Updated, activity: `Team changed`, by: userId, date: new Date() });
+    }
+
+    task.activities.push(...activities);
 
     const savedTask = await task.save();
 
@@ -353,7 +391,7 @@ export const updateTask = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message });
     }
-    res.status(500).json({ message: "An unexpected error has occured" });
+    res.status(500).json({ message: "An unexpected error has occurred" });
   }
 };
 

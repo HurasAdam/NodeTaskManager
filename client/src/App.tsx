@@ -11,6 +11,9 @@ import AuthLayout from "./layouts/AuthLayout";
 import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
 
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { MdError } from "react-icons/md";
+
 function App() {
   return (
     <main className="w-full min-h-screen bg-[#f3f4f6] ">
@@ -34,7 +37,20 @@ function App() {
         </Route>
       </Routes>
 
-      <Toaster richColors expand={true} />
+      <Toaster 
+icons={{
+  success:<IoIosCheckmarkCircleOutline/>,
+  error:<MdError/>
+}}
+
+toastOptions={{
+  unstyled: true,
+  classNames: {
+    toast: ' p-2 flex items-center gap-1 rounded',
+    title: 'text-normal font-semibold',
+  },
+}}
+      richColors expand={true} />
     </main>
   );
 }

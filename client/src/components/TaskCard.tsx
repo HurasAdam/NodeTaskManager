@@ -27,8 +27,7 @@ const ICONS = {
 const TaskCard = ({ task,onSave }) => {
   const { account } = useAccountStore((state) => state);
   const [open, setOpen] = useState(false);
-console.log("TASK to")
-console.log(task);
+
   return (
     <>
       <div className='w-full h-fit bg-white shadow-md p-4 rounded'>
