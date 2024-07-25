@@ -370,7 +370,7 @@ export const updateTask = async (req: Request, res: Response) => {
     if (oldValues.description !== task.description) {
       activities.push({ type: enums.ETaskActivityType.Updated, activity: `Description changed from "${oldValues.description}" to "${task.description}"`, by: userId, date: new Date() });
     }
-    if (oldValues.assets !== task.assets) {
+    if (oldValues.assets.length >0 && oldValues.assets !== task.assets) {
       activities.push({ type: enums.ETaskActivityType.Updated, activity: `Assets changed`, by: userId, date: new Date() });
     }
     if (oldValues.stage !== task.stage) {

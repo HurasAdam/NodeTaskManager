@@ -8,10 +8,11 @@ import ActivityCard from "./ActivityCard";
 import { toast } from "sonner";
 import { MdOutlineDoneAll, MdOutlineMessage } from "react-icons/md";
 import { FaBug, FaTasks, FaThumbsUp, FaUser } from "react-icons/fa";
+import { LiaExchangeAltSolid } from "react-icons/lia";
 import { GrInProgress } from "react-icons/gr";
 
 const TaskActivities = ({ activity, id}) => {
-
+console.log(activity)
   const TASKTYPEICON = {
     commented: (
       <div className="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center text-white">
@@ -43,6 +44,12 @@ const TaskActivities = ({ activity, id}) => {
         <GrInProgress size={16} />
       </div>
     ),
+    updated:(
+      <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-600 text-white">
+        <LiaExchangeAltSolid size={16} />
+      </div>
+    ),
+
   };
 
   const act_types = [
@@ -52,6 +59,7 @@ const TaskActivities = ({ activity, id}) => {
     "commented",
     "bug",
     "completed",
+
   ];
   
   const [text, setText] = useState("");
