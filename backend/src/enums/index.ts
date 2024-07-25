@@ -18,7 +18,7 @@ export enum ETaskPriority{
     Bug = "bug",
     Completed = "completed",
     Commented = "commented",
-    Updated = "updated "
+    Updated = "updated"
   }
 
 
