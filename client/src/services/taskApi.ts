@@ -148,6 +148,30 @@ const restoreAllTask = async () => {
   return data;
 };
 
+const getTaskComments = async ({taskId}) => {
+  const config = {
+    withCredentials: true,
+  };
+  const { data } = await axios.get(
+    `${BACKEND_BASE_URL}/comments/${taskId}`,
+    config
+  );
+  return data;
+};
+const addTaskComment = async ({formData}) => {
+  const config = {
+    withCredentials: true,
+  };
+  const { data } = await axios.post(
+    `${BACKEND_BASE_URL}/comments/create`,formData,
+    config
+  );
+  return data;
+};
+
+
+
+
 export const taskApi = {
   getTasks,
   createTask,
@@ -161,4 +185,6 @@ export const taskApi = {
   restoreTask,
   removeAllTasks,
   restoreAllTask,
+  addTaskComment,
+  getTaskComments,
 };

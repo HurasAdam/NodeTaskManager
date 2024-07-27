@@ -47,6 +47,8 @@ const ProjectDetails = () => {
     queryKey: ["task", id],
   });
 
+
+
   return (
     <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden">
       <h1 className="flex items-center gap-x-2 text-2xl text-gray-600 font-bold bg-white p-2.5 rounded">
