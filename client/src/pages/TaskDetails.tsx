@@ -22,6 +22,7 @@ import TaskActivities from "../components/TaskActivities";
 import TaskDetailsTab from "../components/TaskDetailsTab";
 import TaskAttachments from "../components/TaskAttachments";
 import CommentsTab from "../components/CommentsTab";
+import { toast } from "sonner";
 
 const assets = [
   "https://images.pexels.com/photos/2418664/pexels-photo-2418664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -51,9 +52,9 @@ const TABS = [
 
 const TaskDetails = () => {
   const { id } = useParams();
-
+  const [isInEditMode,setIsInEditMode]=useState("");
   const [selected, setSelected] = useState(0);
-  // const task = tasks[3];
+const queryClient = useQueryClient();
 
 
 
@@ -66,18 +67,40 @@ const {data:task}=useQuery({
 const {data:comments}= useQuery({
   queryFn:()=>{
     return taskApi.getTaskComments({taskId:id})
-  }
+  },
+  queryKey:["comments"]
 })
 
 
 const {mutate:addTaskCommentMutation}=useMutation({
   mutationFn:({formData})=>{
     return taskApi.addTaskComment({formData});
+  },
+  onSuccess:(data)=>{
+    toast.success(data.message);
+    queryClient.invalidateQueries({queryKey:["comments"]})
   }
 })
 
-const newCommentHandler = ({formData}) =>{
-  addTaskCommentMutation({formData})
+const {mutate:editTaskMutation,isLoading:isUpdateLoading}=useMutation({
+  mutationFn:({formData})=>{
+    return taskApi.editTaskComment({formData});
+  },
+  onSuccess:(data)=>{
+    toast.success(data.message);
+    setIsInEditMode("")
+    queryClient.invalidateQueries({queryKey:["comments"]})
+  }
+})
+
+
+const onSave = ({formData,actionType}) =>{
+  if(actionType ==="ADD_COMMENT"){
+    addTaskCommentMutation({formData})
+  }else if(actionType ==="EDIT_COMMENT"){
+    editTaskMutation({formData})
+  }
+
 }
 
 
@@ -105,8 +128,11 @@ const newCommentHandler = ({formData}) =>{
     <>
       {id &&<CommentsTab 
       id={id}
-      newCommentHandler={newCommentHandler}
+      onSave={onSave}
       comments={comments}
+      isInEditMode={isInEditMode}
+      setIsInEditMode={setIsInEditMode}
+      isUpdateLoading={isUpdateLoading}
       />}
 
     </>

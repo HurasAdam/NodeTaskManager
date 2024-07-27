@@ -169,6 +169,18 @@ const addTaskComment = async ({formData}) => {
   return data;
 };
 
+const editTaskComment = async({formData})=>{
+  const config = {
+    withCredentials: true,
+  };
+  const {data:dataa,commentId} = formData;
+  const { data } = await axios.put(
+    `${BACKEND_BASE_URL}/comments/update/${commentId}`,dataa,
+    config
+  );
+  return data;
+}
+
 
 
 
@@ -187,4 +199,5 @@ export const taskApi = {
   restoreAllTask,
   addTaskComment,
   getTaskComments,
+  editTaskComment,
 };
