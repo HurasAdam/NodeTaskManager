@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import * as types from "../types/index";
 
 const commentSchema = new mongoose.Schema({
     user:{type:mongoose.Types.ObjectId ,ref:"User"},
@@ -9,6 +9,6 @@ createdAt:{type:Date, default:()=> new Date()}
 
 })
 
-const Comment = mongoose.model("Comment",commentSchema);
+const Comment = mongoose.model<types.IComment>("Comment",commentSchema);
 
 export default Comment
