@@ -13,7 +13,7 @@ const newComment = await Comment.create({
 })
 const savedNewComment = await newComment.save();
 if(savedNewComment){
-    res.status(201).json()
+    res.status(201).json({message:"Comment has been added"})
 }
 }catch (error) {
     if (error instanceof Error) {
@@ -26,7 +26,11 @@ if(savedNewComment){
 export const getComments = async(req:Request,res:Response)=>{
     try{
 
-const comments= await Comment.find({});
+const comments= await Comment.find({}).populate([{
+  path:"user", select :["name","email","role","isAdmin"]
+}]);
+
+
 
 res.status(200).json(comments);
 
