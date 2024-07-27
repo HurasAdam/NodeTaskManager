@@ -27,12 +27,17 @@ export function getInitials(fullName) {
   }
 
 
-  export const formatDate = (date) => {
+  export const formatDate = (date,hours) => {
     // Get the month, day, and year
-    const month = date.toLocaleString("en-US", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-  
+    const dateOjb = new Date(date)
+    const month = dateOjb.toLocaleString("en-US", { month: "short" });
+    const day = dateOjb.getDate();
+    const year = dateOjb.getFullYear();
+    const hour = dateOjb.getHours();
+    const minutes = dateOjb.getMinutes();
+  if(hours){
+    return `${day}-${month}-${year}, ${hour}:${minutes>10? minutes : "0"+minutes}`;
+  }
     const formattedDate = `${day}-${month}-${year}`;
   
     return formattedDate;

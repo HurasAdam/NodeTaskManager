@@ -4,6 +4,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import {FaTasks } from "react-icons/fa";
 import { GrInProgress } from "react-icons/gr";
+import { GoComment } from "react-icons/go";
 import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
@@ -19,6 +20,8 @@ import { taskApi } from "../services/taskApi";
 import { useForm } from "react-hook-form";
 import TaskActivities from "../components/TaskActivities";
 import TaskDetailsTab from "../components/TaskDetailsTab";
+import TaskAttachments from "../components/TaskAttachments";
+import CommentsTab from "../components/CommentsTab";
 
 const assets = [
   "https://images.pexels.com/photos/2418664/pexels-photo-2418664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -42,6 +45,7 @@ const bgColor = {
 const TABS = [
   { title: "Task Detail", icon: <FaTasks /> },
   { title: "Activities/Timeline", icon: <RxActivityLog /> },
+  { title: "Comments", icon: <GoComment/> },
 ];
 
 
@@ -59,6 +63,22 @@ const {data:task}=useQuery({
   },
   queryKey:["task",id]
 })
+const {data:comments}= useQuery({
+  queryFn:()=>{
+    return taskApi.getTaskComments({taskId:id})
+  }
+})
+
+
+const {mutate:addTaskCommentMutation}=useMutation({
+  mutationFn:({formData})=>{
+    return taskApi.addTaskComment({formData});
+  }
+})
+
+const newCommentHandler = ({formData}) =>{
+  addTaskCommentMutation({formData})
+}
 
 
   return (
@@ -66,16 +86,33 @@ const {data:task}=useQuery({
       <h1 className='text-2xl text-gray-600 font-bold'>{task?.title}</h1>
 
       <Tabs tabs={TABS} setSelected={setSelected}>
-        {selected === 0 ? (
+        {selected === 0 && (
           <>
             <TaskDetailsTab task={task} context="task"/>
           </>
-        ) : (
-          <>
-            <TaskActivities activity={task?.activities} id={id}  />
-      
-          </>
         )}
+{
+  selected ===1 && (
+    <>
+      <TaskActivities activity={task?.activities} id={id}  />
+
+    </>
+  )
+}
+
+{
+  selected ===2 && (
+    <>
+      {id &&<CommentsTab 
+      id={id}
+      newCommentHandler={newCommentHandler}
+      comments={comments}
+      />}
+
+    </>
+  )
+}
+
       </Tabs>
    
     </div>
