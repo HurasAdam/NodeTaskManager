@@ -14,7 +14,13 @@ const user = await User.create(
 )
 
 if(user){
-   
+    const token = user.generateJWT();
+
+    res.cookie("auth_token",token,{
+        httpOnly:true,
+        secure:process.env.NODE_ENV==="production",
+        maxAge:86400000,
+    })
     res.status(200).json({
         name:user?.name,
         email:user?.email,
@@ -23,13 +29,7 @@ if(user){
         title:user?.title
     })
     
-const token = user.generateJWT();
 
-res.cookie("auth_token",token,{
-    httpOnly:true,
-    secure:process.env.NODE_ENV==="production",
-    maxAge:86400000,
-})
 
 }else{
     res.status(400).json({message:"Invalid user data"})
