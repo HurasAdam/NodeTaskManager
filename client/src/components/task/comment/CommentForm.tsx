@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import Button from '../../Button';
 import { ActionType } from '../../../enums';
 import Loader from '../../Loader';
+import * as enums from "../../../enums/index";
 
 const CommentForm = ({onSave,comment,setIsInEditMode,isUpdateLoading}) => {
 
@@ -18,10 +19,10 @@ const CommentForm = ({onSave,comment,setIsInEditMode,isUpdateLoading}) => {
       const onSubmit = handleSubmit((data) => {
        
         if(comment){
-          onSave({formData:{data,commentId:comment?._id}, actionType: "EDIT_COMMENT"})
+          onSave({formData:{data,commentId:comment?._id}, actionType: enums.ActionType.UPDATE_COMMENT})
           setIsInEditMode("")
         }else{
-           onSave({formData:data, actionType:"ADD_COMMENT"})
+           onSave({formData:data, actionType:enums.ActionType.ADD_COMMENT})
            reset()
         }
         

@@ -181,6 +181,17 @@ const editTaskComment = async({formData})=>{
   return data;
 }
 
+const deleteTaskComment = async({commentId}) =>{
+  const config = {
+    withCredentials: true,
+  };
+
+  const { data } = await axios.delete(
+    `${BACKEND_BASE_URL}/comments/delete/${commentId}`,
+    config
+  );
+  return data;
+}
 
 
 
@@ -200,4 +211,5 @@ export const taskApi = {
   addTaskComment,
   getTaskComments,
   editTaskComment,
+  deleteTaskComment,
 };
