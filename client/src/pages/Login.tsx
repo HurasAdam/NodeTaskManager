@@ -6,6 +6,7 @@ import TextBox from "../components/TextBox";
 import { useMutation } from "@tanstack/react-query";
 import { userApi } from "../services/userApi";
 import { useAccountStore } from "../redux/store";
+import { toast } from "sonner";
 
 const Login = () => {
   // const { user } = useSelector((state) => state.auth);
@@ -23,7 +24,7 @@ const {mutate}=useMutation({
   },
   onSuccess:({message,data})=>{
     setAccount(data)
-    console.log(data)
+    toast.success(message)
   }
 })
 

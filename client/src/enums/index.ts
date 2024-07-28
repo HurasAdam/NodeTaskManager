@@ -13,6 +13,9 @@ export enum ETaskActivityType {
     CREATE_TASK = "CREATE_TASK",
     CREATE_SUBTASK = "CREATE_SUBTASK",
     UPDATE_TASK = "UPDATE_TASK",
+    ADD_COMMENT= "ADD_COMMENT",
+    UPDATE_COMMENT= "UPDATE_COMMENT",
+    DELETE_COMMENT= "DELETE_COMMENT",
   }
 
   export enum EAddNewType{

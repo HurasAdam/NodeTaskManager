@@ -22,6 +22,7 @@ import TaskActivities from "../components/TaskActivities";
 import TaskDetailsTab from "../components/TaskDetailsTab";
 import TaskAttachments from "../components/TaskAttachments";
 import CommentsTab from "../components/CommentsTab";
+import * as enums from "../enums/index";
 import { toast } from "sonner";
 
 const assets = [
@@ -82,7 +83,7 @@ const {mutate:addTaskCommentMutation}=useMutation({
   }
 })
 
-const {mutate:editTaskMutation,isLoading:isUpdateLoading}=useMutation({
+const {mutate:editTaskCommentMutation,isLoading:isUpdateLoading}=useMutation({
   mutationFn:({formData})=>{
     return taskApi.editTaskComment({formData});
   },
@@ -93,13 +94,36 @@ const {mutate:editTaskMutation,isLoading:isUpdateLoading}=useMutation({
   }
 })
 
+const {mutate:deleteTaskCommentMutation}=useMutation({
+  mutationFn:({commentId})=>{
+    return taskApi.deleteTaskComment({commentId});
+  },
+  onSuccess:(data)=>{
+    toast.success(data.message);
+    queryClient.invalidateQueries({queryKey:["comments"]})
+  }
+})
+
+
 
 const onSave = ({formData,actionType}) =>{
-  if(actionType ==="ADD_COMMENT"){
-    addTaskCommentMutation({formData})
-  }else if(actionType ==="EDIT_COMMENT"){
-    editTaskMutation({formData})
+
+  switch (actionType) {
+    case enums.ActionType.ADD_COMMENT:
+      addTaskCommentMutation({formData})
+      break;
+    case enums.ActionType.UPDATE_COMMENT:
+      editTaskCommentMutation({formData})
+      break;
+      case enums.ActionType.DELETE_COMMENT:
+        deleteTaskCommentMutation({commentId:formData})
+      break;
+
+    default:
+      throw new Error("Unknown action type");
   }
+
+
 
 }
 

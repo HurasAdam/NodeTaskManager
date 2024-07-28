@@ -66,3 +66,23 @@ res.status(200).json(comments);
           res.status(500).json({ message: "An unexpected error has occured" });
         }
       }
+
+      export const deleteComment = async(req:Request,res:Response)=>{
+        try{
+    const {id} = req.params;
+ 
+    
+    const comment = await Comment.findOneAndDelete({ _id: id });
+    if(!comment){
+      return res.status(404).json({message:"Comment not found"});
+    }
+    
+      res.status(200).json({message:"Comment has been deleted successfully"});
+  
+        }catch (error) {
+            if (error instanceof Error) {
+              return res.status(400).json({ message: error.message });
+            }
+            res.status(500).json({ message: "An unexpected error has occured" });
+          }
+        }

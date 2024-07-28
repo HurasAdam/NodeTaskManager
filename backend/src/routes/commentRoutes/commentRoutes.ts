@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/create", authGuard,commentController.createComment);
 router.get("/:id", authGuard,commentController.getComments);
 router.put("/update/:id", authGuard,commentController.updateComment);
+router.delete("/delete/:id", authGuard,commentController.deleteComment);
 
 
 

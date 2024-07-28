@@ -52,6 +52,7 @@ const CommentContainer:React.FC<ICommandContainerProps> = ({comment,isAuthor,com
 comment={comment} 
 isAuthor={isAuthor}
 commentEditHandler={commentEditHandler}
+onSave={onSave}
 />
 </>) }
     </div>
