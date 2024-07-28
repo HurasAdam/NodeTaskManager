@@ -25,14 +25,22 @@ if(savedNewComment){
 
 export const getComments = async(req:Request,res:Response)=>{
     try{
-
+const {userId} = req.user;
 const comments= await Comment.find({}).populate([{
   path:"user", select :["name","email","role","isAdmin"]
 }]);
 
+const modifiedComments = comments.map(comment => {
+  return {
+      ...comment.toObject(),
+      likesCount: comment.likes.length,
+ alreadyLiked:comment.likes.includes(userId),
+      likes: undefined,
+ 
+  };
+})
 
-
-res.status(200).json(comments);
+res.status(200).json(modifiedComments);
 
 
     }catch (error) {
@@ -86,3 +94,52 @@ res.status(200).json(comments);
             res.status(500).json({ message: "An unexpected error has occured" });
           }
         }
+
+        export const likeTaskComment = async(req:Request,res:Response)=>{
+          try{
+      const {id} = req.params;
+      const { userId } = req.user;
+      
+      const comment = await Comment.findById(id);
+      if(!comment){
+        return res.status(404).json({message:"Comment not found"});
+      }
+      comment.likes.push(userId)
+      const likedComment =await comment.save()
+      if(likedComment){
+        res.status(200).json({message:"Comment has been liked"});
+      }
+      
+    
+          }catch (error) {
+              if (error instanceof Error) {
+                return res.status(400).json({ message: error.message });
+              }
+              res.status(500).json({ message: "An unexpected error has occured" });
+            }
+          }
+  
+          export const unlikeTaskComment = async(req:Request,res:Response)=>{
+            try{
+        const {id} = req.params;
+        const { userId } = req.user;
+        
+        const comment = await Comment.findById(id);
+        if(!comment){
+          return res.status(404).json({message:"Comment not found"});
+        }
+        comment.likes = comment.likes.filter(like => like.toString() !== userId);
+        const likedComment =await comment.save()
+        if(likedComment){
+          res.status(200).json({message:"Comment has been unliked"});
+        }
+        
+      
+            }catch (error) {
+                if (error instanceof Error) {
+                  return res.status(400).json({ message: error.message });
+                }
+                res.status(500).json({ message: "An unexpected error has occured" });
+              }
+            }
+    

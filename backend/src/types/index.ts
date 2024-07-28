@@ -66,5 +66,8 @@ interface ISubTask {
     }
     description:string;
     createdAt:Date;
+    task:mongoose.Schema.Types.ObjectId;
+    likes:String[];
+    dislikes:String[]
  
 }
