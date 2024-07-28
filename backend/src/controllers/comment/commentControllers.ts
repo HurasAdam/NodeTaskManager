@@ -42,3 +42,27 @@ res.status(200).json(comments);
         res.status(500).json({ message: "An unexpected error has occured" });
       }
     }
+
+    export const updateComment = async(req:Request,res:Response)=>{
+      try{
+  const {id} = req.params;
+  const {description} = req.body;
+  console.log(description)
+  const comment= await Comment.findById(id);
+  if(!comment){
+    return res.status(404).json({message:"Comment not found"});
+  }
+  
+  comment.description = description ? description :comment?.description;
+  const updatedComment = await comment.save();
+  
+  if(updatedComment){
+    res.status(200).json({message:"Comment updated successfully"});
+  }
+      }catch (error) {
+          if (error instanceof Error) {
+            return res.status(400).json({ message: error.message });
+          }
+          res.status(500).json({ message: "An unexpected error has occured" });
+        }
+      }

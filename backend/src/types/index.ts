@@ -56,3 +56,15 @@ interface ISubTask {
 
 
 
+  export interface IComment{
+    user:{
+        _id:string;
+        name:string;
+        email:string;
+        role:string;
+        isAdmin:boolean;
+    }
+    description:string;
+    createdAt:Date;
+ 
+}
