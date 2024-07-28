@@ -2,6 +2,8 @@ import React from 'react'
 import { formatDate, getInitials } from '../utils'
 import clsx from "clsx";
 import CommentForm from './task/comment/CommentForm';
+import { IoChatbox } from "react-icons/io5";
+import { RiArrowUpDoubleFill } from "react-icons/ri";
 import CommentActionPanel from './task/comment/CommentActionPanel';
 
 interface ICommandContainerProps{
@@ -39,8 +41,8 @@ const CommentContainer:React.FC<ICommandContainerProps> = ({comment,isAuthor,com
 </div>
     <div className='flex-1 flex-nowrap  border rounded-md ' >
       <h2 className={clsx('bg-violet-50 px-1.5 py-1.5 text-sm flex justify-between bg-[rgb(242,244,245)]', isAuthor && 'bg-[#eef2ff]')}>
-        <span className='text-sm font-bold text-gray-800'>{comment?.user?.name} <span className='text-gray-500 font-normal'> added a comment.</span></span>
-        <span className='text-xs font-semibold text-gray-600'>{formatDate(comment?.createdAt,true)}</span>
+        <span className='text-sm font-bold text-gray-800 flex items-center gap-2'><IoChatbox className='text-slate-400'/>{comment?.user?.name} <span className='text-gray-500 font-normal'> added a comment.</span></span>
+        <span className='text-xs font-semibold text-gray-600 flex gap-x-4 items-center'>{formatDate(comment?.createdAt,true)}<span className='text-center flex  font-bold text-violet-500'><RiArrowUpDoubleFill className='w-4 h-4 text-indigo-500'/>{comment?.likesCount>0 && comment?.likesCount}</span></span>
       </h2>
 {isInEditMode === comment?._id ? 
 <CommentForm comment={comment} onSave={onSave}/>: 

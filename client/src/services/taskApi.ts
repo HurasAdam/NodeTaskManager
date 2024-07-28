@@ -193,7 +193,30 @@ const deleteTaskComment = async({commentId}) =>{
   return data;
 }
 
+const likeTaskComment = async({commentId}) =>{
+  const config = {
+    withCredentials: true,
+  };
 
+  const { data } = await axios.post(
+    `${BACKEND_BASE_URL}/comments/like/${commentId}`,{},
+    config
+  );
+  return data;
+}
+
+
+const unlikeTaskComment = async({commentId}) =>{
+  const config = {
+    withCredentials: true,
+  };
+
+  const { data } = await axios.post(
+    `${BACKEND_BASE_URL}/comments/unlike/${commentId}`,{},
+    config
+  );
+  return data;
+}
 
 export const taskApi = {
   getTasks,
@@ -212,4 +235,6 @@ export const taskApi = {
   getTaskComments,
   editTaskComment,
   deleteTaskComment,
+  likeTaskComment,
+  unlikeTaskComment
 };

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import { AiFillLike } from "react-icons/ai";
 import ConfirmatioDialog from '../../Dialogs';
+import { ActionType } from '../../../enums';
 
 const CommentActionPanel:React.FC = ({isAuthor,commentEditHandler,comment,onSave}) => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -16,6 +17,11 @@ const CommentActionPanel:React.FC = ({isAuthor,commentEditHandler,comment,onSave
     setOpenDialog(true);
     setMsg("Are you sure you want to delete this comment?")
   };
+
+
+const onClickLikeHandler = (type) =>{
+  onSave({formData:comment?._id, actionType:type})
+}
 
   const onClick = (type:string):void => {
     onSave({formData:selected, actionType: type})
@@ -36,9 +42,15 @@ const CommentActionPanel:React.FC = ({isAuthor,commentEditHandler,comment,onSave
             ):
             (
                 <div className=' px-2 py-1 flex gap-2 justify-end'>
-                <span 
+           {  comment?.alreadyLiked ?  (<span 
+                onClick={()=>onClickLikeHandler("UNLIKE_COMMENT")}
                 className='p-1 hover:bg-blue-100 rounded transition-all cursor-pointer '> <AiFillLike className='text-blue-400'/>
-                </span>
+                </span>):
+                 (<span 
+                  onClick={()=>onClickLikeHandler("LIKE_COMMENT")}
+                  className='p-1 hover:bg-blue-100 rounded transition-all cursor-pointer '> <AiFillLike className='text-gray-300'/>
+                  </span>)
+                }
              
                   </div>  
             )
