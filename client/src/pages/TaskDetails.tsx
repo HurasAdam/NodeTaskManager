@@ -104,7 +104,25 @@ const {mutate:deleteTaskCommentMutation}=useMutation({
   }
 })
 
+const {mutate:likeTaskCommentMutation}=useMutation({
+  mutationFn:({commentId})=>{
+    return taskApi.likeTaskComment({commentId});
+  },
+  onSuccess:(data)=>{
+    toast.success(data.message);
+    queryClient.invalidateQueries({queryKey:["comments"]})
+  }
+})
 
+const {mutate:unlikeTaskCommentMutation}=useMutation({
+  mutationFn:({commentId})=>{
+    return taskApi.unlikeTaskComment({commentId});
+  },
+  onSuccess:(data)=>{
+    toast.success(data.message);
+    queryClient.invalidateQueries({queryKey:["comments"]})
+  }
+})
 
 const onSave = ({formData,actionType}) =>{
 
@@ -118,7 +136,12 @@ const onSave = ({formData,actionType}) =>{
       case enums.ActionType.DELETE_COMMENT:
         deleteTaskCommentMutation({commentId:formData})
       break;
-
+      case enums.ActionType.LIKE_COMMENT:
+        likeTaskCommentMutation({commentId:formData})
+      break;
+      case enums.ActionType.UNLIKE_COMMENT:
+        unlikeTaskCommentMutation({commentId:formData})
+      break;
     default:
       throw new Error("Unknown action type");
   }

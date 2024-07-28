@@ -16,6 +16,8 @@ export enum ETaskActivityType {
     ADD_COMMENT= "ADD_COMMENT",
     UPDATE_COMMENT= "UPDATE_COMMENT",
     DELETE_COMMENT= "DELETE_COMMENT",
+    LIKE_COMMENT= "LIKE_COMMENT",
+    UNLIKE_COMMENT= "UNLIKE_COMMENT",
   }
 
   export enum EAddNewType{
