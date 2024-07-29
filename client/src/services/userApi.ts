@@ -44,9 +44,19 @@ const getUsers= async()=>{
 }
 
 
+const getNotifications =async ()=>{
+  const config = {
+    withCredentials:true
+  }
+  const {data}= await axios.get(`${BACKEND_BASE_URL}/notifications/`,config);
+  return data;
+}
+
+
 export const userApi={
     userLogin,
     validateToken,
     userLogout,
-    getUsers
+    getUsers,
+    getNotifications
 }
