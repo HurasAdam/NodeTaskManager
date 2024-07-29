@@ -5,7 +5,7 @@ export const createComment = async(req:Request,res:Response)=>{
 try{
 const {taskId,description} = req.body;
 const { userId } = req.user;
-
+console.log(req.body)
 const newComment = await Comment.create({
     user:userId,
     task:taskId,
@@ -26,7 +26,8 @@ if(savedNewComment){
 export const getComments = async(req:Request,res:Response)=>{
     try{
 const {userId} = req.user;
-const comments= await Comment.find({}).populate([{
+const {id} =req.params;
+const comments= await Comment.find({task:id}).populate([{
   path:"user", select :["name","email","role","isAdmin"]
 }]);
 

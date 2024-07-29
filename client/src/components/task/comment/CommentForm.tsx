@@ -4,13 +4,14 @@ import Button from '../../Button';
 import { ActionType } from '../../../enums';
 import Loader from '../../Loader';
 import * as enums from "../../../enums/index";
+import { useLocation, useParams } from 'react-router-dom';
 
 const CommentForm = ({onSave,comment,setIsInEditMode,isUpdateLoading}) => {
-
+const {id} = useParams();
     const isLoading=false
     const {register,watch,handleSubmit,reset}= useForm({
         defaultValues:{
-      
+      taskId:id,
           description: comment ? comment?.description : ""
         }
       })

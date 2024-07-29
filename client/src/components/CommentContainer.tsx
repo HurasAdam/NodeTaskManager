@@ -37,7 +37,7 @@ const CommentContainer:React.FC<ICommandContainerProps> = ({comment,isAuthor,com
 
 
 </div>
-<span className='text-gray-500 font-semibold text-xs flex justify-center mt-[3px] '> {comment?.user?.role}</span>
+<span className='text-gray-500 font-semibold text-[11px] flex justify-center mt-[3px] '> {comment?.user?.role}</span>
 </div>
     <div className='flex-1 flex-nowrap  border rounded-md ' >
       <h2 className={clsx('bg-violet-50 px-1.5 py-1.5 text-sm flex justify-between bg-[rgb(242,244,245)]', isAuthor && 'bg-[#eef2ff]')}>
