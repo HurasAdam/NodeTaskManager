@@ -9,7 +9,7 @@ import { useAccountStore } from "../redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userApi } from "../services/userApi";
 
-const Navbar:React.FC = () => {
+const Navbar:React.FC = ({notifications}) => {
     const {account}=useAccountStore((state)=>state.account);
     const queryClient= useQueryClient();
 
@@ -49,7 +49,7 @@ type="text" />
        </div>
 
 <div className="flex gap-2 items-center">
-<NotificationPanel/>
+<NotificationPanel notifications={notifications}/>
 <UserAvatar logoutHandler={logoutHandler}/>
 </div>
 

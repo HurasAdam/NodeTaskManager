@@ -31,6 +31,14 @@ const navigate = useNavigate();
   )
 
 
+  const {data:notifications} = useQuery({
+    queryFn:()=>{
+      return userApi.getNotifications();
+    }
+  })
+
+  console.log(notifications)
+
   if(!account){
     return navigate("/log-in")
   }else{
@@ -43,7 +51,7 @@ const navigate = useNavigate();
         {/* <MobileSidebar />  */}
     
         <div className='flex-1 overflow-y-auto'>
-          <Navbar />
+          <Navbar notifications={notifications} />
     
           <div className='p-4 2xl:px-10'>
             <Outlet />
