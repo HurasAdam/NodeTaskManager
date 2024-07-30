@@ -43,7 +43,7 @@ const ProjectCard = ({project, onSave }) => {
             <h4 className='line-clamp-1 text-black uppercase'>{project?.name}</h4>
           </div>
 
-          {account?.isAdmin && <ProjectDialog task={project} />}
+          {account?.isAdmin && <ProjectDialog project={project} />}
         </div>
 
         <>

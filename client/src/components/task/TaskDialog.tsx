@@ -143,7 +143,7 @@ deleteTaskMutation();
       <AddNew
         open={openEdit}
         setOpen={setOpenEdit}
-        task={task}
+        data={task}
         key={new Date().getTime()}
         type={enums.EAddNewType.TASK}
       />
