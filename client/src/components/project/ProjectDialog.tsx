@@ -14,7 +14,7 @@ import ConfirmatioDialog from "../Dialogs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as enums from "../../enums/index";
 
-const ProjectDialog:React.FC = ({ task }) => {
+const ProjectDialog:React.FC = ({ project }) => {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -48,7 +48,7 @@ const queryClient = useQueryClient();
     {
       label: "Open Project",
       icon: <AiTwotoneFolderOpen className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => navigate(`/project/${task._id}`),
+      onClick: () => navigate(`/project/${project._id}`),
     },
     {
       label: "Edit",
@@ -129,12 +129,12 @@ const queryClient = useQueryClient();
       <AddNew
         open={openEdit}
         setOpen={setOpenEdit}
-        task={task}
+        data={project}
         key={new Date().getTime()}
-        type={enums.EAddNewType.TASK}
+        type={enums.EAddNewType.PROJECT}
       />
 
-      <AddNew open={open} setOpen={setOpen} type={enums.EAddNewType.SUBTASK} taskId={task?._id} />
+      <AddNew open={open} setOpen={setOpen} type={enums.EAddNewType.SUBTASK} taskId={project?._id} />
 
       <ConfirmatioDialog
         open={openDialog}

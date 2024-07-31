@@ -29,7 +29,7 @@ interface IAddNewProps{
   taskId?:string
 }
 
-const AddNew:React.FC<IAddNewProps> = ({ open, setOpen,type,taskId,task }) => {
+const AddNew:React.FC<IAddNewProps> = ({ open, setOpen,type,taskId,data }) => {
 
   const [assets, setAssets] = useState([]);
 const queryClient = useQueryClient();
@@ -125,10 +125,10 @@ const onSave=({formData,actionType})=>{
       <ModalWrapper open={open} setOpen={setOpen}>
         {
           type === enums.EAddNewType.PROJECT && (
-            <ProjectForm setOpen={setOpen} onSave={onSave}/>
+            <ProjectForm setOpen={setOpen} onSave={onSave} project={data}/>
           )}
     {type === enums.EAddNewType.TASK &&(
-      <TaskForm setOpen={setOpen} onSave={onSave} task={task}/>
+      <TaskForm setOpen={setOpen} onSave={onSave} task={data}/>
     )
         }
         {

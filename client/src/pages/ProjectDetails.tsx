@@ -28,7 +28,7 @@ const assets = [
 ];
 
 const TABS = [
-  { title: "Task Detail", icon: <FaTasks /> },
+  { title: "Project Details", icon: <FaTasks /> },
   { title: "Activities/Timeline", icon: <RxActivityLog /> },
   { title: "Members", icon: <FaTasks /> },
   { title: "Attachments", icon: <FaTasks /> },

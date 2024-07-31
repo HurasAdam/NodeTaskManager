@@ -15,8 +15,8 @@ import { userApi } from "../../services/userApi";
 const isLoading = "";
 const uploadedFileURLs = [];
 
-const projectForm: React.FC = ({ setOpen, onSave }) => {
-  const project = "";
+const projectForm: React.FC = ({ setOpen, onSave,project }) => {
+
   const [assets, setAssets] = useState([]);
   const queryClient = useQueryClient();
 
@@ -29,11 +29,11 @@ const projectForm: React.FC = ({ setOpen, onSave }) => {
     reset,
   } = useForm({
     defaultValues: {
-      name: "",
-      pm: [],
-      members: [],
-      target: "",
-      description: "",
+      name: project ? project?.name :"",
+      pm: project ? project?.pm : [],
+      members: project? project?.members : [],
+      target: project? project?.overview[0]?.content : "",
+      description: project? project?.overview[1]?.content : "",
     },
   });
 
