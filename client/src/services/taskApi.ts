@@ -1,8 +1,9 @@
 import axios from "axios";
+import TasksType from "../types/taskTypes";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
-const createTask = async (formData) => {
+const createTask = async (formData: any) => {
   const config = {
     withCredentials: true,
   };
@@ -14,7 +15,7 @@ const createTask = async (formData) => {
   return data;
 };
 
-const deleteTask = async ({ taskId }) => {
+const deleteTask = async ({ taskId } : { taskId : number}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -27,7 +28,7 @@ const deleteTask = async ({ taskId }) => {
   return data;
 };
 
-const createSubTask = async ({ data: formData, taskId }) => {
+const createSubTask = async ({ data: formData, taskId }: { data: any, taskId: number }) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -39,7 +40,7 @@ const createSubTask = async ({ data: formData, taskId }) => {
   return data;
 };
 
-const getTask = async ({ taskId }) => {
+const getTask = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -50,7 +51,7 @@ const getTask = async ({ taskId }) => {
   return data;
 };
 
-const getTasks = async ({ stage, isTrashed }) => {
+const getTasks = async ({ stage, isTrashed } : {stage?: string, isTrashed?: string}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -67,7 +68,7 @@ const getTasks = async ({ stage, isTrashed }) => {
 };
 
 
-const updateTask = async (formData) => {
+const updateTask = async (formData : any) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -80,7 +81,7 @@ const updateTask = async (formData) => {
   return data;
 };
 
-const addTaskActivity = async ({ taskId, formData }) => {
+const addTaskActivity = async ({ taskId, formData } : {taskId: number, formData: any}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -92,7 +93,7 @@ const addTaskActivity = async ({ taskId, formData }) => {
   return data;
 };
 
-const duplicateTask = async ({ taskId }) => {
+const duplicateTask = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -104,7 +105,7 @@ const duplicateTask = async ({ taskId }) => {
   return data;
 };
 
-const removeTask = async ({ taskId }) => {
+const removeTask = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -126,7 +127,7 @@ const removeAllTasks = async () => {
   return data;
 };
 
-const restoreTask = async ({ taskId }) => {
+const restoreTask = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -148,7 +149,7 @@ const restoreAllTask = async () => {
   return data;
 };
 
-const getTaskComments = async ({taskId}) => {
+const getTaskComments = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -158,7 +159,7 @@ const getTaskComments = async ({taskId}) => {
   );
   return data;
 };
-const addTaskComment = async ({formData}) => {
+const addTaskComment = async ({formData} : {formData: any}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -169,7 +170,7 @@ const addTaskComment = async ({formData}) => {
   return data;
 };
 
-const editTaskComment = async({formData})=>{
+const editTaskComment = async ({formData} : {formData: any}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -181,7 +182,7 @@ const editTaskComment = async({formData})=>{
   return data;
 }
 
-const deleteTaskComment = async({commentId}) =>{
+const deleteTaskComment = async({commentId} : {commentId: number}) : Promise<TasksType> =>{
   const config = {
     withCredentials: true,
   };
@@ -193,7 +194,7 @@ const deleteTaskComment = async({commentId}) =>{
   return data;
 }
 
-const likeTaskComment = async({commentId}) =>{
+const likeTaskComment = async({commentId} : {commentId: number}) : Promise<TasksType> => {
   const config = {
     withCredentials: true,
   };
@@ -206,7 +207,7 @@ const likeTaskComment = async({commentId}) =>{
 }
 
 
-const unlikeTaskComment = async({commentId}) =>{
+const unlikeTaskComment = async({commentId} : {commentId: number}) : Promise<TasksType> =>{
   const config = {
     withCredentials: true,
   };
