@@ -1,5 +1,5 @@
 import axios from "axios"
-import User from "../types/userLogin";
+import User from "../types/userTypes";
 
 const BACKEND_BASE_URL= import.meta.env.VITE_BACKEND_BASE_URL; 
 

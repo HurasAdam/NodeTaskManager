@@ -1,6 +1,6 @@
-interface User {
+interface UserType {
     email: string;
     password: string;
 }
 
-export default User
+export default UserType
