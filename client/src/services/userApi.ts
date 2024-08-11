@@ -1,10 +1,9 @@
 import axios from "axios"
+import User from "../types/userTypes";
+
 const BACKEND_BASE_URL= import.meta.env.VITE_BACKEND_BASE_URL; 
 
-
-
-
-const userLogin= async({email,password}:{email:string, password:string})=>{
+const userLogin= async({email,password}:{email:string, password:string}):Promise<User>=>{
     const config = {
         withCredentials: true
       };
