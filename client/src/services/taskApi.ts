@@ -1,9 +1,9 @@
 import axios from "axios";
-import TasksType from "../types/taskTypes";
+import {CombinedTaskType} from "../types/taskTypes";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
-const createTask = async (formData: any) => {
+const createTask = async (formData: CombinedTaskType): Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -15,7 +15,7 @@ const createTask = async (formData: any) => {
   return data;
 };
 
-const deleteTask = async ({ taskId } : { taskId : number}) : Promise<TasksType> => {
+const deleteTask = async ({ taskId } : { taskId : number }) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -28,7 +28,7 @@ const deleteTask = async ({ taskId } : { taskId : number}) : Promise<TasksType> 
   return data;
 };
 
-const createSubTask = async ({ data: formData, taskId }: { data: any, taskId: number }) : Promise<TasksType> => {
+const createSubTask = async ({ data: formData, taskId }: { data: CombinedTaskType, taskId: number }) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -40,7 +40,7 @@ const createSubTask = async ({ data: formData, taskId }: { data: any, taskId: nu
   return data;
 };
 
-const getTask = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
+const getTask = async ({ taskId } : {taskId: number}) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -51,7 +51,7 @@ const getTask = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
   return data;
 };
 
-const getTasks = async ({ stage, isTrashed } : {stage?: string, isTrashed?: string}) : Promise<TasksType> => {
+const getTasks = async ({ stage, isTrashed } : {stage?: string, isTrashed?: string}) : Promise<CombinedTaskType[]> => {
   const config = {
     withCredentials: true,
   };
@@ -68,11 +68,11 @@ const getTasks = async ({ stage, isTrashed } : {stage?: string, isTrashed?: stri
 };
 
 
-const updateTask = async (formData : any) : Promise<TasksType> => {
+const updateTask = async (formData: CombinedTaskType): Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
-  const {data:taskData,taskId}= formData;
+  const {formData: taskData,taskId}= formData;
   const { data } = await axios.put(
     `${BACKEND_BASE_URL}/task/${taskId}`,
     taskData,
@@ -81,7 +81,7 @@ const updateTask = async (formData : any) : Promise<TasksType> => {
   return data;
 };
 
-const addTaskActivity = async ({ taskId, formData } : {taskId: number, formData: any}) : Promise<TasksType> => {
+const addTaskActivity = async ({ taskId, formData } : {taskId: number, formData: CombinedTaskType}) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -93,7 +93,7 @@ const addTaskActivity = async ({ taskId, formData } : {taskId: number, formData:
   return data;
 };
 
-const duplicateTask = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
+const duplicateTask = async ({ taskId } : {taskId: number}) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -105,7 +105,7 @@ const duplicateTask = async ({ taskId } : {taskId: number}) : Promise<TasksType>
   return data;
 };
 
-const removeTask = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
+const removeTask = async ({ taskId } : {taskId: number}) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -127,7 +127,7 @@ const removeAllTasks = async () => {
   return data;
 };
 
-const restoreTask = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
+const restoreTask = async ({ taskId } : {taskId: number}) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -149,7 +149,7 @@ const restoreAllTask = async () => {
   return data;
 };
 
-const getTaskComments = async ({ taskId } : {taskId: number}) : Promise<TasksType> => {
+const getTaskComments = async ({ taskId } : {taskId: number}) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -159,7 +159,7 @@ const getTaskComments = async ({ taskId } : {taskId: number}) : Promise<TasksTyp
   );
   return data;
 };
-const addTaskComment = async ({formData} : {formData: any}) : Promise<TasksType> => {
+const addTaskComment = async ({formData} : {formData: CombinedTaskType}) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -170,11 +170,11 @@ const addTaskComment = async ({formData} : {formData: any}) : Promise<TasksType>
   return data;
 };
 
-const editTaskComment = async ({formData} : {formData: any}) : Promise<TasksType> => {
+const editTaskComment = async ({formData} : {formData: CombinedTaskType}) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
-  const {data:dataa,commentId} = formData;
+  const {formData:dataa,commentId} = formData;
   const { data } = await axios.put(
     `${BACKEND_BASE_URL}/comments/update/${commentId}`,dataa,
     config
@@ -182,7 +182,7 @@ const editTaskComment = async ({formData} : {formData: any}) : Promise<TasksType
   return data;
 }
 
-const deleteTaskComment = async({commentId} : {commentId: number}) : Promise<TasksType> =>{
+const deleteTaskComment = async({commentId} : {commentId: number}) : Promise<CombinedTaskType> =>{
   const config = {
     withCredentials: true,
   };
@@ -194,7 +194,7 @@ const deleteTaskComment = async({commentId} : {commentId: number}) : Promise<Tas
   return data;
 }
 
-const likeTaskComment = async({commentId} : {commentId: number}) : Promise<TasksType> => {
+const likeTaskComment = async({commentId} : {commentId: number}) : Promise<CombinedTaskType> => {
   const config = {
     withCredentials: true,
   };
@@ -207,7 +207,7 @@ const likeTaskComment = async({commentId} : {commentId: number}) : Promise<Tasks
 }
 
 
-const unlikeTaskComment = async({commentId} : {commentId: number}) : Promise<TasksType> =>{
+const unlikeTaskComment = async({commentId} : {commentId: number}) : Promise<CombinedTaskType> =>{
   const config = {
     withCredentials: true,
   };
